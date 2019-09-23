@@ -1,11 +1,68 @@
 #sidebar {
-    background-color: red;
+    background-color: white;
+    position: absolute;
+    width: 15em;
+    height: 100%;
+    border-right: 1px solid #d2d5db;
+    padding-right: 1em;
+}
+
+#sidebar ul {
+    list-style-type: none;
+    padding-left: -3em;
+    margin: 0;
+    padding: 1.5em 0;
+}
+
+#sidebar ul li {
+    padding: 2em 0em 0em 1.5em;
+}
+
+#sidebar ul li a{
+    text-decoration: none;
+    color: #005ea1;
+    font-size: 1.3em;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#sidebar ul li a:hover {
+    color: #b5bd4b
 }
 
 #main {
     background-color: blue;
+    padding-left: 17em;
 }
 
-#search\ bar {
-    background-color: orange;
+#search-bar {
+    padding-left: 16em;
+    display: flex;
+}
+
+#search-bar input {
+    flex: 2 auto;
+    font-size: 1em;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #d2d5db;
+    box-shadow: 0 0 3px #d2d5db;
+}
+.block-button {
+    border: none;
+    font-size: 1em;
+    padding: 15px;
+    background-color: #005ea1;
+    color: white;
+    margin: 5px 0px;
+    -webkit-clip-path: polygon(calc(0% + 10px) 0, 100% 0, 100% 100%, 0 100%, 0 calc(0% + 10px));
+    clip-path: polygon(calc(0% + 10px) 0, 100% 0, 100% 100%, 0 100%, 0 calc(0% + 10px));
+}
+
+.block-button:hover {
+    background-color: #b5bd4b;
+}
+
+#sidebar-logo {
+    max-width: 100%;
+    background-color: white;
 }

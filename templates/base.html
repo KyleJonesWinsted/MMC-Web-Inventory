@@ -10,20 +10,21 @@
 </head>
 <body>
     <div id='sidebar'>
+        <img src="http://www.millerberndmfg.com/wp-content/uploads/2015/04/millerbernd-logo-mfg-co.svg" id="sidebar-logo" alt="Millerbernd Manufacturing Company">
         <ul id='tab bar'>
             <li><a href="/browse">Browse Inventory</a></li>
             <li><a href="/adjustments">Adjustment History</a></li>
             <li><a href="/settings">Manage Settings</a></li>
         </ul>
     </div>
-    <div id='search bar'>
+    <div id='search-bar'>
         <input type="text" name="search box" id="search box" placeholder="Search by SKU, Manufacturer, or Description">
-        <button type="submit">Search</button>
+        <button type="submit" class='block-button'>Search</button>
     </div>
     <div id='main'>
     {% block main %}{% endblock %}
     </div>
-    
+
 <script src="../static/scripts/base.js"></script>
 </body>
 </html>
