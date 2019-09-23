@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ page_title }}</title>
+    <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="../static/stylesheets/base.css">
     <link rel="icon" type="image/png" href="http://www.millerberndmfg.com/wp-content/uploads/2015/04/favicon-32x32.png" sizes="32x32"> <link rel="icon" type="image/png" href="http://www.millerberndmfg.com/wp-content/uploads/2015/04/favicon.ico" sizes="16x16"> <link rel="apple-touch-icon-precomposed" sizes="152x152" href="http://www.millerberndmfg.com/wp-content/uploads/2015/04/apple-touch-icon-152x152.png">
 
@@ -20,10 +20,10 @@
         <input type="text" name="search box" id="search box" placeholder="Search by SKU, Manufacturer, or Description">
         <button type="submit">Search</button>
     </div>
-    <div id='content'>
-        <p>Welcome to the inventory tracker for Millerbernd Manufacturing Company.</p>
+    <div id='main'>
+    {% block main %}{% endblock %}
     </div>
-
+    
 <script src="../static/scripts/base.js"></script>
 </body>
 </html>
