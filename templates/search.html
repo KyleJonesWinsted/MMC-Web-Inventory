@@ -5,4 +5,8 @@
 {% block main %}
 <h1>This is the search results page</h1>
 <p>You just typed {{ search_string }}</p>
+<script>
+    document.getElementById('search-box').focus();
+    document.getElementById('search-box').value = "{{ search_string }}";
+</script>
 {% endblock %}
