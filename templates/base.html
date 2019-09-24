@@ -12,11 +12,13 @@
 </head>
 <body>
     <div id='sidebar'>
-        <img src="http://www.millerberndmfg.com/wp-content/uploads/2015/04/millerbernd-logo-mfg-co.svg" id="sidebar-logo" alt="Millerbernd Manufacturing Company">
+        <a href={{ url_for('index') }}>
+            <img src="http://www.millerberndmfg.com/wp-content/uploads/2015/04/millerbernd-logo-mfg-co.svg" id="sidebar-logo" alt="Millerbernd Manufacturing Company">
+        </a>
         <ul id='tab bar'>
-            <li><a href="/browse">Browse Inventory</a></li>
-            <li><a href="/adjustments">Adjustment History</a></li>
-            <li><a href="/settings">Manage Settings</a></li>
+            <li><a href={{ url_for('browse') }}>Browse Inventory</a></li>
+            <li><a href={{ url_for('adjustments') }}>Adjustment History</a></li>
+            <li><a href={{ url_for('settings') }}>Manage Settings</a></li>
         </ul>
     </div>
     <div id='search-bar'>
