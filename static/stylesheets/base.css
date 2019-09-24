@@ -1,3 +1,7 @@
+body {
+    font-family: 'Agency FB', arial;
+}
+
 #sidebar {
     background-color: white;
     position: absolute;
@@ -22,7 +26,7 @@
     text-decoration: none;
     color: #005ea1;
     font-size: 1.3em;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Agency FB bold', arial;
 }
 
 #sidebar ul li a:hover {
@@ -30,8 +34,12 @@
 }
 
 #main {
-    background-color: blue;
+    background-color: white;
     padding-left: 17em;
+}
+
+p {
+    font-family: Helvetica, Arial;
 }
 
 #search-bar {
@@ -46,10 +54,13 @@
     margin: 5px;
     border: 1px solid #d2d5db;
     box-shadow: 0 0 3px #d2d5db;
+    font-family: Helvetica, Arial;
 }
 .block-button {
     border: none;
     font-size: 1em;
+    font-family: 'Agency FB Bold', arial;
+    letter-spacing: 0.1em;
     padding: 15px;
     background-color: #005ea1;
     color: white;
