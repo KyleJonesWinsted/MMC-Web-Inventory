@@ -50,6 +50,7 @@ body {
 
 p {
     font-family: HelveticaNeueLight, monospace;
+    font-size: 1.1em;
 }
 
 #search-bar {
