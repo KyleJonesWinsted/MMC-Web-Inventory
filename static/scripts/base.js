@@ -6,7 +6,7 @@ searchBox.addEventListener("keyup", function(event) {
     if (event.keyCode === 13) {
         search()
     }
-})
+});
 
 function search() {
     var searchString = searchBox.value;
