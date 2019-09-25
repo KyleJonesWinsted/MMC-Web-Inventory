@@ -18,8 +18,9 @@ def adjustments():
 def settings():
     return render_template('settings.html')
 
+@app.route('/search')
 @app.route('/search/<search_string>')
-def search(search_string):
+def search(search_string=""):
     return render_template('search.html', search_string=search_string)
 
 if __name__ == '__main__':
