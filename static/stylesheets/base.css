@@ -19,18 +19,13 @@ body {
 }
 
 #sidebar ul li {
-    padding: 2em 0em 0em 1.5em;
+    padding: 0em;
 }
 
-#sidebar ul li a{
+#sidebar ul li button{
     text-decoration: none;
-    color: #005ea1;
     font-size: 1.3em;
-    font-family: 'Agency FB bold', arial;
-}
-
-#sidebar ul li a:hover {
-    color: #b5bd4b
+    width: 100%;
 }
 
 #main {

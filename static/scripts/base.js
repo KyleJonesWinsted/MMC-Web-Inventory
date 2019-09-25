@@ -1,3 +1,4 @@
+// Search box functionality
 const searchBox = document.getElementById('search-box');
 const searchButton = document.getElementById('search-button');
 searchButton.addEventListener("click", search);
