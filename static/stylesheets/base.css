@@ -1,3 +1,18 @@
+@font-face {
+    font-family: 'HelveticaNeueThin';
+    src: url('../fonts/HelveticaNeue-ThinCond.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'HelveticaNeue';
+    src: url('../fonts/HelveticaNeue-Condensed.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'HelveticaNeueLight';
+    src: url('../fonts/helvetica-47-light-condensed-587ebd7b5a6f6.woff') format('woff');
+}
+
 body {
     font-family: 'Agency FB', arial;
 }
@@ -34,7 +49,7 @@ body {
 }
 
 p {
-    font-family: Helvetica, Arial;
+    font-family: HelveticaNeueLight, monospace;
 }
 
 #search-bar {
