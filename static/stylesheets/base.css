@@ -13,10 +13,6 @@
     src: url('../fonts/helvetica-47-light-condensed-587ebd7b5a6f6.woff') format('woff');
 }
 
-body {
-    font-family: 'Agency FB', arial;
-}
-
 #sidebar {
     background-color: white;
     position: absolute;
@@ -41,6 +37,7 @@ body {
     text-decoration: none;
     font-size: 1.3em;
     width: 100%;
+    text-align: left;
 }
 
 #main {
@@ -48,8 +45,18 @@ body {
     padding-left: 17em;
 }
 
+#main h1 {
+    color: #005ea1;
+    font-family: 'Agency FB Bold';
+}
+
+#main h3 {
+    font-family: HelveticaNeueLight, Arial;
+    color: #b5bd4b;
+}
+
 p {
-    font-family: HelveticaNeueLight, monospace;
+    font-family: HelveticaNeueLight, Arial;
     font-size: 1.1em;
 }
 
@@ -65,7 +72,7 @@ p {
     margin: 5px;
     border: 1px solid #d2d5db;
     box-shadow: 0 0 3px #d2d5db;
-    font-family: Helvetica, Arial;
+    font-family: HelveticaNeue, Arial;
 }
 .block-button {
     border: none;
