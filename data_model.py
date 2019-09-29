@@ -69,7 +69,8 @@ class Adjustment(Base):
         return quantity
 
     def __repr__(self):
-        return "Adjustment(ID: {}, datetime: {}, item: {})".format(self.id, self.datetime, self.item.part_no)
+        part_no = self.item.part_no if self.item != None else 'None'
+        return "Adjustment(ID: {}, datetime: {}, item: {})".format(self.id, self.datetime, part_no)
 
 class Category(Base):
     __tablename__ = "categories"
@@ -120,7 +121,9 @@ class LocationItem(Base):
     location = relationship('Location', back_populates='items')
 
     def __repr__(self):
-        return "LocationItem(item: {}, location: {}, quantity: {})".format(self.item.part_no, self.location.name, self.quantity)
+        location_name = self.location.name if self.location != None else 'None'
+        part_no = self.item.part_no if self.item != None else 'None'
+        return "LocationItem(item: {}, location: {}, quantity: {})".format(part_no, location_name, self.quantity)
 
 class AdjustmentLocation(Base):
     __tablename__ = "adjustments_locations"
@@ -133,6 +136,8 @@ class AdjustmentLocation(Base):
     location = relationship('Location', back_populates='adjustments')
 
     def __repr__(self):
+        location_name = self.location.name if self.location != None else 'None'
+        adjustment_id = self.adjustment.id if self.adjustment != None else 'None'
         return "AdjustmentLocation(adjustment_id: {}, location: {}, old_qty: {}, new_qty: {})".\
-            format(self.adjustment_id, self.location.name, self.old_qty, self.new_qty)
+            format(adjustment_id, location_name, self.old_qty, self.new_qty)
 
