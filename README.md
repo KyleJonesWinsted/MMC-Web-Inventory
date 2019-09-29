@@ -1,6 +1,6 @@
 # MMC Web Inventory Tracker
 
-## A web-based inventory tracking app for the machining department at [Millerbenrd Manufacturing Company](http://www.millerberndmfg.com/ring-cylinder/products/cnc-machining/).
+## A web-based inventory tracking app for the machining department at [Millerbernd Manufacturing Company](http://www.millerberndmfg.com/ring-cylinder/products/cnc-machining/).
 
 ### Purpose
 ---
