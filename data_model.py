@@ -18,7 +18,7 @@ class Item(Base):
     manufacturer = Column(String(50))
     category_id = Column(Integer, ForeignKey('categories.id'))
     category = relationship('Category', back_populates='items')
-    locations = relationship('LocationItem', back_populates='item')
+    locations = relationship('LocationItem', back_populates='item', cascade="all, delete, delete-orphan")
     adjustments = relationship('Adjustment', back_populates='item')
 
     @hybrid_property
@@ -30,6 +30,8 @@ class Item(Base):
 
     @hybrid_property
     def is_below_minimum_qty(self):
+        if self.category == None:
+            return False
         return self.category.min_qty > self.total_quantity
 
     def __repr__(self):
