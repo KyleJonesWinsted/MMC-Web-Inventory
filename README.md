@@ -20,4 +20,4 @@ Each time an employee takes or replaces an item, the app records when the change
 
 ### Restrictions
 ---
-Although the site is publicly visible, basic changes to the inventory as restricted to employees with a valid login. Changes to the database beyond basic quantity adjustment are restricted to the developer or anyone else with admin SQL access to the database.
+Although the site is publicly visible, basic changes to the inventory are restricted to employees with a valid login. Changes to the database beyond basic quantity adjustment are restricted to the developer or anyone else with admin SQL access to the database.
