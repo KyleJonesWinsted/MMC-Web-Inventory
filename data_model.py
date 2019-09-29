@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, Column, Integer, String, Sequence, DateTime, func, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.ext.hybrid import hybrid_property
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -30,7 +30,7 @@ class Item(Base):
 
     @hybrid_property
     def is_below_minimum_qty(self):
-        return self.category.min_qty > self.total_quantity()
+        return self.category.min_qty > self.total_quantity
 
     def __repr__(self):
         return "Item(sku: {}, part_no: {}, manufacturer: {})".format(self.sku, self.part_no, self.manufacturer)
@@ -115,7 +115,7 @@ class LocationItem(Base):
     location_id = Column(Integer, ForeignKey('locations.id'), primary_key=True)
     quantity = Column(Integer)
     item = relationship('Item', back_populates='locations')
-    location = relationship('Locations', back_populates='items')
+    location = relationship('Location', back_populates='items')
 
     def __repr__(self):
         return "LocationItem(item: {}, location: {}, quantity: {})".format(self.item.part_no, self.location.name, self.quantity)
