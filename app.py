@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-
+import view_controllers.browse
 app = Flask(__name__)
 
 @app.route('/')
@@ -8,7 +8,8 @@ def index():
 
 @app.route('/browse')
 def browse():
-    return render_template('browse.html')
+    return view_controllers.browse.setupView()
+    
 
 @app.route('/adjustments')
 def adjustments():
