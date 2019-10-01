@@ -18,26 +18,50 @@
     position: absolute;
     width: 15em;
     height: 100%;
-    border-right: 1px solid #d2d5db;
     padding-right: 1em;
+}
+
+#sidebar-box {
+    background-color: #d2d5db;
+    height: 100%;
+    padding: 0 1em;
+    margin: 1em 0;
+}
+
+#sidebar-box h3 {
+    font-family: 'Agency FB Bold';
+    color: #005ea1;
+    padding: .7em 0;
+    margin: 0;
+}
+
+.sidebar-button {
+    background-color: #e5e7ea;
+    border: none;
+    border-left: 3px solid #b5bd4b;
+    font-family: HelveticaNeue, Arial;
+    height: 2.5em;
+    margin: .2em auto;
+    text-decoration: none;
+    font-size: 1em;
+    width: 100%;
+    text-align: left;
+    padding: 0 1em;
+}
+
+.sidebar-button:hover {
+    background-color: #b5bd4b;
 }
 
 #sidebar ul {
     list-style-type: none;
     padding-left: -3em;
     margin: 0;
-    padding: 1.5em 0;
+    padding: 0em 0;
 }
 
 #sidebar ul li {
     padding: 0em;
-}
-
-#sidebar ul li button{
-    text-decoration: none;
-    font-size: 1.3em;
-    width: 100%;
-    text-align: left;
 }
 
 #main {

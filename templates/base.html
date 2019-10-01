@@ -17,29 +17,32 @@
         <a href={{ url_for('index') }}>
             <img src="http://www.millerberndmfg.com/wp-content/uploads/2015/04/millerbernd-logo-mfg-co.svg" id="sidebar-logo" alt="Millerbernd Manufacturing Company">
         </a>
-        <ul id='tab bar'>
-            <li>
-                <a href={{ url_for('browse') }}>
-                    <button class="block-button">
-                        <i class="fas fa-chevron-circle-right"></i> Browse Inventory
-                    </button>
-                </a>
-            </li>
-            <li>
-                <a href={{ url_for('adjustments') }}>
-                    <button class="block-button">
-                        <i class="fas fa-chevron-circle-right"></i> Adjustment History
-                    </button>
-                </a>
-            </li>
-            <li>
-                <a href={{ url_for('settings') }}>
-                    <button class="block-button">
-                        <i class="fas fa-chevron-circle-right"></i> Manage Settings
-                    </button>
-                </a>
-            </li>
-        </ul>
+        <div id='sidebar-box'>
+            <h3>GET STARTED</h3>
+            <ul id='tab bar'>
+                <li>
+                    <a href={{ url_for('browse') }}>
+                        <button class="sidebar-button">
+                            Browse Inventory
+                        </button>
+                    </a>
+                </li>
+                <li>
+                    <a href={{ url_for('adjustments') }}>
+                        <button class="sidebar-button">
+                            Adjustment History
+                        </button>
+                    </a>
+                </li>
+                <li>
+                    <a href={{ url_for('settings') }}>
+                        <button class="sidebar-button">
+                            Manage Settings
+                        </button>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
     <div id='search-bar'>
         <input type="text" name="search-box" id="search-box" placeholder="Search by SKU, Manufacturer, or Description">
