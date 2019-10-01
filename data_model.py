@@ -1,8 +1,9 @@
-from sqlalchemy import create_engine, Column, Integer, String, Sequence, DateTime, func, ForeignKey
+from sqlalchemy import create_engine, Column, Integer, String, Sequence, DateTime, func, ForeignKey, Date
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.ext.hybrid import hybrid_property
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import date
 
 engine = create_engine('postgres://localhost/mmc_web_inventory', echo=False)
 Base = declarative_base()
@@ -53,6 +54,7 @@ class Adjustment(Base):
 
     id = Column(Integer, primary_key=True)
     datetime = Column(DateTime(timezone=False), server_default=func.now())
+    date = Column(Date, default=date.today)
     item_sku = Column(Integer, ForeignKey('items.sku'))
     item = relationship('Item', back_populates='adjustments')
     locations = relationship('AdjustmentLocation', back_populates='adjustment')
