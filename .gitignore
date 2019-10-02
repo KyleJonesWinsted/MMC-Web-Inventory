@@ -6,3 +6,7 @@ venv
 
 #Ignore cache files
 __pycache__
+
+#Ignore database migration files
+alembic
+alembic.ini
