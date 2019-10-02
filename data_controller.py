@@ -1,7 +1,8 @@
 from data_model import session, Item, Location, Adjustment, AdjustmentLocation, LocationItem, Employee, AdjustmentReason, Category
 import data_model as db
-from sqlalchemy import func
+from sqlalchemy import func, and_
 from math import ceil
+from datetime import datetime, date
 
 page_limit = 20
 
@@ -72,6 +73,16 @@ def get_adjustments_by_reason_id(reason_id: int, page: int = 0) -> [Adjustment]:
 
 def count_adjustments_by_reason_id(reason_id: int) -> int:
     return session.query(func.count(Adjustment.id)).filter(Adjustment.reason_id==reason_id).scalar()
+
+def get_adjustments_by_date(date1: date, date2: date = None, page: int = 0) -> [Adjustment]:
+    if date2 == None:
+        date2 = date1
+    return session.query(Adjustment).filter(and_(Adjustment.date>=date1, Adjustment.date<=date2)).limit(page_limit).offset(page_limit * page).all()
+
+def count_adjustments_by_date(date1: date, date2: date = None) -> int:
+    if date2 == None:
+        date2 == date1
+    return session.query(func.count(Adjustment.id)).filter(and_(Adjustment.date>=date1, Adjustment.date<=date2)).scalar()
 
 def get_all_employees() -> [Employee]:
     return session.query(Employee).all()
