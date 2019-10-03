@@ -1,6 +1,6 @@
 from data_model import session, Item, Location, Adjustment, AdjustmentLocation, LocationItem, Employee, AdjustmentReason, Category
 import data_model as db
-from sqlalchemy import func, and_
+from sqlalchemy import func, and_, or_
 from math import ceil
 from datetime import datetime, date
 
@@ -77,7 +77,9 @@ def count_adjustments_by_reason_id(reason_id: int) -> int:
 def get_adjustments_by_date(date1: date, date2: date = None, page: int = 0) -> [Adjustment]:
     if date2 == None:
         date2 = date1
-    return session.query(Adjustment).filter(and_(Adjustment.date>=date1, Adjustment.date<=date2)).limit(page_limit).offset(page_limit * page).all()
+    return session.query(Adjustment).\
+        filter(and_(Adjustment.date>=date1, Adjustment.date<=date2)).\
+        limit(page_limit).offset(page_limit * page).all()
 
 def count_adjustments_by_date(date1: date, date2: date = None) -> int:
     if date2 == None:
@@ -97,3 +99,37 @@ def loginEmployee(employee_id: int, password: str) -> bool:
     except:
         return False
     return employee.check_password(password)
+
+# Search items by SKU, Part_no, or Description
+
+def get_search_results(search_string: str, page: int = 0) -> [Item]:
+    results = []
+    if len(search_string) < 3:
+        return None
+    try:
+        results.append(session.query(Item).filter(Item.sku==int(search_string)).one())
+        return results
+    except:
+        pass
+    search = "%{}%".format(search_string)
+    for row in session.query(Item).\
+            filter(or_(Item.part_no.like(search), Item.description.like(search))).\
+            limit(page_limit).\
+            offset(page_limit * page).all():
+        results.append(row)
+    return results
+
+
+def count_search_results(search_string: str, page: int = 0) -> int:
+    count = 0
+    if len(search_string) < 3:
+        return None
+    try:
+        item = session.query(Item).filter(Item.sku==int(search_string)).one()
+        return 1
+    except:
+        pass
+    search = "%{}%".format(search_string)
+    for row in session.query(Item).filter(or_(Item.part_no.like(search), Item.description.like(search))).all():
+        count += 1
+    return count
