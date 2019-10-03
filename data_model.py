@@ -72,7 +72,7 @@ class Adjustment(Base):
 
     def __repr__(self):
         part_no = self.item.part_no if self.item != None else 'None'
-        return "Adjustment(ID: {}, datetime: {}, item: {})".format(self.id, self.datetime, part_no)
+        return "Adjustment(ID: {}, datetime: {}, item: {})".format(self.id, self.datetime.strftime('%D %I:%M %p'), part_no)
 
 class Category(Base):
     __tablename__ = "categories"
