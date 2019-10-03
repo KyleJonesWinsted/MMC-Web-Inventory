@@ -120,7 +120,7 @@ def get_search_results(search_string: str, page: int = 0) -> [Item]:
     return results
 
 
-def count_search_results(search_string: str, page: int = 0) -> int:
+def count_search_results(search_string: str) -> int:
     count = 0
     if len(search_string) < 3:
         return None
@@ -133,3 +133,28 @@ def count_search_results(search_string: str, page: int = 0) -> int:
     for row in session.query(Item).filter(or_(Item.part_no.like(search), Item.description.like(search))).all():
         count += 1
     return count
+
+# Modify database
+
+def create_new_item(part_no: str, description: str, manufacturer: str, category: Category) -> Item:
+    new_item = Item(part_no=part_no, description=description, manufacturer=manufacturer, category=category)
+    try:
+        session.add(new_item)
+        session.commit()
+        return new_item
+    except:
+        return None
+
+def adjust_quantities_for_item():
+    pass
+
+def add_location():
+    pass
+
+def delete_location():
+    pass
+
+def create_adjustment():
+    pass
+
+
