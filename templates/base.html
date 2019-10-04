@@ -14,28 +14,28 @@
 </head>
 <body>
     <div id='sidebar'>
-        <a href={{ url_for('index') }}>
+        <a href="{{ url_for('homepage') }}">
             <img src="http://www.millerberndmfg.com/wp-content/uploads/2015/04/millerbernd-logo-mfg-co.svg" id="sidebar-logo" alt="Millerbernd Manufacturing Company">
         </a>
         <div id='sidebar-box'>
             <h3>GET STARTED</h3>
             <ul id='tab bar'>
                 <li>
-                    <a href={{ url_for('browse') }}>
+                    <a href="{{ url_for('browse') }}">
                         <button class="sidebar-button">
                             Browse Inventory
                         </button>
                     </a>
                 </li>
                 <li>
-                    <a href={{ url_for('adjustments') }}>
+                    <a href="{{ url_for('adjustments') }}">
                         <button class="sidebar-button">
                             Adjustment History
                         </button>
                     </a>
                 </li>
                 <li>
-                    <a href={{ url_for('settings') }}>
+                    <a href="{{ url_for('settings') }}">
                         <button class="sidebar-button">
                             Manage Settings
                         </button>

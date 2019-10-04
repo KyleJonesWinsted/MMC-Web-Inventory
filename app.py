@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 #Homepage
 @app.route('/')
-def index():
+def homepage():
     return render_template('homepage.html')
 
 #Browse Inventory
@@ -32,7 +32,7 @@ def browse_all_items():
         page_number = None
     return view_controllers.browse.all_items_view(page=page_number)
 
-@app.route('/browse/details')
+@app.route('/item')
 def view_item_details():
     try:
         item_sku = int(request.args.get('sku'))
@@ -55,6 +55,11 @@ def settings():
 @app.route('/search/<search_string>')
 def search(search_string=""):
     return render_template('search.html', search_string=search_string)
+
+#Error handling
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 if __name__ == '__main__':
     app.run(debug=True)
