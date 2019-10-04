@@ -10,3 +10,6 @@ __pycache__
 #Ignore database migration files
 alembic
 alembic.ini
+
+#Ignore vscode
+.vscode
