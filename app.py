@@ -52,8 +52,13 @@ def settings():
 
 #Search Inventory
 @app.route('/search')
-@app.route('/search/<search_string>')
-def search(search_string=""):
+def search():
+    try:
+        search_string = str(request.args.get('input'))
+        if search_string == None or search_string == "" or search_string == "None":
+            abort(404)
+    except:
+        abort(404)
     return render_template('search.html', search_string=search_string)
 
 #Error handling
