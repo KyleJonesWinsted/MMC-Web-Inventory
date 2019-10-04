@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, abort
+from flask import Flask, render_template, request, abort, jsonify
 import view_controllers.browse
 app = Flask(__name__)
 
@@ -37,7 +37,7 @@ def view_item_details():
     try:
         item_sku = int(request.args.get('sku'))
     except:
-        abort(404)
+        abort(404, description='html')
     return view_controllers.browse.item_detail_view(sku=item_sku)
     
 #Adjustment History
@@ -60,6 +60,10 @@ def search(search_string=""):
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def server_error(e):
+    return render_template('500.html'), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

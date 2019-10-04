@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}500 Server Error{% endblock %}
+
+{% block main %}
+<h1>Server Error</h1>
+<h3>Something happened on our side.</h3>
+<p>Please try your request again, if it still doesn't work please contact the site administrator.</p>
+<a href="{{ url_for('homepage') }}">
+    <button>Go Home</button>
+</a>
+{% endblock %}
