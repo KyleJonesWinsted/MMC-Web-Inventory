@@ -3,5 +3,17 @@
 {% block title %}Browse{% endblock %}
 
 {% block main %}
-<h1>This is the browse page</h1>
+<h1>Select browse method</h1>
+<a href="{{ url_for('browse_by_category') }}">
+    <button class="block-button">Browse by Category</button>
+</a><br>
+<a href="{{ url_for('browse_by_location') }}">
+    <button class="block-button">Browse by Storage Location</button>
+</a><br>
+<a href="{{ url_for('browse_by_manufacturer') }}">
+    <button class="block-button">Browse by Manufacturer</button>
+</a><br>
+<a href="{{ url_for('browse_all_items') }}">
+    <button class="block-button">Browse All Items</button>
+</a>
 {% endblock %}

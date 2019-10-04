@@ -115,6 +115,10 @@ p {
     background-color: #b5bd4b;
 }
 
+a {
+    text-decoration: none;
+}
+
 #sidebar-logo {
     max-width: 100%;
     background-color: white;
