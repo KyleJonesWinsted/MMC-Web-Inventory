@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, abort
 import view_controllers.browse
 app = Flask(__name__)
 
@@ -31,6 +31,14 @@ def browse_all_items():
     except:
         page_number = None
     return view_controllers.browse.all_items_view(page=page_number)
+
+@app.route('/browse/details')
+def view_item_details():
+    try:
+        item_sku = int(request.args.get('sku'))
+    except:
+        abort(404)
+    return view_controllers.browse.item_detail_view(sku=item_sku)
     
 #Adjustment History
 @app.route('/adjustments')

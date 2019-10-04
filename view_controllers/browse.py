@@ -15,3 +15,6 @@ def manufacturer_select_view():
 
 def all_items_view(page = 0):
     return render_template('placeholder.html', page_name='all items view page: {}'.format(page))
+
+def item_detail_view(sku: int):
+    return render_template('placeholder.html', page_name='item details: sku = {}'.format(sku))
