@@ -3,7 +3,7 @@
 {% block title %}{{ browse_type }}{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="../static/stylesheets/intermediate_browse_view.css">
+<link rel="stylesheet" href="../static/stylesheets/basic_table_view.css">
 {% endblock %}
 
 {% block main%}
@@ -12,10 +12,10 @@
         <h1>Select {{ browse_type }}</h1>
     </div>
     {% for row in rows %}
-        <a href='/placeholder/{{ row['name'] }}'>
-            <div class="basic-table-cell">
-                <h4>{{ row['name'] }}</h4>
-                <p># of items: <b>{{ row['number_of_items'] }}</b></p>
+        <a href='/placeholder/{{ row['primary-text'] }}'>
+            <div class="basic-table-cell" id={{ row['id'] }}>
+                <h4>{{ row['primary-text'] }}</h4>
+                <p>{{ row['secondary-text'] }}</p>
             </div>
         </a>
     {% endfor %}
