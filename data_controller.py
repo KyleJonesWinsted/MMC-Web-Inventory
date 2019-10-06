@@ -41,7 +41,7 @@ def count_all_items():
 def get_all_manufacturers() -> [str]:
     manufacturers = []
     for row in session.query(Item.manufacturer).group_by(Item.manufacturer).all():
-        manufacturers.append(row[0].capitalize())
+        manufacturers.append(row[0])
     manufacturers.sort()
     return manufacturers
 
