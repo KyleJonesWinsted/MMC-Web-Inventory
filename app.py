@@ -7,6 +7,10 @@ app = Flask(__name__)
 def homepage():
     return render_template('homepage.html')
 
+@app.route('/placeholder/<string:page_name>')
+def placeholder(page_name):
+    return render_template('placeholder.html', page_name=page_name)
+
 #Browse Inventory
 @app.route('/browse')
 def browse():
