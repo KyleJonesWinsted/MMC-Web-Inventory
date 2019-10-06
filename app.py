@@ -28,20 +28,21 @@ def browse_by_location():
 def browse_by_manufacturer():
     return view_controllers.browse.manufacturer_select_view()
 
-@app.route('/browse/all_items')
-def browse_all_items():
+@app.route('/browse/items')
+def browse_items():
     try:
-        page_number = int(request.args.get('page'))
+        browse_type = request.args.get('browse_type')
+        filter_id = request.args.get('filter_id')
     except:
-        page_number = None
-    return view_controllers.browse.all_items_view(page=page_number)
+        abort(400)
+    return view_controllers.browse.items_view(browse_type = browse_type, filter_id = filter_id)
 
 @app.route('/item')
 def view_item_details():
     try:
         item_sku = int(request.args.get('sku'))
     except:
-        abort(404, description='html')
+        abort(400)
     return view_controllers.browse.item_detail_view(sku=item_sku)
     
 #Adjustment History
@@ -60,15 +61,19 @@ def search():
     try:
         search_string = str(request.args.get('input'))
         if search_string == None or search_string == "" or search_string == "None":
-            abort(404)
+            abort(400)
     except:
-        abort(404)
+        abort(400)
     return render_template('search.html', search_string=search_string)
 
 #Error handling
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
+
+@app.errorhandler(400)
+def bad_request(e):
+    return render_template('400.html'), 400
 
 @app.errorhandler(500)
 def server_error(e):

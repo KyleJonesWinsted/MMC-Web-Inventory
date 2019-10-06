@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ browse_type }}{% endblock %}
+{% block title %}{{ page_title }}{% endblock %}
 
 {% block head %}
 <link rel="stylesheet" href="../static/stylesheets/basic_table_view.css">
@@ -9,13 +9,13 @@
 {% block main%}
 <div class="full-width-table-view">
     <div class="basic-table-header">
-        <h1>Select {{ browse_type }}</h1>
+        <h1>{{ table_header }}</h1>
     </div>
     {% for row in rows %}
-        <a href='/placeholder/{{ row['primary-text'] }}'>
-            <div class="basic-table-cell" id={{ row['id'] }}>
-                <h4>{{ row['primary-text'] }}</h4>
-                <p>{{ row['secondary-text'] }}</p>
+        <a href={{ row.href }}>
+            <div class="basic-table-cell" id={{ row.id }}>
+                <h4>{{ row.primary_text }}</h4>
+                <p>{{ row.secondary_text }}</p>
             </div>
         </a>
     {% endfor %}
