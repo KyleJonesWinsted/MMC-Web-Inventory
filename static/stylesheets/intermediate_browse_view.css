@@ -1,0 +1,46 @@
+.basic-table-header {
+    border-bottom: 1px solid #e5e7ea
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:any-link {
+    text-decoration: none;
+}
+
+.basic-table-cell {
+    border-bottom: 1px solid #e5e7ea;
+    padding: 0 1em;
+    
+}
+
+.basic-table-cell:hover {
+    box-shadow: 0 0 10px grey;
+    border-bottom: none;
+}
+
+.basic-table-cell h4 {
+    font-family: 'Agency FB', sans-serif;
+    color: #005ea1;
+    font-size: 1.2em;
+    display: inline-block;
+}
+
+.basic-table-cell p {
+    font-family: 'HelveticaNeueLight', sans-serif;
+    display: inline-block;
+    float: right;
+    color: black;
+    vertical-align: middle;
+}
+
+.basic-table-cell:hover h4 {
+    color: #b5bd4b;
+}
