@@ -8,9 +8,11 @@
 
 {% block main %}
 <h1>Item Details</h1>
-{% if item.category.img_url != None %}
-<img src={{ item.category.img_url }} alt="image for category {{ item.category }}">
-{% endif %}
+<div class='category-image-frame'>
+    {% if item.category.img_url != None %}
+    <img src={{ item.category.img_url }} alt="image for category: {{ item.category.name }}">
+    {% endif %}
+</div>
 <h4>{{ item.manufacturer.title() }}</h4>
 <h2>{{ item.part_no.upper() }}</h2>
 <h6>SKU: {{ item.sku }}</h6>
