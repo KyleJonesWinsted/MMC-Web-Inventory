@@ -26,9 +26,9 @@ a:any-link {
 }
 
 .basic-table-cell h4 {
-    font-family: 'Agency FB', sans-serif;
-    color: #005ea1;
-    font-size: 1.2em;
+    font-family: 'HelveticaNeue', monospace;
+    color: black;
+    font-size: 1em;
     display: inline-block;
 }
 
@@ -37,7 +37,7 @@ a:any-link {
     display: inline-block;
     float: right;
     color: black;
-    line-height: 38px;
+    line-height: 25px;
 }
 
 .basic-table-cell:hover h4 {
