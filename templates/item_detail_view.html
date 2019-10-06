@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ item.part_no.upper() }}{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="../static/stylesheets/item_detail_view.css">
+{% endblock %}
+
+{% block main %}
+<h1>Item Details</h1>
+{% if item.category.img_url != None %}
+<img src={{ item.category.img_url }} alt="image for category {{ item.category }}">
+{% endif %}
+<h4>{{ item.manufacturer.title() }}</h4>
+<h2>{{ item.part_no.upper() }}</h2>
+<h6>SKU: {{ item.sku }}</h6>
+<p>{{ item.description.capitalize() }}</p>
+<h2>Locations:</h2>
+{% for location in item.locations %}
+    <div class='location-row'>
+        <h4>{{ location.location.name.upper() }}</h4>
+        <p>Quantity: {{ location.quantity }}</p>
+    </div>
+{% endfor %}
+{% endblock %}

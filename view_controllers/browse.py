@@ -107,4 +107,5 @@ def items_view(browse_type, filter_id):
 
 
 def item_detail_view(sku: int):
-    return render_template('placeholder.html', page_name='item details: sku = {}'.format(sku))
+    item = db.get_item_by_sku(sku)
+    return render_template('item_detail_view.html', item = item)
