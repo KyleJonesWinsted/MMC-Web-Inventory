@@ -18,7 +18,6 @@ a:any-link {
 .basic-table-cell {
     border-bottom: 1px solid #e5e7ea;
     padding: 0 1em;
-    
 }
 
 .basic-table-cell:hover {
@@ -38,7 +37,7 @@ a:any-link {
     display: inline-block;
     float: right;
     color: black;
-    vertical-align: middle;
+    line-height: 38px;
 }
 
 .basic-table-cell:hover h4 {
