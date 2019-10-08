@@ -7,21 +7,25 @@
 {% endblock %}
 
 {% block main %}
-<h1>Item Details</h1>
+<button id='stock-in-out-button' class='block-button'>Stock In/Out</button>
+<h1 id='page-heading'>Item Details</h1>
 <div class='category-image-frame'>
     {% if item.category.img_url != None %}
     <img src={{ item.category.img_url }} alt="image for category: {{ item.category.name }}">
     {% endif %}
 </div>
-<h4>{{ item.manufacturer.title() }}</h4>
-<h2>{{ item.part_no.upper() }}</h2>
-<h6>SKU: {{ item.sku }}</h6>
-<p>{{ item.description.capitalize() }}</p>
-<h2>Locations:</h2>
+<h4 id='manufacturer'>{{ item.manufacturer.title() }}</h4>
+<h2 id='part-no'>{{ item.part_no.upper() }}</h2>
+<h6 id = 'sku'>SKU: {{ item.sku }}</h6>
+<p id='description'>{{ item.description.capitalize() }}</p>
+<h2 id='locations-header'>Locations:</h2>
 {% for location in item.locations %}
     <div class='location-row'>
-        <h4>{{ location.location.name.upper() }}</h4>
-        <p>Quantity: {{ location.quantity }}</p>
+        <h4 class='location-name'>{{ location.location.name.upper() }}</h4>
+        <p class='location-quantity'>Qty: {{ location.quantity }}</p>
     </div>
 {% endfor %}
+    <div class='location-row'>
+        <h4 class="location-name">Total Quantity: {{ item.total_quantity }}</h4>
+    </div>
 {% endblock %}

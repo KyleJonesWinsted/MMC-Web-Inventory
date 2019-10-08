@@ -1,0 +1,70 @@
+#page-heading {
+    border-bottom: 1px solid #d2d5db;
+    margin-top: 30px;
+}
+
+#stock-in-out-button {
+    float: right;
+    position: relative;
+    bottom: 20px;
+    right: 10px;
+}
+
+.category-image-frame {
+    width: 100px;
+    height: 100px;
+    float: right;
+    margin-right: 2em;
+}
+
+.category-image-frame img {
+    object-fit: cover;
+    width: 100px;
+    height: 100px;
+}
+
+#manufacturer {
+    font-family: 'Agency FB Bold', monospace;
+    color: #b5bd4b;
+    margin: 0em;
+    font-size: 1.5em;
+}
+
+#part-no {
+    font-family: 'Agency FB', monospace;
+    color: #005ea1;
+    margin: 0.5em auto;
+    font-size: 200%;
+    padding-right: 170px;
+}
+
+#sku {
+    font-family: 'HelveticaNeueThin', monospace;
+    margin: 0;
+    font-size: 80%;
+}
+
+#locations-header {
+    font-family: 'Agency FB', monospace;
+    color: #005ea1;
+    border-bottom: 1px solid #e5e7ea;
+    margin-bottom: 0;
+}
+
+.location-row {
+    border-bottom: 1px solid #e5e7ea
+}
+
+.location-name {
+    display: inline-block;
+    margin: 1em;
+    font-family: 'HelveticaNeue', monospace;
+    font-size: 120%;
+}
+
+.location-quantity {
+    float: right;
+    display: inline-block;
+    margin-right: 4em;
+    line-height: 25px;
+}
