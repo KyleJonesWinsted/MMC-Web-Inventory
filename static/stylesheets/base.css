@@ -79,9 +79,15 @@
     color: #b5bd4b;
 }
 
+#main img {
+    max-width: 100%;
+    box-shadow: 0 0 10px gray;
+}
+
 p {
     font-family: HelveticaNeueLight, Arial;
     font-size: 1.1em;
+    line-height: 120%;
 }
 
 #search-bar {
