@@ -9,8 +9,9 @@ searchBox.addEventListener("keyup", function(event) {
 });
 
 function search() {
-    var searchString = searchBox.value;
-    if (searchString == "") { return; }
+    var searchValue = searchBox.value;
+    const searchString = searchValue.trim()
+    if (searchString.length < 3) { return; }
     const baseURL = '/search?input='
     // Will probably change later to escape on the server side
     location.replace(baseURL + encodeURI(searchString)) 

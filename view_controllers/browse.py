@@ -95,7 +95,7 @@ def items_view(browse_type, filter_id):
     for item in items:
         rows.append(BasicRow(
             id = item.sku,
-            href = '/item?sku={}'.format(item.sku),
+            href = '/item/{}'.format(item.sku),
             primary_text = '{} {}'.format(item.manufacturer.title(), item.part_no.upper()),
             secondary_text = 'Quantity: {}'.format(item.total_quantity)
         )

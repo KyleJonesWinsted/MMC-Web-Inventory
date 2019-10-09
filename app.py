@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, abort, jsonify
 import view_controllers.browse
+import view_controllers.search
 app = Flask(__name__)
 
 #Homepage
@@ -37,13 +38,9 @@ def browse_items():
         abort(400)
     return view_controllers.browse.items_view(browse_type = browse_type, filter_id = filter_id)
 
-@app.route('/item')
-def view_item_details():
-    try:
-        item_sku = int(request.args.get('sku'))
-    except:
-        abort(400)
-    return view_controllers.browse.item_detail_view(sku=item_sku)
+@app.route('/item/<int:sku>')
+def view_item_details(sku):
+    return view_controllers.browse.item_detail_view(sku=sku)
     
 #Adjustment History
 @app.route('/adjustments')
@@ -64,7 +61,7 @@ def search():
             abort(400)
     except:
         abort(400)
-    return render_template('search.html', search_string=search_string)
+    return view_controllers.search.search_results_view(search_string)
 
 #Error handling
 @app.errorhandler(404)

@@ -21,6 +21,8 @@
     object-fit: cover;
     width: 100px;
     height: 100px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px lightgray;
 }
 
 #manufacturer {
@@ -64,7 +66,6 @@
 
 .location-quantity {
     float: right;
-    display: inline-block;
     margin-right: 4em;
     line-height: 25px;
 }
