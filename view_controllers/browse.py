@@ -1,4 +1,5 @@
 import data_controller as db
+import urllib.parse
 from flask import render_template, abort
 
 class BasicRow:
@@ -56,7 +57,7 @@ def manufacturer_select_view():
         number_of_items = db.count_items_by_manufacturer(manufacturer)
         rows.append(BasicRow(
             id = manufacturer,
-            href = '/browse/items?browse_type=Manufacturer&filter_id={}'.format(manufacturer),
+            href = '/browse/items?browse_type=Manufacturer&filter_id={}'.format(urllib.parse.quote(manufacturer)),
             primary_text = manufacturer.title(),
             secondary_text = '{} {}'.format(
                 number_of_items,
