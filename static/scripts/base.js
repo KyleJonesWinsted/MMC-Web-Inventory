@@ -11,7 +11,12 @@ searchBox.addEventListener("keyup", function(event) {
 function search() {
     var searchValue = searchBox.value;
     const searchString = searchValue.trim()
-    if (searchString.length < 3) { return; }
+    if (searchString.length < 3) {
+        searchBox.style.border = '3px solid red';
+        searchBox.setCustomValidity('Please enter a longer search term.');
+        searchBox.reportValidity();
+        return
+    }
     const baseURL = '/search?input='
     // Will probably change later to escape on the server side
     location.replace(baseURL + encodeURI(searchString)) 
