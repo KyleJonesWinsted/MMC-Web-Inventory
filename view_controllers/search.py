@@ -1,4 +1,4 @@
-from flask import render_template, abort
+from flask import render_template, abort, redirect, url_for
 import data_controller as db
 import app
 from .browse import BasicRow
@@ -7,7 +7,7 @@ def search_results_view(search_string):
     number_of_results = db.count_search_results(search_string)
     if number_of_results == 1:
         items = db.get_search_results(search_string)
-        return app.view_item_details(items[0].sku)
+        return redirect('/item/{}'.format(items[0].sku), code=302)
     elif number_of_results == None:
         abort(400)
     elif number_of_results == 0:
