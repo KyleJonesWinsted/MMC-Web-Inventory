@@ -28,4 +28,35 @@
     <div class='location-row'>
         <h4 class="location-name">Total Quantity: {{ item.total_quantity }}</h4>
     </div>
+<div id='stock-in-out-frame'>
+    <form>
+        <label for="employee-id">Employee ID:</label>
+        <input type="text" name="employee-id" id="employee-id"><br>
+        <label for="employee-password">Password:</label>
+        <input type="text" name="employee-password" id="employee-password"><br>
+        <label for="reason">Reason for Change:</label>
+        <select name="reason" id="reason">
+            <option selected value="0">-</option>
+            {% for reason in reasons %}
+                <option value={{ reason.id }}>{{ reason.name }}</option>
+            {% endfor %}
+        </select><br>
+        <fieldset>
+            <legend>Locations</legend>
+            {% for location in item.locations %}
+                <label for={{ location.location.id }}>{{ location.location.name.upper() }}</label>
+                <input type="number" name={{ location.location.id }} id={{ location.location.id }} value={{ location.quantity }}>
+                <br>
+            {% endfor %}
+        </fieldset>
+
+        <input type="reset">
+        <button id='submit'>Submit</button>
+    </form>
+</div>
+<div id='background-cover'></div>
+{% endblock %}
+
+{% block script %}
+    <script src="../static/scripts/item_detail_view.js"></script>
 {% endblock %}

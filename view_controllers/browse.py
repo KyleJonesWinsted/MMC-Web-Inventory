@@ -109,4 +109,5 @@ def items_view(browse_type, filter_id):
 
 def item_detail_view(sku: int):
     item = db.get_item_by_sku(sku)
-    return render_template('item_detail_view.html', item = item)
+    reasons = db.get_all_reasons()
+    return render_template('item_detail_view.html', item = item, reasons=reasons)
