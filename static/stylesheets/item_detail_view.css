@@ -79,12 +79,12 @@
     background-color: white;
     z-index: 3;
     border: 1px solid black;
-    box-shadow: 0 0 10px lightgray;
+    box-shadow: 0 0 20px lightgray;
 }
 
 #background-cover {
     display: block;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(233, 233, 233, 0.5);
     position: fixed;
     top: 0;
     left: 0;

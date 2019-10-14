@@ -93,7 +93,7 @@ def get_all_reasons() -> [AdjustmentReason]:
     return session.query(AdjustmentReason).all()
 
 # Authentication
-def loginEmployee(employee_id: int, password: str) -> bool:
+def login_employee(employee_id: int, password: str) -> bool:
     try:
         employee: Employee = session.query(Employee).filter(Employee.id==employee_id).one()
     except:
@@ -145,16 +145,26 @@ def create_new_item(part_no: str, description: str, manufacturer: str, category:
     except:
         return None
 
-def adjust_quantities_for_item():
-    pass
+def adjust_quantities_for_item(locations, employee_id: int, employee_password: str, reason_id: int, item_sku: int) -> str:
+    if not login_employee(employee_id, employee_password):
+        return 'Bad login'
+    try:
+        item = get_item_by_sku(item_sku)
+        reason = db.session.query(AdjustmentReason).filter(AdjustmentReason.id==reason_id).one()
+        item.locations = []
+        for l in locations:
+            quantity = l['quantity']
+            if quantity > 0:
+                location = session.query(Location).filter(Location.id==l['location_id']).one()
+                association = LocationItem(quantity = quantity)
+                association.item = item
+                association.location = location
+                session.add(association)
+        return 'Success'
+    except:
+        session.rollback()
+        return 'Failed'
 
-def add_location():
-    pass
-
-def delete_location():
-    pass
-
-def create_adjustment():
-    pass
+    
 
 

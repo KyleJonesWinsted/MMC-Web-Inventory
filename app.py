@@ -63,6 +63,11 @@ def search():
         abort(400)
     return view_controllers.search.search_results_view(search_string)
 
+#API
+@app.route('/api/adjust_quantity')
+def adjust_quantity():
+    pass
+
 #Error handling
 @app.errorhandler(404)
 def page_not_found(e):
