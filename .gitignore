@@ -13,3 +13,5 @@ alembic.ini
 
 #Ignore vscode
 .vscode
+
+example_adjust_quantities.json

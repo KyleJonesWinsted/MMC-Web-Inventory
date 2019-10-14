@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, abort, jsonify
 import view_controllers.browse
 import view_controllers.search
+import data_controller as db
 app = Flask(__name__)
 
 #Homepage
@@ -64,9 +65,33 @@ def search():
     return view_controllers.search.search_results_view(search_string)
 
 #API
-@app.route('/api/adjust_quantity')
+@app.route('/api/adjust_quantity', methods=['POST'])
 def adjust_quantity():
-    pass
+    """ JQuery request should look like this
+    $.post('/api/adjust_quantity', JSON.stringify({
+    "locations": [
+        {"location_id": 1, "quantity": 9},
+        {"location_id": 2, "quantity": 1}
+    ],
+    "employee_id": 2718,
+    "employee_password": "008172",
+    "reason_id": 1,
+    "item_sku": 1000
+    }), function(data) { console.log(data)});
+    """
+    try:
+        json = request.get_json(force=True)
+        locations = json['locations']
+        employee_id = json['employee_id']
+        employee_password = json['employee_password']
+        item_sku = json['item_sku']
+        reason_id = json['reason_id']
+    except:
+        abort(400)
+    result = db.adjust_quantities_for_item(locations, employee_id, employee_password, reason_id, item_sku)
+    if result == 'Success':
+        db.session.commit()
+    return jsonify(result), 200
 
 #Error handling
 @app.errorhandler(404)
