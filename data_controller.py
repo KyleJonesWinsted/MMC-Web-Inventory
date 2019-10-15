@@ -166,6 +166,15 @@ def adjust_quantities_for_item(locations, employee_id: int, employee_password: s
         session.rollback()
         abort(500)
 
+def add_new_location(location_name):
+    try:
+        location = session.query(Location).filter(Location.name == location_name.lower()).one()
+    except:
+        location = Location(name = location_name.lower())
+        session.add(location)
+        session.commit()
+    return location
+
     
 
 

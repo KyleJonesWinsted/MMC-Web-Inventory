@@ -93,6 +93,19 @@ def adjust_quantity():
         db.session.commit()
     return jsonify(result), 200
 
+@app.route('/api/new_location')
+def add_new_location():
+    try:
+        location_name = request.args.get('location_name')
+    except:
+        abort(400)
+    location = db.add_new_location(location_name.lower())
+    json = {
+        'location_id': location.id,
+        'location_name': location.name.lower()
+    }
+    return jsonify(json), 200
+
 #Error handling
 @app.errorhandler(404)
 def page_not_found(e):
