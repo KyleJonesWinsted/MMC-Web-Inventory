@@ -18,10 +18,10 @@ $(function() {
         var locationLabels = document.getElementsByClassName('location-label');        
         var locationNames = [];
         for (var i = 0; i < locationLabels.length; i++) {
-            locationNames.push(locationLabels[i].innerHTML.toUpperCase());
+            locationNames.push(locationLabels[i].innerHTML.toLowerCase());
         }
         if (!addLocationTextbox.validity.patternMismatch) {
-            const locationName = addLocationTextbox.value.toUpperCase().trim();
+            const locationName = addLocationTextbox.value.toLowerCase().trim();
             if (locationNames.includes(locationName)) {
                 addLocationTextbox.setCustomValidity('Location already exists.');
                 addLocationTextbox.reportValidity();
@@ -32,6 +32,7 @@ $(function() {
                 const locationLabel = document.createElement('label');
                 const quantityInput = document.createElement('input');
                 locationLabel.htmlFor = location['location_id'];
+                locationLabel.className = 'location-label';
                 locationLabel.innerHTML = location['location_name'].toUpperCase();
                 quantityInput.type = "number";
                 quantityInput.defaultValue = 0;
