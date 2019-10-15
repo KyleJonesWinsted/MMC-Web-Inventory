@@ -44,7 +44,7 @@
         <fieldset id='locations-fieldset'>
             <legend>Locations</legend>
             {% for location in item.locations %}
-                <label for={{ location.location.id }}>{{ location.location.name.upper() }}</label>
+                <label class="location-label" for={{ location.location.id }}>{{ location.location.name.upper() }}</label>
                 <input type="number" name={{ location.location.id }} id={{ location.location.id }} value={{ location.quantity }}>
                 <br>
             {% endfor %}

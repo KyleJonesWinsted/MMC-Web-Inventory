@@ -168,9 +168,9 @@ def adjust_quantities_for_item(locations, employee_id: int, employee_password: s
 
 def add_new_location(location_name):
     try:
-        location = session.query(Location).filter(Location.name == location_name.lower()).one()
+        location = session.query(Location).filter(Location.name == location_name.upper()).one()
     except:
-        location = Location(name = location_name.lower())
+        location = Location(name = location_name.upper())
         session.add(location)
         session.commit()
     return location

@@ -15,8 +15,18 @@ $(function() {
     $('#add-location-button').click( function() {
         const addLocationTextbox = document.getElementById('add-location-textbox');
         addLocationTextbox.setCustomValidity('Enter a valid location name. (ex. "301A01A")');
+        var locationLabels = document.getElementsByClassName('location-label');        
+        var locationNames = [];
+        for (var i = 0; i < locationLabels.length; i++) {
+            locationNames.push(locationLabels[i].innerHTML.toUpperCase());
+        }
         if (!addLocationTextbox.validity.patternMismatch) {
-            const locationName = addLocationTextbox.value.toLowerCase();
+            const locationName = addLocationTextbox.value.toUpperCase().trim();
+            if (locationNames.includes(locationName)) {
+                addLocationTextbox.setCustomValidity('Location already exists.');
+                addLocationTextbox.reportValidity();
+                return
+            }
             $.get('/api/new_location', {location_name: locationName}).done(function (data) {
                 const location = data;
                 const locationLabel = document.createElement('label');
