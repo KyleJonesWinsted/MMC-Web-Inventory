@@ -1,8 +1,10 @@
-from flask import Flask, render_template, request, abort, jsonify
+from flask import Flask, render_template, request, abort, jsonify, session
 import view_controllers.browse
 import view_controllers.search
 import data_controller as db
+import os
 app = Flask(__name__)
+app.secret_key = os.urandom(64)
 
 #Homepage
 @app.route('/')
@@ -105,6 +107,14 @@ def add_new_location():
         'location_name': location.name.lower()
     }
     return jsonify(json), 200
+
+@app.route('/api/create_new_cart')
+def create_new_cart():
+    try:
+        session['cart_id'] = request.args.get('cart_title')
+    except:
+        abort(400)
+    return jsonify(session['cart_id']), 200
 
 #Error handling
 @app.errorhandler(404)
