@@ -157,6 +157,9 @@ class Picklist(Base):
     datetime = Column(DateTime(timezone=False), server_default=func.now())
     location_items = relationship('PicklistItem', back_populates='picklist')
 
+    def __repr__(self):
+        return "Picklist(title: {}, status: {})".format(self.title, self.status)
+
 class PicklistItem(Base):
     __tablename__ = 'picklist_items'
 
@@ -166,3 +169,8 @@ class PicklistItem(Base):
     quantity = Column(Integer)
     location_item = relationship('LocationItem', back_populates='picklists')
     picklist = relationship('Picklist', back_populates='location_items')
+
+    def __repr__(self):
+        location_item_id = self.location_item_id if self.location_item_id != None else 'None'
+        picklist_id = self.picklist_id if self.picklist_id != None else 'None'
+        return "PicklistItem(location_item_id: {}, picklist_id: {}, quantity: {})".format(location_item_id, picklist_id, self.quantity)
