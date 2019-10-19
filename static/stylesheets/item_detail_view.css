@@ -71,7 +71,7 @@
 }
 
 #stock-in-out-frame {
-    display: block;
+    display: none;
     width: 350px;
     position: absolute;
     top: 140px;
@@ -83,7 +83,7 @@
 }
 
 #background-cover {
-    display: block;
+    display: none;
     background-color: rgba(233, 233, 233, 0.5);
     position: fixed;
     top: 0;

@@ -10,7 +10,7 @@
 <button id='stock-in-out-button' class='block-button'>Stock In/Out</button>
 <h1 id='page-heading'>Item Details</h1>
 <div class='category-image-frame'>
-    {% if item.category.img_url != None %}
+    {% if item.category.img_url != None and item.category != None %}
     <img src={{ item.category.img_url }} alt="image for category: {{ item.category.name }}">
     {% endif %}
 </div>

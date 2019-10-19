@@ -21,12 +21,15 @@ class Item(Base):
     category = relationship('Category', back_populates='items')
     locations = relationship('LocationItem', back_populates='item', cascade="all, delete, delete-orphan")
     adjustments = relationship('Adjustment', back_populates='item')
+    qty_checked_out = Column(Integer, default = 0)
 
     @hybrid_property
     def total_quantity(self):
         quantity = 0
         for location in self.locations:
             quantity += location.quantity
+        if self.qty_checked_out != None:
+            quantity - self.qty_checked_out
         return quantity
 
     @hybrid_property
