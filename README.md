@@ -14,10 +14,10 @@ Each time an employee takes or replaces an item, the app records when the change
 
 :)
 
-#### Adjusting Item Quantity
+#### Using picklists
 
 :)
 
 ### Restrictions
 ---
-Although the site is publicly visible, basic changes to the inventory are restricted to employees with a valid login. Changes to the database beyond basic quantity adjustment are restricted to the developer or anyone else with admin SQL access to the database.
+Although the site is publicly visible, creating picklists and check in/out requires and valid employee login. Freeform modification of inventory quantities required an approved supervisor login.
