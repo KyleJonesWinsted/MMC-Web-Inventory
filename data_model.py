@@ -5,7 +5,7 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import date
 
-engine = create_engine('postgres://localhost/mmc_web_inventory', echo=False)
+engine = create_engine('postgres://localhost/mmc_test_inventory', echo=False)
 Base = declarative_base()
 Session = sessionmaker(bind=engine)
 session = Session()
@@ -93,6 +93,7 @@ class Employee(Base):
     name = Column(String(50))
     password_hash = Column(String(128))
     adjustments = relationship('Adjustment', back_populates='employee')
+    picklists = relationship('Picklist', back_populates='employee')
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -116,11 +117,13 @@ class AdjustmentReason(Base):
 class LocationItem(Base):
     __tablename__ = "location_items"
 
+    id = Column(Integer, Sequence('location_item_seq'), unique=True)
     item_sku = Column(Integer, ForeignKey('items.sku'), primary_key=True)
     location_id = Column(Integer, ForeignKey('locations.id'), primary_key=True)
     quantity = Column(Integer)
     item = relationship('Item', back_populates='locations')
     location = relationship('Location', back_populates='items')
+    picklists = relationship('PicklistItem', back_populates='location_item')
 
     def __repr__(self):
         location_name = self.location.name if self.location != None else 'None'
@@ -143,3 +146,23 @@ class AdjustmentLocation(Base):
         return "AdjustmentLocation(adjustment_id: {}, location: {}, old_qty: {}, new_qty: {})".\
             format(adjustment_id, location_name, self.old_qty, self.new_qty)
 
+class Picklist(Base):
+    __tablename__ = "picklists"
+
+    id = Column(Integer, primary_key=True)
+    title = Column(String(140))
+    status = Column(String(24))
+    employee_id = Column(Integer, ForeignKey('employees.id'))
+    employee = relationship('Employee', back_populates='picklists')
+    datetime = Column(DateTime(timezone=False), server_default=func.now())
+    location_items = relationship('PicklistItem', back_populates='picklist')
+
+class PicklistItem(Base):
+    __tablename__ = 'picklist_items'
+
+    id = Column(Integer, Sequence('picklist_item_seq'), unique=True)
+    location_item_id = Column(Integer, ForeignKey('location_items.id'), primary_key=True)
+    picklist_id = Column(Integer, ForeignKey('picklists.id'), primary_key=True)
+    quantity = Column(Integer)
+    location_item = relationship('LocationItem', back_populates='picklists')
+    picklist = relationship('Picklist', back_populates='location_items')
