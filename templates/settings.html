@@ -2,6 +2,22 @@
 
 {% block title %}Settings{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="../static/stylesheets/settings.css">
+{% endblock %}
+
 {% block main %}
 <h1>This is the settings page</h1>
+<button class="block-button" id="adjust-stock-button">Adjust Stock for Item</button>
+<div id="sku-entry-frame">
+    <label for="sku-textbox">Enter SKU Number:</label>
+    <input type="text" name="sku-textbox" id="sku-textbox" pattern="^\d{4,}$">
+    <button id='sku-entry-submit'>Submit</button>
+    <p id="sku-entry-error-text">Please enter a valid sku number.</p>
+</div>
+<div id="background-cover"></div>
+{% endblock %}
+
+{% block script %}
+<script src="../static/scripts/settings.js"></script>
 {% endblock %}

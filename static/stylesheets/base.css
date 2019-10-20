@@ -51,6 +51,7 @@
 
 .sidebar-button:hover {
     background-color: #b5bd4b;
+    color: white;
 }
 
 #sidebar ul {

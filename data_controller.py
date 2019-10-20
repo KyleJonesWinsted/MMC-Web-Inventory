@@ -8,7 +8,11 @@ page_limit = 20
 
 # Browse page database access
 def get_item_by_sku(sku: str) -> Item:
-    return session.query(Item).filter(Item.sku==sku).one()
+    try:
+        item = session.query(Item).filter(Item.sku==sku).one()
+    except:
+        return None
+    return item
 
 def get_items_by_category_id(category_id: int, page:int = 0) -> [Item]:
     return session.query(Item).filter(Item.category_id==category_id).limit(page_limit).offset(page_limit * page).all()

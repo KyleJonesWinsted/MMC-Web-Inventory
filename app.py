@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, abort, jsonify, session
 import view_controllers.browse
 import view_controllers.search
+import view_controllers.settings
 import data_controller as db
 import os
 app = Flask(__name__)
@@ -54,6 +55,14 @@ def adjustments():
 @app.route('/settings')
 def settings():
     return render_template('settings.html')
+
+@app.route('/settings/adjust_stock')
+def adjust_stock_for_item():
+    try:
+        item_sku = request.args.get('item_sku')
+    except:
+        abort(400)
+    return view_controllers.settings.adjust_stock_for_item_view(item_sku = item_sku)
 
 #Search Inventory
 @app.route('/search')
@@ -115,6 +124,18 @@ def create_new_cart():
     except:
         abort(400)
     return jsonify(session['cart_id']), 200
+
+@app.route('/api/get_item')
+def get_item_by_sku():
+    try:
+        item_sku = request.args.get('item_sku')
+    except:
+        abort(400)
+    item = db.get_item_by_sku(int(item_sku))
+    if item == None:
+        return jsonify(item), 404
+    else:
+        return jsonify(item.__repr__()), 200
 
 #Error handling
 @app.errorhandler(404)
