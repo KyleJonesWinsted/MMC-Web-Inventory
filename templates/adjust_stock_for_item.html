@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Adjust {{ item.sku }} Quantity{% endblock %}
+{% block title %}Adjust {{ item.part_no.upper() }} Quantity{% endblock %}
 
 {% block main %}
 <h1>Adjust Stock for {{ item.part_no.upper() }}</h1>

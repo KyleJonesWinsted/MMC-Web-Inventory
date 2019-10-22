@@ -68,6 +68,7 @@
 #main {
     background-color: white;
     padding-left: 17em;
+    padding-right: 300px;
 }
 
 #main h1 {
@@ -94,6 +95,7 @@ p {
 #search-bar {
     padding-left: 16em;
     display: flex;
+    padding-right: 300px;
 }
 
 #search-bar input {
@@ -129,4 +131,13 @@ a {
 #sidebar-logo {
     max-width: 100%;
     background-color: white;
+}
+
+#picklist-frame {
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 300px;
+    box-shadow: 0 0 20px lightgray;
 }
