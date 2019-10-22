@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, abort, jsonify, session
 import view_controllers.browse
 import view_controllers.search
 import view_controllers.settings
+import view_controllers.picklist
 import data_controller as db
 import os
 app = Flask(__name__)
@@ -120,10 +121,10 @@ def add_new_location():
 @app.route('/api/create_new_cart')
 def create_new_cart():
     try:
-        session['cart_id'] = request.args.get('cart_title')
+        session['picklist_id'] = request.args.get('cart_title')
     except:
         abort(400)
-    return jsonify(session['cart_id']), 200
+    return jsonify(session['picklist_id']), 200
 
 @app.route('/api/get_item')
 def get_item_by_sku():
@@ -136,6 +137,14 @@ def get_item_by_sku():
         return jsonify(item), 404
     else:
         return jsonify(item.__repr__()), 200
+
+@app.route('/api/get_picklist', methods=['POST'])
+def get_picklist_by_id():
+    try:
+        picklist_id = request.form.get('picklist_id')
+    except:
+        abort(400)
+    return view_controllers.picklist.picklist_view(picklist_id), 200
 
 #Error handling
 @app.errorhandler(404)
