@@ -118,10 +118,10 @@ def add_new_location():
     }
     return jsonify(json), 200
 
-@app.route('/api/create_new_cart')
+@app.route('/api/set_picklist_id')
 def create_new_cart():
     try:
-        session['picklist_id'] = request.args.get('cart_title')
+        session['picklist_id'] = request.args.get('picklist_id')
     except:
         abort(400)
     return jsonify(session['picklist_id']), 200
