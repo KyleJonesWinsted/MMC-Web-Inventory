@@ -1,1 +1,72 @@
-<p>{{ session['picklist_id'] }}</p>
+<style>
+    body {
+        background-color: white;
+        color: black;
+        font-family: 'HelveticaNeueLight', monospace;
+    }
+
+    #picklist-title h2 {
+        font-family: 'Agency FB Bold', monospace;
+        color: #005ea1;
+    }
+
+    #picklist-title p {
+        color: #b5bd4b;
+    }
+
+    .picklist-item-row {
+        position: relative;
+        border-top: 1px solid lightgray;
+    }
+
+    .picklist-item-row h3 {
+        font-family: 'HelveticaNeue', monospace;
+        margin-bottom: 0;
+        margin-top: 10px;
+    }
+
+    .picklist-item-row h4 {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .picklist-item-row p {
+        position: absolute;
+        right: 0;
+        bottom: -20px;
+    }
+
+    #picklist-buttons {
+        position: absolute;
+        bottom: 70px;
+        width: 90%;
+        border-top: 1px solid gray;
+    }
+
+    #checkout-button {
+        position: absolute;
+        right: 0px;
+    }
+
+    #save-button {
+        position: absolute;
+        right: 100px;
+    }
+</style>
+<div id='picklist-title'>
+    <h2>{{ picklist.title.title() }}</h2>
+    <p>Created by {{ picklist.employee.name.title() }} on {{ picklist.datetime.strftime('%m/%d/%Y') }}</p>
+</div>
+<div id='picklist-items'>
+    {% for picklist_item in picklist.location_items %}
+    <div class="picklist-item-row">
+        <h3>{{ picklist_item.location_item.item.part_no.upper() }}</h3>
+        <h4>Take from: {{ picklist_item.location_item.location.name.upper() }}</h4>
+        <p>Quantity: {{ picklist_item.location_item.quantity }}</p>
+    </div>
+    {% endfor %}
+    <div id="picklist-buttons">
+        <button id='save-button' class='block-button'>Save</button>
+        <button id='checkout-button' class='block-button'>Checkout</button>
+    </div>
+</div>

@@ -26,5 +26,5 @@ function search() {
 }
 
 function getPicklist() {
-    $picklistFrame.load('/api/get_picklist', {request_id: sessionPicklistId});
+    $picklistFrame.load('/api/get_picklist');
 }

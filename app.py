@@ -138,12 +138,12 @@ def get_item_by_sku():
     else:
         return jsonify(item.__repr__()), 200
 
-@app.route('/api/get_picklist', methods=['POST'])
+@app.route('/api/get_picklist')
 def get_picklist_by_id():
     try:
-        picklist_id = request.form.get('picklist_id')
+        picklist_id = session['picklist_id']
     except:
-        abort(400)
+        return view_controllers.picklist.no_picklist_view(), 200
     return view_controllers.picklist.picklist_view(picklist_id), 200
 
 #Error handling

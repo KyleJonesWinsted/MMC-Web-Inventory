@@ -1,4 +1,4 @@
-from data_model import session, Item, Location, Adjustment, AdjustmentLocation, LocationItem, Employee, AdjustmentReason, Category
+from data_model import session, Item, Location, Adjustment, AdjustmentLocation, LocationItem, Employee, AdjustmentReason, Category, Picklist, PicklistItem
 import data_model as db
 from sqlalchemy import func, and_, or_
 from math import ceil

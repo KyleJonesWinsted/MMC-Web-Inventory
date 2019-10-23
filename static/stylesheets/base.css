@@ -134,10 +134,12 @@ a {
 }
 
 #picklist-frame {
+    box-sizing: border-box;
     position: fixed;
     right: 0;
     top: 0;
     bottom: 0;
     width: 300px;
     box-shadow: 0 0 20px lightgray;
+    padding: 10px;
 }
