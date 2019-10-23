@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Current Picklists{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="../static/stylesheets/picklist_list.css">
+{% endblock %}
+
+{% block main %}
+<div id='open-picklists'>
+    <h1>Open</h1>
+    {% for picklist in open_picklists %}
+        <div class='picklist-row' id="{{ picklist.id }}">
+            <h3>{{ picklist.title.title() }}</h3>
+            <button class='block-button delete-button'>Delete</button>
+            <button class='block-button view-edit-button'>View/Edit</button>
+            <p>{{picklist.number_of_items }} {% if picklist.number_of_items == 1 %}Item{% else %}Items{% endif %}</p>
+        </div>
+    {% endfor %}
+</div>
+<div id='checked-out-picklists'>
+    <h1>Checked Out</h1>
+    {% for picklist in checkout_picklists %}
+        <div class='picklist-row' id="{{ picklist.id }}">
+            <h3>{{ picklist.title.title() }}</h3>
+            <button class='block-button check-in-button'>Check In</button>
+            <p>{{picklist.number_of_items }} {% if picklist.number_of_items == 1 %}Item{% else %}Items{% endif %}</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="../static/scripts/picklist_list.js"></script>
+{% endblock %}

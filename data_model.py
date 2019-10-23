@@ -160,6 +160,13 @@ class Picklist(Base):
     datetime = Column(DateTime(timezone=False), server_default=func.now())
     location_items = relationship('PicklistItem', back_populates='picklist')
 
+    @hybrid_property
+    def number_of_items(self):
+        quantity = 0
+        for picklist_item in self.location_items:
+            quantity += picklist_item.quantity
+        return quantity
+
     def __repr__(self):
         return "Picklist(title: {}, status: {})".format(self.title, self.status)
 

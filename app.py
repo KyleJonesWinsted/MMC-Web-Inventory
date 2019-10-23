@@ -65,6 +65,11 @@ def adjust_stock_for_item():
         abort(400)
     return view_controllers.settings.adjust_stock_for_item_view(item_sku = item_sku)
 
+#Picklists
+@app.route('/picklists')
+def picklists():
+    return view_controllers.picklist.picklist_list_view()
+
 #Search Inventory
 @app.route('/search')
 def search():
