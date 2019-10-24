@@ -10,6 +10,9 @@ $( function() {
             rowId = 0;
             getPicklist();
         });
+        request.fail(function() {
+            alert('Unable to load picklist. Please reload and try again.');
+        });
     });
 
     //Delete picklist
@@ -24,6 +27,9 @@ $( function() {
         request.done(function() {
             rowId = 0;
             location.reload();
+        });
+        request.fail(function() {
+            alert("Unable to delete picklist. Please reload and try again.");
         });
     });
 

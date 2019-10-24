@@ -1,20 +1,3 @@
-.block-button-destructive {
-    border: none;
-    font-size: 1em;
-    font-family: 'Agency FB Bold', arial;
-    letter-spacing: 0.1em;
-    padding: 15px;
-    background-color: black;
-    color: white;
-    margin: 5px 0px;
-    -webkit-clip-path: polygon(calc(0% + 10px) 0, 100% 0, 100% 100%, 0 100%, 0 calc(0% + 10px));
-    clip-path: polygon(calc(0% + 10px) 0, 100% 0, 100% 100%, 0 100%, 0 calc(0% + 10px));
-}
-
-.block-button-destructive:hover {
-    background-color: red;
-}
-
 .picklist-row {
     border-top: 1px solid lightgray;
 }

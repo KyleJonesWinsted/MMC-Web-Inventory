@@ -19,7 +19,7 @@
 <p id='description'>{{ item.description.capitalize() }}</p>
 <h2 id='locations-header'>Locations:</h2>
 {% for location in item.locations %}
-    <div class='location-row'>
+    <div class='location-row' id={{ location.id }}>
         <h4 class='location-name'>{{ location.location.name.upper() }}</h4>
         <p class='location-quantity'>Qty: {{ location.quantity }}</p>
     </div>
