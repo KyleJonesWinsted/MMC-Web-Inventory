@@ -3,6 +3,7 @@ import data_model as db
 from sqlalchemy import func, and_, or_
 from math import ceil
 from datetime import datetime, date
+from flask import abort
 
 page_limit = 20
 
@@ -53,7 +54,11 @@ def get_all_categories() -> [Category]:
     return session.query(Category).all()
 
 def get_all_locations() -> [Location]:
-    return session.query(Location).all()
+    locations = session.query(Location).all()
+    for i in range(len(locations)):
+        if locations[i].total_quantity == 0:
+            locations.pop(i)
+    return locations
 
 # Adjustments page database access
 
@@ -179,6 +184,14 @@ def add_new_location(location_name):
         session.commit()
     return location
 
-    
-
-
+def create_new_picklist(picklist_title, employee_id):
+    picklist = Picklist(title = picklist_title, status = 'open')
+    try:
+        employee = session.query(Employee).filter(Employee.id == employee_id).one()
+        picklist.employee = employee
+        session.add(picklist)
+        session.commit()
+    except:
+        session.rollback()
+        abort(500)
+    return picklist

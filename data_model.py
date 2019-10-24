@@ -49,6 +49,13 @@ class Location(Base):
     items = relationship('LocationItem', back_populates='location')
     adjustments = relationship('AdjustmentLocation', back_populates='location')
 
+    @hybrid_property
+    def total_quantity(self):
+        quantity = 0
+        for item in self.items:
+            quantity += item.quantity
+        return quantity
+
     def __repr__(self):
         return "Location(id: {}, name: {})".format(self.id, self.name)
 

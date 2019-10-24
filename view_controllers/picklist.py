@@ -18,3 +18,22 @@ def picklist_list_view():
     except:
         abort(500)
     return render_template('picklist_list.html', open_picklists = open_picklists, checkout_picklists=checkout_picklists)
+
+def create_new_picklist(employee_id, employee_password, picklist_title) -> int:
+    if not db.login_employee(employee_id, employee_password):
+        abort(401)
+    picklist = db.create_new_picklist(picklist_title, employee_id)
+    return picklist.id
+
+def delete_picklist(picklist_id):
+    try:
+        picklist = db.session.query(db.Picklist).filter(db.Picklist.id == picklist_id).one()
+        picklist.status = 'deleted'
+        db.session.commit()
+        return picklist.id
+    except:
+        db.session.rollback()
+        abort(400)
+
+
+    

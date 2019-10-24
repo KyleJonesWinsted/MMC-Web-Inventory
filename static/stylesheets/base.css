@@ -143,3 +143,14 @@ a {
     box-shadow: 0 0 20px lightgray;
     padding: 10px;
 }
+
+#background-cover {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(179, 179, 179, 0.466);
+    z-index: 2;
+}

@@ -94,7 +94,7 @@ def adjust_quantity():
     "employee_password": "008172",
     "reason_id": 1,
     "item_sku": 1000
-    }), function(data) { console.log(data)});
+    }));
     """
     try:
         json = request.get_json(force=True)
@@ -150,6 +150,35 @@ def get_picklist_by_id():
     except:
         return view_controllers.picklist.no_picklist_view(), 200
     return view_controllers.picklist.picklist_view(picklist_id), 200
+
+@app.route('/api/create_new_picklist', methods=['POST'])
+def create_new_picklist():
+    """ JQuery request should look like this
+    $.post('/api/create_new_picklist', JSON.stringify({
+    "picklist_title": "picklist title",
+    "employee_id": 2718,
+    "employee_password": "008172",
+    }));
+    """
+    try:
+        json = request.get_json(force=True)
+        picklist_title = json['picklist_title']
+        employee_id = json['employee_id']
+        employee_password = json['employee_password']
+    except:
+        abort(400)
+    picklist_id = view_controllers.picklist.create_new_picklist(employee_id, employee_password, picklist_title)
+    session['picklist_id'] = picklist_id
+    return jsonify(picklist_id), 200
+
+@app.route('/api/delete_picklist')
+def delete_picklist():
+    try:
+        picklist_id = request.args.get('picklist_id')
+    except:
+        abort(400)
+    picklist_id = view_controllers.picklist.delete_picklist(picklist_id)
+    return jsonify(picklist_id), 200
 
 #Error handling
 @app.errorhandler(404)

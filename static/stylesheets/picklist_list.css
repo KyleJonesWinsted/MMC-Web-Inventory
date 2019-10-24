@@ -31,7 +31,6 @@
 }
 
 .picklist-row .block-button {
-    display: inline;
     float: right;
     margin: 7px 5px;
     font-size: 80%;
@@ -43,5 +42,29 @@
 }
 
 .picklist-row .delete-button:hover {
+    background-color: red;
+}
+
+#confirmation-alert {
+    display: none;
+    position: fixed;
+    top: 30%;
+    left: 40%;
+    z-index: 3;
+    background-color: white;
+    box-shadow: 0 0 10px lightgray;
+    text-align: center;
+    padding: 10px;
+}
+
+#confirmation-alert h1 {
+    margin-top: 0px;
+}
+
+#confirmation-confirm {
+    background-color: black;
+}
+
+#confirmation-confirm:hover{
     background-color: red;
 }

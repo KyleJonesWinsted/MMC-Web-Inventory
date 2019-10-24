@@ -28,6 +28,13 @@
         </div>
     {% endfor %}
 </div>
+<div id='background-cover'></div>
+<div id='confirmation-alert'>
+    <h1>Are you sure?</h1>
+    <p>This action cannot be undone.</p>
+    <button class='block-button' id='confirmation-confirm'>Confirm</button>
+    <button class='block-button' id='confirmation-cancel'>Cancel</button>
+</div>
 {% endblock %}
 
 {% block script %}
