@@ -62,7 +62,7 @@
     <div class="picklist-item-row">
         <h3>{{ picklist_item.location_item.item.part_no.upper() }}</h3>
         <h4>Take from: {{ picklist_item.location_item.location.name.upper() }}</h4>
-        <p>Quantity: {{ picklist_item.location_item.quantity }}</p>
+        <p>Quantity: {{ picklist_item.quantity }}</p>
     </div>
     {% endfor %}
     <div id="picklist-buttons">
