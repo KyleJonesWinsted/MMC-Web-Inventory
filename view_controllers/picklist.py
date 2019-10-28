@@ -43,9 +43,12 @@ def add_item_to_picklist(picklist_id, location_item_id):
         abort(400)
     for item in picklist.location_items:
         if item.location_item_id == location_item.id:
-            item.quantity += 1
-            db.session.commit()
-            return item.id
+            if item.quantity < location_item.quantity:
+                item.quantity += 1
+                db.session.commit()
+                return item.id
+            else:
+                return item.id
     picklist_item = db.PicklistItem(quantity = 1)
     picklist_item.location_item = location_item
     picklist_item.picklist = picklist
