@@ -21,10 +21,11 @@
 {% for location in item.locations %}
     <div class='location-row' id={{ location.id }}>
         <h4 class='location-name'>{{ location.location.name.upper() }}</h4>
+        <button class='add-to-picklist-button block-button' name="add-to-list-button">Add to List</button>
         <p class='location-quantity'>Qty: {{ location.quantity }}</p>
     </div>
 {% endfor %}
-    <div class='location-row'>
+    <div class='location-footer'>
         <h4 class="location-name">Total Quantity: {{ item.total_quantity }}</h4>
     </div>
 {% endblock %}

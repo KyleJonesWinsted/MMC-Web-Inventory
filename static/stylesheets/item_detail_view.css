@@ -59,6 +59,13 @@
 
 .location-quantity {
     float: right;
-    margin-right: 4em;
+    margin-right: 20px;
     line-height: 25px;
+}
+
+.add-to-picklist-button {
+    float: right;
+    margin: 9px 5px;
+    font-size: 80%;
+    padding: 10px;
 }

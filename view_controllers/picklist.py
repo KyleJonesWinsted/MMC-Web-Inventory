@@ -35,5 +35,26 @@ def delete_picklist(picklist_id):
         db.session.rollback()
         abort(400)
 
+def add_item_to_picklist(picklist_id, location_item_id):
+    try:
+        picklist = db.session.query(db.Picklist).filter(db.Picklist.id == picklist_id).one()
+        location_item = db.session.query(db.LocationItem).filter(db.LocationItem.id == location_item_id).one()
+    except:
+        abort(400)
+    for item in picklist.location_items:
+        if item.location_item_id == location_item.id:
+            item.quantity += 1
+            db.session.commit()
+            return item.id
+    picklist_item = db.PicklistItem(quantity = 1)
+    picklist_item.location_item = location_item
+    picklist_item.picklist = picklist
+    try:
+        db.session.add(picklist_item)
+        db.session.commit()
+    except:
+        db.session.rollback()
+        abort(500)
+    return picklist_item.id
 
     

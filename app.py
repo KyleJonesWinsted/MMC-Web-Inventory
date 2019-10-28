@@ -180,6 +180,16 @@ def delete_picklist():
     picklist_id = view_controllers.picklist.delete_picklist(picklist_id)
     return jsonify(picklist_id), 200
 
+@app.route('/api/add_item_to_picklist')
+def add_item_to_picklist():
+    try:
+        location_item_id = request.args.get('location_item_id')
+        picklist_id = session['picklist_id']
+    except:
+        abort(400)
+    picklist_item_id = view_controllers.picklist.add_item_to_picklist(picklist_id, location_item_id)
+    return jsonify(picklist_item_id), 200
+
 #Error handling
 @app.errorhandler(404)
 def page_not_found(e):

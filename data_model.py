@@ -169,10 +169,11 @@ class Picklist(Base):
 
     @hybrid_property
     def number_of_items(self):
-        quantity = 0
+        """quantity = 0
         for picklist_item in self.location_items:
             quantity += picklist_item.quantity
-        return quantity
+        return quantity"""
+        return len(self.location_items)
 
     def __repr__(self):
         return "Picklist(title: {}, status: {})".format(self.title, self.status)
@@ -190,4 +191,4 @@ class PicklistItem(Base):
     def __repr__(self):
         location_item_id = self.location_item_id if self.location_item_id != None else 'None'
         picklist_id = self.picklist_id if self.picklist_id != None else 'None'
-        return "PicklistItem(location_item_id: {}, picklist_id: {}, quantity: {})".format(location_item_id, picklist_id, self.quantity)
+        return "PicklistItem(id: {}, location_item_id: {}, picklist_id: {}, quantity: {})".format(self.id, location_item_id, picklist_id, self.quantity)
