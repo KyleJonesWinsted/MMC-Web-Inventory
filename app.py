@@ -177,8 +177,8 @@ def delete_picklist():
         picklist_id = request.args.get('picklist_id')
     except:
         abort(400)
-    picklist_id = view_controllers.picklist.delete_picklist(picklist_id)
-    return jsonify(picklist_id), 200
+    return_id = view_controllers.picklist.delete_picklist(picklist_id)
+    return jsonify(return_id), 200
 
 @app.route('/api/add_item_to_picklist')
 def add_item_to_picklist():
@@ -189,6 +189,15 @@ def add_item_to_picklist():
         abort(400)
     picklist_item_id = view_controllers.picklist.add_item_to_picklist(picklist_id, location_item_id)
     return jsonify(picklist_item_id), 200
+
+@app.route('/api/delete_picklist_item')
+def delete_picklist_item():
+    try:
+        picklist_item_id = request.args.get('picklist_item_id')
+    except:
+        abort(400)
+    return_id = view_controllers.picklist.delete_picklist_item(picklist_item_id)
+    return jsonify(return_id), 200
 
 #Error handling
 @app.errorhandler(404)

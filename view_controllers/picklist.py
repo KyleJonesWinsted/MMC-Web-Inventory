@@ -60,4 +60,13 @@ def add_item_to_picklist(picklist_id, location_item_id):
         abort(500)
     return picklist_item.id
 
+def delete_picklist_item(picklist_item_id):
+    try:
+        picklist_item = db.session.query(db.PicklistItem).filter(db.PicklistItem.id == picklist_item_id).one()
+        db.session.delete(picklist_item)
+        db.session.commit()
+    except:
+        db.session.rollback()
+        abort(400)
+    
     

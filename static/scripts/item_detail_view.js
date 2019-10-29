@@ -4,7 +4,7 @@ $(function() {
     $('.add-to-picklist-button').fadeTo(0, 0);
 
     $('.location-row').mouseenter(function() {
-        $(this).children('.add-to-picklist-button').fadeTo('fast', 100);
+        $(this).children('.add-to-picklist-button').fadeTo(0, 100);
     });
 
     $('.location-row').mouseleave(function() {

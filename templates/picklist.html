@@ -52,6 +52,23 @@
         position: absolute;
         right: 100px;
     }
+
+    .delete-picklist-item {
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: black;
+        font-size: 100%;
+        padding: 7px;
+        border: none;
+        color: white;
+        font-family: 'Agency FB', monospace;
+    }
+
+    .delete-picklist-item:hover {
+        background-color: red;
+    }
 </style>
 <div id='picklist-title'>
     <h2>{{ picklist.title.title() }}</h2>
@@ -59,10 +76,11 @@
 </div>
 <div id='picklist-items'>
     {% for picklist_item in picklist.location_items %}
-    <div class="picklist-item-row">
+    <div class="picklist-item-row" id={{ picklist_item.id }}>
         <h3>{{ picklist_item.location_item.item.part_no.upper() }}</h3>
         <h4>Take from: {{ picklist_item.location_item.location.name.upper() }}</h4>
         <p>Quantity: {{ picklist_item.quantity }}</p>
+        <button class="delete-picklist-item">Remove</button>
     </div>
     {% endfor %}
     <div id="picklist-buttons">
@@ -70,3 +88,28 @@
         <button id='checkout-button' class='block-button'>Checkout</button>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $(function(){
+
+        //Show and hide remove button
+        $('.delete-picklist-item').fadeTo(0, 0);
+
+        $('.picklist-item-row').mouseenter(function() {
+            $(this).children('.delete-picklist-item').fadeTo(0, 100);
+        });
+
+        $('.picklist-item-row').mouseleave(function() {
+            $(this).children('.delete-picklist-item').fadeTo('fast', 0);
+        });
+
+        //Remove from picklist
+        $('.delete-picklist-item').click(function() {
+            var picklistItemId = this.parentElement.id;
+            request = $.get('/api/delete_picklist_item', {picklist_item_id: picklistItemId});
+            request.done(function() {
+                getPicklist();
+            });
+        });
+    });
+</script>
