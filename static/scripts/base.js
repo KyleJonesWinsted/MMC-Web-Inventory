@@ -32,14 +32,37 @@ function getPicklist() {
 }
 
 //Logout
-$(function() {
-    $('#logout-button').click(function() {
-        request = $.get('/logout');
-        request.done(function() {
-            window.location.assign("/login");
-        });
-        request.fail(function() {
-            alert('Unable to logout. Please reload and try again.')
-        });
+
+function logout() {
+    request = $.get('/logout');
+    request.done(function() {
+        window.location.assign("/login");
     });
-})
+    request.fail(function() {
+        alert('Unable to logout. Please reload and try again.')
+    });
+}
+$(function() {
+    idleTimer();
+
+    $('#logout-button').click(function() {
+        logout();
+    });
+});
+
+function idleTimer() {
+    var t;
+    //window.onload = resetTimer;
+    window.onmousemove = resetTimer; // catches mouse movements
+    window.onmousedown = resetTimer; // catches mouse movements
+    window.onclick = resetTimer;     // catches mouse clicks
+    window.onscroll = resetTimer;    // catches scrolling
+    window.onkeypress = resetTimer;  //catches keyboard actions
+    resetTimer()
+
+    function resetTimer() {
+        clearTimeout(t);
+        t = setTimeout(logout, 300000);  // time is in milliseconds (1000 is 1 second)
+        //t= setTimeout(reload, 300000);  // time is in milliseconds (1000 is 1 second)
+    }
+}
