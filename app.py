@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, abort, jsonify, session
+from flask import Flask, render_template, render_template_string, request, abort, jsonify, session, redirect, url_for, g
 import view_controllers.browse
 import view_controllers.search
 import view_controllers.settings
@@ -7,6 +7,28 @@ import data_controller as db
 import os
 app = Flask(__name__)
 app.secret_key = os.urandom(64)
+
+@app.before_request
+def set_global_user():
+    if 'user' not in session and 'login' not in request.endpoint and 'static' not in request.path:
+        return redirect('/login')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        if db.login_employee(request.form['username'], request.form['password']):
+            employee = db.session.query(db.Employee).filter(db.Employee.id == request.form['username']).one()
+            session['user'] = employee.id
+            session['username'] = employee.name.title()
+            return redirect('/')
+        else:
+            return render_template('login.html', first_time=False)
+    return render_template('login.html', first_time=True)
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return jsonify('success'), 200
 
 #Homepage
 @app.route('/')
@@ -46,7 +68,7 @@ def browse_items():
 @app.route('/item/<int:sku>')
 def view_item_details(sku):
     return view_controllers.browse.item_detail_view(sku=sku)
-    
+
 #Adjustment History
 @app.route('/adjustments')
 def adjustments():

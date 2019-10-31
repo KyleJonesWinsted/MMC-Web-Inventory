@@ -154,3 +154,28 @@ a {
     background-color: rgba(179, 179, 179, 0.466);
     z-index: 2;
 }
+
+#username {
+    font-size: 80%;
+}
+
+#logout-button {
+    border: none;
+    color: #005ea1;
+    background-color: #d2d5db;
+    margin: 0;
+    padding: 0;
+    font-size: 90%;
+}
+
+#logout-button:hover {
+    text-decoration: underline;
+}
+
+#logout-button:active {
+    color: purple;
+}
+
+.fa-sign-out-alt {
+    color: #005ea1;
+}

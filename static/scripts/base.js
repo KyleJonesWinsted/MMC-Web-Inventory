@@ -28,3 +28,16 @@ function search() {
 function getPicklist() {
     $picklistFrame.load('/api/get_picklist');
 }
+
+//Logout
+$(function() {
+    $('#logout-button').click(function() {
+        request = $.get('/logout');
+        request.done(function() {
+            window.location.assign("/login");
+        });
+        request.fail(function() {
+            alert('Unable to logout. Please reload and try again.')
+        });
+    });
+})

@@ -110,6 +110,9 @@
             request.done(function() {
                 getPicklist();
             });
+            request.fail(function() {
+                alert("Unable to delete item from picklist. Please reload the page and try again.");
+            });
         });
     });
 </script>
