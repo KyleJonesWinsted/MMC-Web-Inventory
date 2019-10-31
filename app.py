@@ -1,4 +1,4 @@
-from flask import Flask, render_template, render_template_string, request, abort, jsonify, session, redirect, url_for, g
+from flask import Flask, render_template, render_template_string, request, escape, abort, jsonify, session, redirect, url_for, g
 import view_controllers.browse
 import view_controllers.search
 import view_controllers.settings
@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.secret_key = os.urandom(64)
 
 @app.before_request
-def set_global_user():
+def check_logged_in():
     if 'user' not in session and request.endpoint != 'login':
         return redirect('/login')
 
@@ -112,8 +112,6 @@ def adjust_quantity():
         {"location_id": 1, "quantity": 9},
         {"location_id": 2, "quantity": 1}
     ],
-    "employee_id": 2718,
-    "employee_password": "008172",
     "reason_id": 1,
     "item_sku": 1000
     }));
@@ -121,8 +119,7 @@ def adjust_quantity():
     try:
         json = request.get_json(force=True)
         locations = json['locations']
-        employee_id = json['employee_id']
-        employee_password = json['employee_password']
+        employee_id = session['user']
         item_sku = json['item_sku']
         reason_id = json['reason_id']
     except:
@@ -173,23 +170,14 @@ def get_picklist_by_id():
         return view_controllers.picklist.no_picklist_view(), 200
     return view_controllers.picklist.picklist_view(picklist_id), 200
 
-@app.route('/api/create_new_picklist', methods=['POST'])
+@app.route('/api/create_new_picklist')
 def create_new_picklist():
-    """ JQuery request should look like this
-    $.post('/api/create_new_picklist', JSON.stringify({
-    "picklist_title": "picklist title",
-    "employee_id": 2718,
-    "employee_password": "008172",
-    }));
-    """
     try:
-        json = request.get_json(force=True)
-        picklist_title = json['picklist_title']
-        employee_id = json['employee_id']
-        employee_password = json['employee_password']
+        picklist_title = escape(request.args.get('picklist_title'))
+        employee_id = session['user']
     except:
         abort(400)
-    picklist_id = view_controllers.picklist.create_new_picklist(employee_id, employee_password, picklist_title)
+    picklist_id = view_controllers.picklist.create_new_picklist(employee_id, picklist_title)
     session['picklist_id'] = picklist_id
     return jsonify(picklist_id), 200
 
@@ -200,7 +188,13 @@ def delete_picklist():
     except:
         abort(400)
     return_id = view_controllers.picklist.delete_picklist(picklist_id)
+    session.pop('picklist_id')
     return jsonify(return_id), 200
+
+@app.route('/api/save_picklist')
+def save_picklist():
+    session.pop('picklist_id')
+    return jsonify('Success'), 200
 
 @app.route('/api/add_item_to_picklist')
 def add_item_to_picklist():

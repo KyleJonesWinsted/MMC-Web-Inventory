@@ -11,12 +11,41 @@
 
     #center-box h4 {
         font-family: 'HelveticaNeueThin', monospace;
-        color: #b5bd4b;
-        
+        color: #b5bd4b; 
+    }
+    #picklist-title {
+        font-size: 1em;
+        width: 80%;
+        padding: 10px;
+        margin: 5px;
+        border: 1px solid #d2d5db;
+        box-shadow: 0 0 3px #d2d5db;
+        font-family: HelveticaNeue, Arial;
     }
 </style>
 <div id='center-box'>
     <h1>No picklist selected</h1>
     <h4>You can select an existing picklist from the sidebar or create a new one.</h4>
+    <input type="text" name="picklist-title" id="picklist-title" placeholder="New Picklist Title">
     <button id='create-new-picklist' class='block-button'>Create New Picklist</button>
 </div>
+<script>
+$(function() {
+    $('#create-new-picklist').click(function() {
+        var picklistTitle = $('#picklist-title').val();
+        if (picklistTitle.length < 4) {
+            alert('Please enter a longer picklist title.');
+            return
+        }
+        $(this).attr('disabled', true);
+        var request = $.get('/api/create_new_picklist', {picklist_title: picklistTitle});
+        request.done(function() {
+            getPicklist()
+        });
+        request.fail(function() {
+            $(this).attr('disabled', false);
+            alert('An error occured creating a new picklist. Please reload and try again.');
+        });
+    });
+});
+</script>

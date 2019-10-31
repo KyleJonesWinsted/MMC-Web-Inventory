@@ -154,13 +154,12 @@ def create_new_item(part_no: str, description: str, manufacturer: str, category:
     except:
         return None
 
-def adjust_quantities_for_item(locations, employee_id: int, employee_password: str, reason_id: int, item_sku: int) -> str:
+def adjust_quantities_for_item(locations, employee_id: int, reason_id: int, item_sku: int) -> str:
     # Locations argument should be a dictionary with keys 'location_id' and 'quantity'
-    if not login_employee(employee_id, employee_password):
-        return 'Bad login'
-    item = get_item_by_sku(item_sku)
-    reason = session.query(AdjustmentReason).filter(AdjustmentReason.id==reason_id).one()
     try:
+        item = get_item_by_sku(item_sku)
+        reason = session.query(AdjustmentReason).filter(AdjustmentReason.id==reason_id).one()
+        employee = session.query(Employee).filter(Employee.id == employee_id).one()
         item.locations = []
         for l in locations:
             quantity = l['quantity']

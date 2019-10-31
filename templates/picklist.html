@@ -106,12 +106,32 @@
         //Remove from picklist
         $('.delete-picklist-item').click(function() {
             var picklistItemId = this.parentElement.id;
+            $(this).attr('disabled', true);
             request = $.get('/api/delete_picklist_item', {picklist_item_id: picklistItemId});
             request.done(function() {
+                $(this).attr('disabled', false);
                 getPicklist();
             });
             request.fail(function() {
+                $(this).attr('disabled', false);
                 alert("Unable to delete item from picklist. Please reload the page and try again.");
+            });
+        });
+
+        //Save picklist
+        $('#save-button').click(function() {
+            $('#save-button').attr('disabled', true);
+            var request = $.get('/api/save_picklist');
+            request.done(function() {
+                $('#save-button').html('Saved!')
+                $('#save-button').attr('disabled', true);
+                window.setTimeout(function() {
+                    getPicklist();
+                }, 1000);
+            });
+            request.fail(function() {
+                $('#save-button').attr('disabled', false);
+                alert('Unable to verify save. Please check "Current Picklists" tab to verify picklist saved properly.');
             });
         });
     });

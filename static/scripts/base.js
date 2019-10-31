@@ -46,6 +46,7 @@ $(function() {
     idleTimer();
 
     $('#logout-button').click(function() {
+        $(this).attr('disabled', true)
         logout();
     });
 });

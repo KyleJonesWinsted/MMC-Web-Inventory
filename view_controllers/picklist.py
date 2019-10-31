@@ -19,9 +19,7 @@ def picklist_list_view():
         abort(500)
     return render_template('picklist_list.html', open_picklists = open_picklists, checkout_picklists=checkout_picklists)
 
-def create_new_picklist(employee_id, employee_password, picklist_title) -> int:
-    if not db.login_employee(employee_id, employee_password):
-        abort(401)
+def create_new_picklist(employee_id, picklist_title) -> int:
     picklist = db.create_new_picklist(picklist_title, employee_id)
     return picklist.id
 

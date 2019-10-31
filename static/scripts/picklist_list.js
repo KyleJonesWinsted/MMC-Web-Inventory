@@ -23,12 +23,14 @@ $( function() {
     });
 
     $('#confirmation-confirm').click( function() {
+        $(this).attr('disabled', true);
         var request = $.get('/api/delete_picklist', {picklist_id: rowId});
         request.done(function() {
             rowId = 0;
             location.reload();
         });
         request.fail(function() {
+            $(this).attr('disabled', false);
             alert("Unable to delete picklist. Please reload and try again.");
         });
     });
