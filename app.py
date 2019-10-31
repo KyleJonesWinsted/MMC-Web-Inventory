@@ -10,7 +10,7 @@ app.secret_key = os.urandom(64)
 
 @app.before_request
 def set_global_user():
-    if 'user' not in session and 'login' not in request.endpoint and 'static' not in request.path:
+    if 'user' not in session and request.endpoint != 'login':
         return redirect('/login')
 
 @app.route('/login', methods=['GET', 'POST'])
