@@ -225,6 +225,20 @@ def checkout_picklist():
     session.pop('picklist_id')
     return jsonify("Success"), 200
 
+@app.route('/api/checkin_picklist', methods=['GET', 'POST'])
+def checkin_picklist():
+    try:
+        picklist_id = request.form.get('picklist_id')
+        picklist_item_ids = request.form.getlist('picklist_item_id')
+        returned_qtys = request.form.getlist('returned_qty')
+    except:
+        abort(400)
+    returned_item_counts = {}
+    for i in range(len(picklist_item_ids)):
+        returned_item_counts[picklist_item_ids[i]] = returned_qtys[i]
+    view_controllers.picklist.check_in_picklist(picklist_id, returned_item_counts)
+    return jsonify('success'), 200
+
 #Error handling
 @app.errorhandler(404)
 def page_not_found(e):

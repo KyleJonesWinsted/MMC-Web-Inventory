@@ -70,6 +70,8 @@ def delete_picklist_item(picklist_item_id):
 def check_out_picklist(picklist_id):
     try:
         picklist = db.session.query(db.Picklist).filter(db.Picklist.id == picklist_id).one()
+        if picklist.status != "open":
+            abort(400)
     except:
         abort(400)
     try:
@@ -81,5 +83,30 @@ def check_out_picklist(picklist_id):
             item.qty_checked_out += picklist_item.quantity
         db.session.commit()
     except:
+        db.session.rollback()
+        abort(500)
+
+def check_in_picklist(picklist_id, returned_item_counts):
+    """
+    picklist_items is dict with format { picklist_item_id: quantity_returned }
+    """
+    try:
+        picklist = db.session.query(db.Picklist).filter(db.Picklist.id == picklist_id).one()
+        if picklist.status != 'checked_out':
+            print('not checked out')
+            abort(400)
+    except:
+        print('400')
+        abort(400)
+    try:
+        picklist.status = 'closed'
+        for picklist_item in picklist.location_items:
+            qty_not_returned = picklist_item.quantity - returned_item_counts[picklist_item.id]
+            picklist_item.location_item.quantity += (picklist_item.quantity - qty_not_returned)
+            picklist_item.location_item.item.qty_checked_out -= picklist_item.quantity
+        db.session.commit()
+        print('done')
+    except:
+        print('500')
         db.session.rollback()
         abort(500)
