@@ -29,7 +29,7 @@ class Item(Base):
         for location in self.locations:
             quantity += location.quantity
         if self.qty_checked_out != None:
-            quantity - self.qty_checked_out
+            quantity += self.qty_checked_out
         return quantity
 
     @hybrid_property

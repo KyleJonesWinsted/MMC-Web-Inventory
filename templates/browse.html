@@ -5,15 +5,15 @@
 {% block main %}
 <h1>Select browse method</h1>
 <a href="{{ url_for('browse_by_category') }}">
-    <button class="block-button">Browse by Category</button>
+    <button class="block-button">Category</button>
 </a>
 <a href="{{ url_for('browse_by_location') }}">
-    <button class="block-button">Browse by Storage Location</button>
+    <button class="block-button">Storage Location</button>
 </a>
 <a href="{{ url_for('browse_by_manufacturer') }}">
-    <button class="block-button">Browse by Manufacturer</button>
+    <button class="block-button">Manufacturer</button>
 </a>
 <a href="/browse/items?browse_type=All&filter_id=All">
-    <button class="block-button">Browse All Items</button>
+    <button class="block-button">All Items</button>
 </a>
 {% endblock %}

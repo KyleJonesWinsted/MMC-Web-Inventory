@@ -215,6 +215,16 @@ def delete_picklist_item():
     return_id = view_controllers.picklist.delete_picklist_item(picklist_item_id)
     return jsonify(return_id), 200
 
+@app.route('/api/checkout_picklist')
+def checkout_picklist():
+    try:
+        picklist_id = session['picklist_id']
+    except:
+        abort(400)
+    view_controllers.picklist.check_out_picklist(picklist_id)
+    session.pop('picklist_id')
+    return jsonify("Success"), 200
+
 #Error handling
 @app.errorhandler(404)
 def page_not_found(e):

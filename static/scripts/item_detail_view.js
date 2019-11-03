@@ -1,16 +1,5 @@
 $(function() {
 
-    //Show and hide add buttons
-    $('.add-to-picklist-button').fadeTo(0, 0);
-
-    $('.location-row').mouseenter(function() {
-        $(this).children('.add-to-picklist-button').fadeTo(0, 100);
-    });
-
-    $('.location-row').mouseleave(function() {
-        $(this).children('.add-to-picklist-button').fadeTo('fast', 0);
-    });
-
     //Add to picklist
     $('.add-to-picklist-button').click(function() {        
         var locationItemId = this.parentElement.id;

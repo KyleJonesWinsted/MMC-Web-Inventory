@@ -25,6 +25,10 @@
         <p class='location-quantity'>Qty: {{ location.quantity }}</p>
     </div>
 {% endfor %}
+    <div id="quantity-checked-out">
+        <h4 class='location-name'>Checked Out</h4>
+        <p class="location-quantity">Quantity: {{ item.qty_checked_out }}</p>
+    </div>
     <div class='location-footer'>
         <h4 class="location-name">Total Quantity: {{ item.total_quantity }}</h4>
     </div>

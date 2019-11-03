@@ -67,4 +67,19 @@ def delete_picklist_item(picklist_item_id):
         db.session.rollback()
         abort(400)
     
-    
+def check_out_picklist(picklist_id):
+    try:
+        picklist = db.session.query(db.Picklist).filter(db.Picklist.id == picklist_id).one()
+    except:
+        abort(400)
+    try:
+        picklist.status = "checked_out"
+        for picklist_item in picklist.location_items:
+            location = picklist_item.location_item
+            item = picklist_item.location_item.item
+            location.quantity -= picklist_item.quantity
+            item.qty_checked_out += picklist_item.quantity
+        db.session.commit()
+    except:
+        db.session.rollback()
+        abort(500)

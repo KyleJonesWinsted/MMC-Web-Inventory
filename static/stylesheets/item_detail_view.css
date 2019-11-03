@@ -68,5 +68,8 @@
     margin: 9px 5px;
     font-size: 80%;
     padding: 10px;
-    opacity: 0;
+}
+
+#quantity-checked-out {
+    border-bottom: 1px solid #e5e7ea;
 }
