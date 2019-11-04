@@ -105,7 +105,6 @@ def check_in_picklist(picklist_id, returned_item_counts):
             picklist_item.location_item.quantity += (picklist_item.quantity - qty_not_returned)
             picklist_item.location_item.item.qty_checked_out -= picklist_item.quantity
         db.session.commit()
-        print('done')
     except:
         print('500')
         db.session.rollback()

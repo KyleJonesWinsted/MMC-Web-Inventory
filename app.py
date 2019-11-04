@@ -92,6 +92,27 @@ def adjust_stock_for_item():
 def picklists():
     return view_controllers.picklist.picklist_list_view()
 
+@app.route('/checkin_picklist', methods=['GET', 'POST'])
+def checkin_picklist():
+    if request.method == 'GET':
+        try:
+            picklist_id = request.args.get('picklist_id')
+            picklist = db.session.query(db.Picklist).filter(db.Picklist.id==picklist_id).one()
+        except:
+            abort(400)
+        return render_template('picklist_checkin.html', picklist = picklist)
+    try:
+        picklist_id = escape(request.form.get('picklist_id'))
+        picklist_item_ids = request.form.getlist('picklist_item_id')
+        returned_qtys = request.form.getlist('returned_qty')
+    except:
+        abort(400)
+    returned_item_counts = {}
+    for i in range(len(picklist_item_ids)):
+        returned_item_counts[int(picklist_item_ids[i])] = int(returned_qtys[i])
+    view_controllers.picklist.check_in_picklist(picklist_id, returned_item_counts)
+    return redirect('/picklists')
+
 #Search Inventory
 @app.route('/search')
 def search():
@@ -224,20 +245,6 @@ def checkout_picklist():
     view_controllers.picklist.check_out_picklist(picklist_id)
     session.pop('picklist_id')
     return jsonify("Success"), 200
-
-@app.route('/api/checkin_picklist', methods=['GET', 'POST'])
-def checkin_picklist():
-    try:
-        picklist_id = request.form.get('picklist_id')
-        picklist_item_ids = request.form.getlist('picklist_item_id')
-        returned_qtys = request.form.getlist('returned_qty')
-    except:
-        abort(400)
-    returned_item_counts = {}
-    for i in range(len(picklist_item_ids)):
-        returned_item_counts[picklist_item_ids[i]] = returned_qtys[i]
-    view_controllers.picklist.check_in_picklist(picklist_id, returned_item_counts)
-    return jsonify('success'), 200
 
 #Error handling
 @app.errorhandler(404)

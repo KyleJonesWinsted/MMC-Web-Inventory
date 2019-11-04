@@ -1,0 +1,45 @@
+.hidden-input {
+    display: none;
+}
+
+.picklist-item-row {
+    border-top: 1px solid lightgray;
+}
+
+#main .picklist-part-no {
+    color: black;
+    font-family: 'HelveticaNeue';
+    margin-bottom: 0;
+}
+
+#main .picklist-return-location {
+    font-family: 'HelveticaNeueLight', monospace;
+    display: inline-block;
+    margin-top: 15px;
+}
+
+#main .picklist-return-location span {
+    font-family: 'HelveticaNeue';
+    font-size: 1.1em;
+}
+
+.picklist-return-quantity {
+    margin-top: 13px;
+    float: right;
+    margin-right: 5px;
+}
+
+.return-qty-textbox {
+    font-size: 1em;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #d2d5db;
+    box-shadow: 0 0 3px #d2d5db;
+    font-family: HelveticaNeue, Arial;
+    float: right;
+}
+
+#submit {
+    float: right;
+    margin: 15px;
+}

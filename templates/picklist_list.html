@@ -23,7 +23,9 @@
     {% for picklist in checkout_picklists %}
         <div class='picklist-row' id="{{ picklist.id }}">
             <h3>{{ picklist.title.title() }}</h3>
-            <button class='block-button check-in-button'>Check In</button>
+            <a href="/checkin_picklist?picklist_id={{ picklist.id }}">
+                <button class='block-button check-in-button'>Check In</button>
+            </a>
             <p>{{picklist.number_of_items }} {% if picklist.number_of_items == 1 %}Item{% else %}Items{% endif %}</p>
         </div>
     {% endfor %}
