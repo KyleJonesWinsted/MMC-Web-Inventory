@@ -1,6 +1,7 @@
 import data_controller as db
 import urllib.parse
 from flask import render_template, abort
+from math import ceil
 
 class BasicRow:
     def __init__(self, id, href, primary_text, secondary_text):
@@ -70,29 +71,34 @@ def manufacturer_select_view():
         page_title='Manufacturers', 
         rows = rows)
 
-def items_view(browse_type, filter_id):
+def items_view(browse_type, filter_id, page_number = 0):
     items = []
     rows = []
     if browse_type == 'Category':
         category = db.session.query(db.Category).filter(db.Category.id==filter_id).one()
         table_header = '{}s'.format(category.name.title())
         page_title = '{}s'.format(category.name.title())
-        items = db.get_items_by_category_id(filter_id)
+        item_count = db.count_items_by_category_id(filter_id)
+        items = db.get_items_by_category_id(filter_id, page_number)
     elif browse_type == 'Location':
         location = db.session.query(db.Location).filter(db.Location.id==filter_id).one()
         table_header = 'Items in {}'.format(location.name.upper())
         page_title = location.name.upper()
-        items = db.get_items_by_location_id(filter_id)
+        item_count = db.count_items_by_location_id(filter_id)
+        items = db.get_items_by_location_id(filter_id, page_number)
     elif browse_type == 'Manufacturer':
         table_header = 'Items from {}'.format(filter_id.title())
         page_title = filter_id.title()
-        items = db.get_items_by_manufacturer(filter_id)
+        item_count = db.count_items_by_manufacturer(filter_id)
+        items = db.get_items_by_manufacturer(filter_id, page_number)
     elif browse_type == 'All':
         table_header = 'All Items'
         page_title = 'All Items'
-        items = db.get_all_items()
+        item_count = db.count_all_items()
+        items = db.get_all_items(page_number)
     else:
         abort(400)
+    page_count = ceil(item_count / db.page_limit)
     for item in items:
         rows.append(BasicRow(
             id = item.sku,
@@ -104,7 +110,9 @@ def items_view(browse_type, filter_id):
     return render_template('basic_table_view.html', 
         table_header = table_header, 
         page_title = page_title, 
-        rows = rows)
+        rows = rows,
+        current_page = page_number + 1,
+        total_pages = page_count)
 
 
 def item_detail_view(sku: int):

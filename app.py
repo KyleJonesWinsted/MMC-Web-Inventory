@@ -63,7 +63,12 @@ def browse_items():
         filter_id = request.args.get('filter_id')
     except:
         abort(400)
-    return view_controllers.browse.items_view(browse_type = browse_type, filter_id = filter_id)
+    page_number = request.args.get('page')
+    if page_number == None:
+        page_number = 0
+    return view_controllers.browse.items_view(browse_type = browse_type, 
+        filter_id = filter_id, 
+        page_number=int(page_number))
 
 @app.route('/item/<int:sku>')
 def view_item_details(sku):
@@ -122,7 +127,10 @@ def search():
             abort(400)
     except:
         abort(400)
-    return view_controllers.search.search_results_view(search_string)
+    page_number = request.args.get('page')
+    if page_number == None:
+        page_number = 0
+    return view_controllers.search.search_results_view(search_string, int(page_number))
 
 #API
 @app.route('/api/adjust_quantity', methods=['POST'])

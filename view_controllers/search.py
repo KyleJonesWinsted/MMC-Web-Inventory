@@ -1,9 +1,10 @@
 from flask import render_template, abort, redirect, url_for
+from math import ceil
 import data_controller as db
 import app
 from .browse import BasicRow
 
-def search_results_view(search_string):
+def search_results_view(search_string, page_number):
     number_of_results = db.count_search_results(search_string)
     if number_of_results == 1:
         items = db.get_search_results(search_string)
@@ -16,7 +17,8 @@ def search_results_view(search_string):
             page_title = '0 Search Results',
             rows = [])
     else:
-        items = db.get_search_results(search_string)
+        page_count = ceil(db.count_search_results(search_string) / db.page_limit)
+        items = db.get_search_results(search_string, page_number)
         rows = []
         for item in items:
             rows.append(
@@ -30,5 +32,7 @@ def search_results_view(search_string):
         return render_template('basic_table_view.html',
             table_header = 'Results for "{}"'.format(search_string),
             page_title = '{} Search Results'.format(number_of_results),
-            rows = rows)
+            rows = rows,
+            total_pages = page_count,
+            current_page = page_number + 1)
 

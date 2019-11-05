@@ -21,8 +21,8 @@ a:any-link {
 }
 
 .basic-table-cell:hover {
-    box-shadow: 0 0 10px grey;
-    border-bottom: none;
+    box-shadow: 0px 0px 5px lightgray;
+    
 }
 
 .basic-table-cell h4 {
@@ -41,5 +41,42 @@ a:any-link {
 }
 
 .basic-table-cell:hover h4 {
+    color: #b5bd4b;
+}
+
+#page-controls { 
+    text-align: center;
+}
+
+#page-number {
+    display: inline-block;
+    font-size: 1em;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #d2d5db;
+    box-shadow: 0 0 3px #d2d5db;
+    font-family: HelveticaNeue, Arial;
+    width: 2em;
+}
+
+#total-pages {
+    display: inline-block;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+#page-controls button {
+    border: none;
+    font-family: 'HelveticaNeue';
+    color: #005ea1;
+    font-size: 120%;
+    background-color: white;
+}
+
+#page-controls button:hover {
     color: #b5bd4b;
 }

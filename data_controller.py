@@ -41,7 +41,7 @@ def get_all_items(page: int = 0) -> [Item]:
     return session.query(Item).limit(page_limit).offset(page_limit * page).all()
 
 def count_all_items():
-    return session.query(func.count(Item.sku))
+    return session.query(func.count(Item.sku)).scalar()
 
 def get_all_manufacturers() -> [str]:
     manufacturers = []
