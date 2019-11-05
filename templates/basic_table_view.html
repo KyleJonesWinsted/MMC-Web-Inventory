@@ -4,6 +4,7 @@
 
 {% block head %}
 <link rel="stylesheet" href="../static/stylesheets/basic_table_view.css">
+{% if current_page %}
 <style>
     {% if current_page <= 1 %}
     #prev-page-button {
@@ -16,6 +17,7 @@
     }
     {% endif %}
 </style>
+{% endif %}
 {% endblock %}
 
 {% block main%}
