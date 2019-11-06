@@ -3,6 +3,7 @@ import view_controllers.browse
 import view_controllers.search
 import view_controllers.settings
 import view_controllers.picklist
+import view_controllers.adjustments
 import data_controller as db
 import os
 app = Flask(__name__)
@@ -77,7 +78,39 @@ def view_item_details(sku):
 #Adjustment History
 @app.route('/adjustments')
 def adjustments():
-    return render_template('adjustments.html')
+    return view_controllers.adjustments.adjustments_browse_view()
+
+@app.route('/adjustments/employees')
+def adjustments_by_employee():
+    return view_controllers.adjustments.employee_select_view()
+
+@app.route('/adjustments/date')
+def adjustments_by_date():
+    return view_controllers.adjustments.date_select_view()
+
+@app.route('/adjustments/sku')
+def adjustments_by_sku():
+    return view_controllers.adjustments.item_select_view()
+
+@app.route('/adjustments/reason')
+def adjustments_by_reason():
+    return view_controllers.adjustments.reason_select_view()
+
+@app.route('/adjustments/adjustments')
+def browse_adjustments():
+    try:
+        browse_type = request.args.get('browse_type')
+        filter_id = request.args.get('filter_id')
+    except:
+        abort(400)
+    page_number = request.args.get('page')
+    if page_number == None:
+        page_number = 0
+    return view_controllers.adjustments.adjustments_view(browse_type, filter_id, page_number)
+
+@app.route('/adjustment/<int:adjustment_id>')
+def view_adjustment_details(adjustment_id):
+    return render_template('placeholder.html', page_name="adjustment id: {}".format(adjustment_id))
 
 #Manage Settings
 @app.route('/settings')

@@ -7,10 +7,14 @@ $(function() {
     //Page navigation
     $('#page-number').keyup(function(event) {        
         if (event.keyCode == '13') {
-            var pageNumber = $('#page-number').val();
-            parameters.set('page', pageNumber - 1);
-            currentURL.search = parameters.toString();
-            window.location.assign(currentURL.toString());            
+            if ($('#page-number')[0].checkValidity()) {
+                var pageNumber = $('#page-number').val();
+                parameters.set('page', pageNumber - 1);
+                currentURL.search = parameters.toString();
+                window.location.assign(currentURL.toString()); 
+            } else {
+                $('#page-number')[0].reportValidity();
+            }         
         }
     });
 

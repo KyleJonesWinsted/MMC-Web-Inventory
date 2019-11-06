@@ -3,5 +3,17 @@
 {% block title %}Adjustments{% endblock %}
 
 {% block main %}
-<h1>This is the adjustments page</h1>
+<h1>Browse Inventory Changes By</h1>
+<a href="{{ url_for('adjustments_by_employee') }}">
+    <button class='block-button' id='employee-button'>Employee</button>
+</a>
+<a href="{{ url_for('adjustments_by_date') }}">
+    <button class="block-button" id='date-button'>Date</button>
+</a>
+<a href="{{ url_for('adjustments_by_sku') }}">
+    <button class="block-button" id='item-button'>Item SKU</button>
+</a>
+<a href="{{ url_for('adjustments_by_reason') }}">
+    <button class="block-button" id='reason-button'>Reason for Change</button>
+</a>
 {% endblock %}

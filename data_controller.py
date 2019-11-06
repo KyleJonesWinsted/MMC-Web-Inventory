@@ -92,7 +92,7 @@ def get_adjustments_by_date(date1: date, date2: date = None, page: int = 0) -> [
 
 def count_adjustments_by_date(date1: date, date2: date = None) -> int:
     if date2 == None:
-        date2 == date1
+        date2 = date1
     return session.query(func.count(Adjustment.id)).filter(and_(Adjustment.date>=date1, Adjustment.date<=date2)).scalar()
 
 def get_all_employees() -> [Employee]:
@@ -100,6 +100,16 @@ def get_all_employees() -> [Employee]:
 
 def get_all_reasons() -> [AdjustmentReason]:
     return session.query(AdjustmentReason).all()
+
+def count_adjustment_dates() -> int:
+    return session.query(Adjustment.date).group_by(Adjustment.date).count()
+
+def get_adjustment_dates(page: int = 0) -> [date]:
+    dates = []
+    for row in session.query(Adjustment.date).group_by(Adjustment.date).limit(page_limit).offset(page_limit * page).all():
+        dates.append(row[0])
+    dates.sort()
+    return dates
 
 # Authentication
 def login_employee(employee_id: int, password: str) -> bool:
