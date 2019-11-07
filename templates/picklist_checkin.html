@@ -12,7 +12,7 @@
 <form method="POST" action="/checkin_picklist">
     <input type="text" name="picklist_id" class="hidden-input" value={{ picklist.id }}>
     {% for picklist_item in picklist.location_items %}
-    <div class="picklist-item-row">
+    <div class="checkin-item-row">
         <h3 class="picklist-part-no">{{ picklist_item.location_item.item.part_no.upper() }}</h3>
         <h4 class="picklist-return-location">Return <span>{{ picklist_item.quantity }}</span> to <span>{{ picklist_item.location_item.location.name.upper() }}</span></h4>
         <input type="number" name="returned_qty" class="return-qty-textbox" min="0", max={{ picklist_item.quantity }} value={{ picklist_item.quantity }}>
