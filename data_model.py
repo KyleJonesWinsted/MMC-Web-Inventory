@@ -150,6 +150,10 @@ class AdjustmentLocation(Base):
     adjustment = relationship('Adjustment', back_populates='locations')
     location = relationship('Location', back_populates='adjustments')
 
+    @hybrid_property
+    def quantity_change(self):
+        return self.new_qty - self.old_qty
+
     def __repr__(self):
         location_name = self.location.name if self.location != None else 'None'
         adjustment_id = self.adjustment.id if self.adjustment != None else 'None'

@@ -118,3 +118,6 @@ def adjustments_view(browse_type, filter_id, page_number = 0):
         current_page = page_number + 1,
         total_pages = page_count)
 
+def adjustment_detail_view(adjustment_id):
+    adjustment = db.get_adjustment_by_id(adjustment_id)
+    return render_template('adjustment_detail_view.html', adjustment = adjustment)

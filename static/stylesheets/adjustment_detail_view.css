@@ -1,0 +1,58 @@
+body {
+    font-family: 'HelveticaNeue';
+}
+
+.red {
+    color: red;
+}
+
+.green {
+    color: #b5bd4b;
+}
+
+.number {
+    font-weight: 900;
+    font-size: 120%;
+}
+
+#reason {
+    color: #b5bd4b;
+    font-family: 'Agency FB Bold';
+    font-size: 140%;
+    margin: 10px 0;
+}
+
+#item {
+    color: #005ea1;
+}
+
+#page-header {
+    border-bottom: 1px solid lightgrey;
+    padding: 5px;
+}
+
+#changes-header {
+    color: #005ea1;
+    border-bottom: 1px solid #d2d5db;
+    font-family: 'Agency FB';
+    margin-bottom: 0;
+}
+
+.change-row {
+    margin: 0 10px;
+    border-bottom: 1px solid #e5e7ea;
+}
+
+.change-row p{
+    display: inline-block;
+}
+
+.change-location {
+    display: inline-block;
+}
+
+.quantity-change {
+    float: right;
+    line-height: 29px;
+    padding-right: 20px;
+}

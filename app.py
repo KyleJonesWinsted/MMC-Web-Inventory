@@ -110,8 +110,7 @@ def browse_adjustments():
 
 @app.route('/adjustment/<int:adjustment_id>')
 def view_adjustment_details(adjustment_id):
-    return render_template('placeholder.html', page_name="adjustment id: {}".format(adjustment_id))
-
+    return view_controllers.adjustments.adjustment_detail_view(adjustment_id)
 #Manage Settings
 @app.route('/settings')
 def settings():

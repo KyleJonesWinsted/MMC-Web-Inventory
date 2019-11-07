@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Adjustment Details{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="../static/stylesheets/adjustment_detail_view.css">
+{% endblock %}
+
+{% block main %}
+<h1 id='page-header'>Adjustment Details</h1>
+<h4 id='reason'>{{ adjustment.reason.name.title() }}</h4>
+<h2 id='item'>{{ adjustment.item.manufacturer.title() }} - {{ adjustment.item.part_no.upper() }}</h2>
+<p id='employee-datetime'>Created by {{ adjustment.employee.name.title() }} on {{ adjustment.date.strftime("%x") }} at {{ adjustment.datetime.strftime("%-I:%M %p") }}</p>
+<h2 id="changes-header">Changes</h2>
+{% for adj_location in adjustment.locations %}
+<div class="change-row">
+    <h4 class='change-location'>Location:
+        <span class="number">{{ adj_location.location.name.upper() }}</span>
+    </h4>
+    <p class="quantity-change">Qty Change:
+        <span class="number">
+            {{ adj_location.old_qty }}
+        </span>
+        &rarr;
+        <span class="number">
+            {{ adj_location.new_qty }}
+        </span>
+        =
+        {% if adj_location.quantity_change < 0 %}
+            <span class="number red">
+                {{ adj_location.quantity_change }}
+            </span>
+        {% else %}
+            <span class="number green">
+                +{{ adj_location.quantity_change }}
+            </span>
+        {% endif %}
+    </p>
+</div>
+{% endfor %}
+
+{% endblock %}
