@@ -66,19 +66,28 @@ def get_adjustment_by_id(adjustment_id: int) -> Adjustment:
     return session.query(Adjustment).filter(Adjustment.id==adjustment_id).one()
 
 def get_adjustments_by_employee_id(employee_id: int, page: int = 0) -> [Adjustment]:
-    return session.query(Adjustment).filter(Adjustment.employee_id==employee_id).limit(page_limit).offset(page_limit * page).all()
+    return session.query(Adjustment).\
+        filter(Adjustment.employee_id==employee_id).\
+        order_by(Adjustment.datetime.desc()).\
+        limit(page_limit).offset(page_limit * page).all()
 
 def count_adjustments_by_employee_id(employee_id: int) -> int:
     return session.query(func.count(Adjustment.id)).filter(Adjustment.employee_id==employee_id).scalar()
 
 def get_adjustments_by_sku(sku: int, page: int = 0) -> [Adjustment]:
-    return session.query(Adjustment).filter(Adjustment.item_sku==sku).limit(page_limit).offset(page_limit * page).all()
+    return session.query(Adjustment).\
+        filter(Adjustment.item_sku==sku).\
+        order_by(Adjustment.datetime.desc()).\
+        limit(page_limit).offset(page_limit * page).all()
 
 def count_adjustments_by_sku(sku: int) -> int:
     return session.query(func.count(Adjustment.id)).filter(Adjustment.item_sku==sku).scalar()
 
 def get_adjustments_by_reason_id(reason_id: int, page: int = 0) -> [Adjustment]:
-    return session.query(Adjustment).filter(Adjustment.reason_id==reason_id).limit(page_limit).offset(page_limit * page).all()
+    return session.query(Adjustment).\
+        filter(Adjustment.reason_id==reason_id).\
+        order_by(Adjustment.datetime.desc()).\
+        limit(page_limit).offset(page_limit * page).all()
 
 def count_adjustments_by_reason_id(reason_id: int) -> int:
     return session.query(func.count(Adjustment.id)).filter(Adjustment.reason_id==reason_id).scalar()
@@ -88,6 +97,7 @@ def get_adjustments_by_date(date1: date, date2: date = None, page: int = 0) -> [
         date2 = date1
     return session.query(Adjustment).\
         filter(and_(Adjustment.date>=date1, Adjustment.date<=date2)).\
+        order_by(Adjustment.datetime.desc()).\
         limit(page_limit).offset(page_limit * page).all()
 
 def count_adjustments_by_date(date1: date, date2: date = None) -> int:
@@ -204,3 +214,40 @@ def create_new_picklist(picklist_title, employee_id):
         session.rollback()
         abort(500)
     return picklist
+
+def create_new_adjustment(reason_id, item_sku, employee_id, qty_changes):
+    """
+    locations should be dict list in form of {location_id: int, old_qty: int, new_qty: int}
+    """
+    try:
+        employee = session.query(Employee).get(employee_id)
+        item = session.query(Item).get(item_sku)
+        reason = session.query(AdjustmentReason).get(reason_id)
+    except:
+        print('unable to get employee, reason, or item')
+        abort(400)
+    new_adjustment = Adjustment()
+    new_adjustment.employee = employee
+    new_adjustment.item = item
+    new_adjustment.reason = reason
+    try:
+        session.add(new_adjustment)
+    except:
+        session.rollback()
+        abort(500)
+    for qty_change in qty_changes:
+        try:
+            location = session.query(Location).get(qty_change['location_id'])
+        except:
+            print('unable to get location {}'.format(qty_change['location_id']))
+            abort(400)
+        new_adj_location = AdjustmentLocation(new_qty = qty_change['new_qty'], old_qty = qty_change['old_qty'])
+        new_adj_location.adjustment = new_adjustment
+        new_adj_location.location = location
+        try:
+            session.add(new_adj_location)
+        except:
+            session.rollback()
+            print('unable to add adj_location {}'.format(new_adj_location))
+            abort(500)
+    return new_adjustment.id

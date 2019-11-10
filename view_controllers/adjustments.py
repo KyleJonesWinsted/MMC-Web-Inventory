@@ -84,7 +84,6 @@ def adjustments_view(browse_type, filter_id, page_number = 0):
         adjustments = db.get_adjustments_by_employee_id(filter_id, page_number)
     elif browse_type == 'date':
         filter_date = date(int(filter_id[0:4]), int(filter_id[5:7]), int(filter_id[8:]))
-        print(filter_date)
         table_header = "Adjustments on {}".format(filter_date.strftime("%a, %b %e %Y"))
         page_title = filter_date.strftime("%a, %b %e %Y")
         adjustment_count = db.count_adjustments_by_date(filter_date)

@@ -1,4 +1,5 @@
 import data_controller as db
+import app
 from flask import render_template, abort
 
 def picklist_view(picklist_id):
@@ -93,19 +94,25 @@ def check_in_picklist(picklist_id, returned_item_counts):
     try:
         picklist = db.session.query(db.Picklist).filter(db.Picklist.id == picklist_id).one()
         if picklist.status != 'checked_out':
-            print('not checked out')
             abort(400)
     except:
-        print('400')
         abort(400)
     try:
         picklist.status = 'closed'
         for picklist_item in picklist.location_items:
             qty_not_returned = picklist_item.quantity - returned_item_counts[picklist_item.id]
-            picklist_item.location_item.quantity += (picklist_item.quantity - qty_not_returned)
+            old_qty = picklist_item.location_item.quantity + picklist_item.quantity
+            new_qty = old_qty - qty_not_returned
+            picklist_item.location_item.quantity = new_qty
             picklist_item.location_item.item.qty_checked_out -= picklist_item.quantity
+            if qty_not_returned != 0:
+                db.create_new_adjustment(1, 
+                    picklist_item.location_item.item.sku, 
+                    app.session['user'], 
+                    [{'location_id': picklist_item.location_item.location.id, 
+                        'old_qty': old_qty,
+                        'new_qty': new_qty}])
         db.session.commit()
     except:
-        print('500')
         db.session.rollback()
         abort(500)
