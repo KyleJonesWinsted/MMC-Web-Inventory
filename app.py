@@ -19,12 +19,15 @@ def login():
     if request.method == 'POST':
         if db.login_employee(request.form['username'], request.form['password']):
             employee = db.session.query(db.Employee).filter(db.Employee.id == request.form['username']).one()
-            session['user'] = employee.id
-            session['username'] = employee.name.title()
+            session['user'] = employee.serialize()
             return redirect('/')
         else:
             return render_template('login.html', first_time=False)
     return render_template('login.html', first_time=True)
+
+def check_admin():
+    if session['user']['credentials'] != 'admin':
+        abort(403)
 
 @app.route('/logout')
 def logout():
@@ -78,26 +81,32 @@ def view_item_details(sku):
 #Adjustment History
 @app.route('/adjustments')
 def adjustments():
+    check_admin()
     return view_controllers.adjustments.adjustments_browse_view()
 
 @app.route('/adjustments/employees')
 def adjustments_by_employee():
+    check_admin()
     return view_controllers.adjustments.employee_select_view()
 
 @app.route('/adjustments/date')
 def adjustments_by_date():
+    check_admin()
     return view_controllers.adjustments.date_select_view()
 
 @app.route('/adjustments/sku')
 def adjustments_by_sku():
+    check_admin()
     return view_controllers.adjustments.item_select_view()
 
 @app.route('/adjustments/reason')
 def adjustments_by_reason():
+    check_admin()
     return view_controllers.adjustments.reason_select_view()
 
 @app.route('/adjustments/adjustments')
 def browse_adjustments():
+    check_admin()
     try:
         browse_type = request.args.get('browse_type')
         filter_id = request.args.get('filter_id')
@@ -110,14 +119,18 @@ def browse_adjustments():
 
 @app.route('/adjustment/<int:adjustment_id>')
 def view_adjustment_details(adjustment_id):
+    check_admin()
     return view_controllers.adjustments.adjustment_detail_view(adjustment_id)
+
 #Manage Settings
 @app.route('/settings')
 def settings():
+    check_admin()
     return render_template('settings.html')
 
 @app.route('/settings/adjust_stock')
 def adjust_stock_for_item():
+    check_admin()
     try:
         item_sku = request.args.get('item_sku')
     except:
@@ -177,10 +190,11 @@ def adjust_quantity():
     "item_sku": 1000
     }));
     """
+    check_admin()
     try:
         json = request.get_json(force=True)
         locations = json['locations']
-        employee_id = session['user']
+        employee_id = session['user'].id
         item_sku = json['item_sku']
         reason_id = json['reason_id']
     except:
@@ -192,6 +206,7 @@ def adjust_quantity():
 
 @app.route('/api/new_location')
 def add_new_location():
+    check_admin()
     try:
         location_name = request.args.get('location_name')
     except:
@@ -235,7 +250,7 @@ def get_picklist_by_id():
 def create_new_picklist():
     try:
         picklist_title = escape(request.args.get('picklist_title'))
-        employee_id = session['user']
+        employee_id = session['user'].id
     except:
         abort(400)
     picklist_id = view_controllers.picklist.create_new_picklist(employee_id, picklist_title)
@@ -298,6 +313,10 @@ def bad_request(e):
 @app.errorhandler(500)
 def server_error(e):
     return render_template('500.html'), 500
+
+@app.errorhandler(403)
+def forbidden(e):
+    return render_template('403.html'), 403
 
 if __name__ == '__main__':
     app.run(debug=True)

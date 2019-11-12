@@ -33,6 +33,7 @@
                         </button>
                     </a>
                 </li>
+                {% if session['user'].credentials == 'admin' %}
                 <li>
                     <a href="{{ url_for('adjustments') }}">
                         <button class="sidebar-button">
@@ -47,8 +48,9 @@
                         </button>
                     </a>
                 </li>
+                {% endif %}
             </ul>
-            <p id='username'>Logged in as: {{ session['username'] }}</p>
+            <p id='username'>Logged in as: {{ session['user'].name.title() }}</p>
             <i class="fas fa-sign-out-alt"></i>
             <button id='logout-button'>Logout</button>
         </div>

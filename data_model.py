@@ -102,6 +102,7 @@ class Employee(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(50))
     password_hash = Column(String(128))
+    credentials = Column(String(50))
     adjustments = relationship('Adjustment', back_populates='employee')
     picklists = relationship('Picklist', back_populates='employee')
 
@@ -113,6 +114,13 @@ class Employee(Base):
 
     def __repr__(self):
         return "Employee(id: {}, name: {})".format(self.id, self.name)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'credentials': self.credentials
+        }
 
 class AdjustmentReason(Base):
     __tablename__ = "adjustments_reasons"

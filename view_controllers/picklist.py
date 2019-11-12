@@ -108,7 +108,7 @@ def check_in_picklist(picklist_id, returned_item_counts):
             if qty_not_returned != 0:
                 db.create_new_adjustment(1, 
                     picklist_item.location_item.item.sku, 
-                    app.session['user'], 
+                    app.session['user'].id, 
                     [{'location_id': picklist_item.location_item.location.id, 
                         'old_qty': old_qty,
                         'new_qty': new_qty}])
