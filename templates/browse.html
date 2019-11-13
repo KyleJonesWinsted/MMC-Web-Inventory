@@ -2,18 +2,59 @@
 
 {% block title %}Browse{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="../static/stylesheets/browse.css">
+{% endblock %}
+
 {% block main %}
 <h1>Select browse method</h1>
-<a href="{{ url_for('browse_by_category') }}">
-    <button class="block-button">Category</button>
-</a>
-<a href="{{ url_for('browse_by_location') }}">
-    <button class="block-button">Storage Location</button>
-</a>
-<a href="{{ url_for('browse_by_manufacturer') }}">
-    <button class="block-button">Manufacturer</button>
-</a>
-<a href="/browse/items?browse_type=All&filter_id=All">
-    <button class="block-button">All Items</button>
-</a>
+<div class="browse-row">
+    <h2>Category</h2>
+    <p>Browse all items in a given category.</p>
+    <label for="category-entry">Category Name: </label>
+    <input type="text" id='category-entry' placeholder='ex. "Carbide Drill"'>
+    <button class="block-button" id="category-submit">GO</button>
+    <span class="bold-or">OR</span>
+    <a href="{{ url_for('browse_by_category') }}">
+        <button class="block-button browse-all-button">Browse Categories</button>
+    </a>
+</div>
+<div class="browse-row">
+    <h2>Storage Location</h2>
+    <p>Browse all items in a given storage location.</p>
+    <label for="location-entry">Location ID: </label>
+    <input type="text" id='location-entry' placeholder='ex. "301A01A"'>
+    <button class="block-button" id='location-submit'>GO</button>
+    <span class="bold-or">OR</span>
+    <a href="{{ url_for('browse_by_location') }}">
+        <button class="block-button">Browse Locations</button>
+    </a>
+</div>
+<div class="browse-row">
+    <h2>Manufacturer</h2>
+    <p>Browse all items made by a given manufacturer.</p>
+    <label for="manufacturer-entry">Manufacturer: </label>
+    <input type="text" id='manufacturer-entry' placeholder='ex. "Sumitomo"'>
+    <button class="block-button" id='manufacturer-submit'>GO</button>
+    <span class="bold-or">OR</span>
+    <a href="{{ url_for('browse_by_manufacturer') }}">
+        <button class="block-button">Browse Manufacturers</button>
+    </a>
+</div>
+<div class="browse-row">
+    <h2>Item SKU</h2>
+    <p>View an item matching a given SKU number.</p>
+    <label for="sku-entry">SKU Number: </label>
+    <input type="text" id='sku-entry' placeholder='ex. "1234"'>
+    <button class="block-button" id='sku-submit'>GO</button>
+    <span class="bold-or">OR</span>
+    <a href="/browse/items?browse_type=All&filter_id=All">
+        <button class="block-button">Browse Items</button>
+    </a>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script src="../static/scripts/browse.js"></script>
 {% endblock %}

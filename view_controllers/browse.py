@@ -13,6 +13,25 @@ class BasicRow:
 def browse_type_view():
     return render_template('browse.html')
 
+def get_object_id(search_string, object_type):
+    if object_type == "category":
+        try:
+            category = db.session.query(db.Category).filter(db.Category.name == search_string.lower()).one()
+        except:
+            abort(404)
+        result_id = category.id
+    elif object_type == "location":
+        try:
+            location = db.session.query(db.Location).filter(db.Location.name == search_string.lower()).one()
+        except:
+            abort(404)
+        result_id = location.id
+    else:
+        abort(400)
+    return result_id    
+        
+            
+
 def category_select_view():
     all_categories = db.get_all_categories()
     rows = []
@@ -117,4 +136,6 @@ def items_view(browse_type, filter_id, page_number = 0):
 
 def item_detail_view(sku: int):
     item = db.get_item_by_sku(sku)
+    if item == None:
+        abort(404)
     return render_template('item_detail_view.html', item = item)

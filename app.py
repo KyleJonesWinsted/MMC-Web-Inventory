@@ -301,6 +301,16 @@ def checkout_picklist():
     session.pop('picklist_id')
     return jsonify("Success"), 200
 
+@app.route('/api/get_id')
+def get_id():
+    try:
+        search_string = request.args.get('search_string')
+        object_type = request.args.get('object_type')
+    except:
+        abort(400)
+    result_id = view_controllers.browse.get_object_id(search_string.lower(), object_type)
+    return jsonify(result_id), 200
+
 #Error handling
 @app.errorhandler(404)
 def page_not_found(e):

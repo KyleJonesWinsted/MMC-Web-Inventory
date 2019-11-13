@@ -1,0 +1,42 @@
+.browse-row {
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 10px;
+}
+
+.browse-row h2 {
+    font-family: 'Agency FB Bold';
+    color: #b5bd4b;
+    margin: 10px 0;
+}
+
+.browse-row input {
+    flex: 2 auto;
+    font-size: 1em;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #d2d5db;
+    box-shadow: 0 0 3px #d2d5db;
+    font-family: HelveticaNeue, Arial;
+}
+
+.browse-row p {
+    margin: 15px 0;
+}
+
+.browse-row label {
+    font-family: 'HelveticaNeue';
+    display: inline-block;
+    width: 110px;
+    font-weight: 800;
+}
+
+.browse-row .block-button {
+    padding: 10px;
+    font-size: 100%;
+}
+
+.bold-or {
+    font-family: 'HelveticaNeue';
+    font-weight: 900;
+    margin: 0 5px;
+}
