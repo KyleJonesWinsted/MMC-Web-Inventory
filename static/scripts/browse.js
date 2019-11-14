@@ -9,7 +9,7 @@ $(function() {
         });
         request.fail(function() {
             alert("The entered category name does not exist.")
-        })
+        });
     }
 
     function locationSearch() {

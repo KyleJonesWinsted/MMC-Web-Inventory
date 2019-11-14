@@ -76,32 +76,36 @@ def reason_select_view():
 def adjustments_view(browse_type, filter_id, page_number = 0):
     adjustments = []
     rows = []
-    if browse_type == 'employee':
-        employee = db.session.query(db.Employee).filter(db.Employee.id == filter_id).one()
-        table_header = "Adjustments by {}".format(employee.name.title())
-        page_title = employee.name.title()
-        adjustment_count = db.count_adjustments_by_employee_id(filter_id)
-        adjustments = db.get_adjustments_by_employee_id(filter_id, page_number)
-    elif browse_type == 'date':
-        filter_date = date(int(filter_id[0:4]), int(filter_id[5:7]), int(filter_id[8:]))
-        table_header = "Adjustments on {}".format(filter_date.strftime("%a, %b %e %Y"))
-        page_title = filter_date.strftime("%a, %b %e %Y")
-        adjustment_count = db.count_adjustments_by_date(filter_date)
-        adjustments = db.get_adjustments_by_date(filter_date, None, page_number)
-    elif browse_type == 'item':
-        item = db.get_item_by_sku(filter_id)
-        table_header = "Adjustments to {}".format(item.part_no.upper())
-        page_title = item.part_no.upper()
-        adjustment_count = db.count_adjustments_by_sku(filter_id)
-        adjustments = db.get_adjustments_by_sku(filter_id, page_number)
-    elif browse_type == 'reason':
-        reason = db.session.query(db.AdjustmentReason).filter(db.AdjustmentReason.id == filter_id).one()
-        table_header = "Adjustments for {}".format(reason.name.title())
-        page_title = reason.name.upper()
-        adjustment_count = db.count_adjustments_by_reason_id(filter_id)
-        adjustments = db.get_adjustments_by_reason_id(filter_id, page_number)
-    else:
-        abort(400)
+    try:
+        if browse_type == 'employee':
+            employee = db.session.query(db.Employee).filter(db.Employee.id == filter_id).one()
+            table_header = "Adjustments by {}".format(employee.name.title())
+            page_title = employee.name.title()
+            adjustment_count = db.count_adjustments_by_employee_id(filter_id)
+            adjustments = db.get_adjustments_by_employee_id(filter_id, page_number)
+        elif browse_type == 'date':
+            filter_date = date(int(filter_id[0:4]), int(filter_id[5:7]), int(filter_id[8:]))
+            table_header = "Adjustments on {}".format(filter_date.strftime("%a, %b %e %Y"))
+            page_title = filter_date.strftime("%a, %b %e %Y")
+            adjustment_count = db.count_adjustments_by_date(filter_date)
+            adjustments = db.get_adjustments_by_date(filter_date, None, page_number)
+        elif browse_type == 'item':
+            item = db.get_item_by_sku(filter_id)
+            table_header = "Adjustments to {}".format(item.part_no.upper())
+            page_title = item.part_no.upper()
+            adjustment_count = db.count_adjustments_by_sku(filter_id)
+            adjustments = db.get_adjustments_by_sku(filter_id, page_number)
+        elif browse_type == 'reason':
+            reason = db.session.query(db.AdjustmentReason).filter(db.AdjustmentReason.id == filter_id).one()
+            table_header = "Adjustments for {}".format(reason.name.title())
+            page_title = reason.name.upper()
+            adjustment_count = db.count_adjustments_by_reason_id(filter_id)
+            adjustments = db.get_adjustments_by_reason_id(filter_id, page_number)
+        else:
+            abort(400)
+    except:
+        db.session.rollback()
+        abort(500)
     page_count = ceil(adjustment_count / db.page_limit)
     for adjustment in adjustments:
         rows.append(BasicRow(

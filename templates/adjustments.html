@@ -2,18 +2,59 @@
 
 {% block title %}Adjustments{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="../static/stylesheets/browse.css">
+{% endblock %}
+
 {% block main %}
-<h1>Browse Inventory Changes By</h1>
-<a href="{{ url_for('adjustments_by_employee') }}">
-    <button class='block-button' id='employee-button'>Employee</button>
-</a>
-<a href="{{ url_for('adjustments_by_date') }}">
-    <button class="block-button" id='date-button'>Date</button>
-</a>
-<a href="{{ url_for('adjustments_by_sku') }}">
-    <button class="block-button" id='item-button'>Item SKU</button>
-</a>
-<a href="{{ url_for('adjustments_by_reason') }}">
-    <button class="block-button" id='reason-button'>Reason for Change</button>
-</a>
+<h1>Browse Adjustments by:</h1>
+<div class="browse-row">
+    <h2>Employee</h2>
+    <p>View all adjustments made by a given employee.</p>
+    <label for="employee-entry">Employee ID: </label>
+    <input type="text" id='employee-entry' placeholder='ex. "1234"' pattern="^\d{4,}$">
+    <button class="block-button" id='employee-submit'>GO</button>
+    <span class="bold-or">OR</span>
+    <a href="{{ url_for('adjustments_by_employee') }}">
+        <button class='block-button' id='employee-button'>Browse Employees</button>
+    </a>
+</div>
+<div class="browse-row">
+    <h2>Date</h2>
+    <p>View all adjustments made on a given date. Format is YYYY-MM-DD.</p>
+    <label for="date-entry">Date: </label>
+    <input type="text" id='date-entry' placeholder='ex. "2019-06-14"'>
+    <button class="block-button" id='date-submit'>GO</button>
+    <span class="bold-or">OR</span>
+    <a href="{{ url_for('adjustments_by_date') }}">
+        <button class="block-button" id='date-button'>Browse Dates</button>
+    </a>
+</div>
+<div class="browse-row">
+    <h2>Item</h2>
+    <p>View all adjustments made to a given item.</p>
+    <label for="sku-entry">Item SKU: </label>
+    <input type="text" id='sku-entry' placeholder='ex. "1234"' pattern="^\d{4,}$">
+    <button class="block-button" id='sku-submit'>GO</button>
+    <span class="bold-or">OR</span>
+    <a href="{{ url_for('adjustments_by_sku') }}">
+        <button class="block-button" id='item-button'>Browse Items</button>
+    </a>
+</div>
+<div class="browse-row">
+    <h2>Reason for Change</h2>
+    <p>View all adjustments made for a given reason.</p>
+    <label for="reason-entry">Reason: </label>
+    <input type="text" id='reason-entry' placeholder='ex. "Correction"' pattern="^.{4,}$">
+    <button class="block-button" id='reason-submit'>GO</button>
+    <span class="bold-or">OR</span>
+    <a href="{{ url_for('adjustments_by_reason') }}">
+        <button class="block-button" id='reason-button'>Browse Reasons</button>
+    </a>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script src="../static/scripts/adjustments.js"></script>
 {% endblock %}

@@ -7,12 +7,12 @@
 {% endblock %}
 
 {% block main %}
-<h1>Select browse method</h1>
+<h1>Browse Items by: </h1>
 <div class="browse-row">
     <h2>Category</h2>
     <p>Browse all items in a given category.</p>
     <label for="category-entry">Category Name: </label>
-    <input type="text" id='category-entry' placeholder='ex. "Carbide Drill"'>
+    <input type="text" id='category-entry' placeholder='ex. "Carbide Drill"' pattern="^.{4,}$">
     <button class="block-button" id="category-submit">GO</button>
     <span class="bold-or">OR</span>
     <a href="{{ url_for('browse_by_category') }}">
@@ -34,7 +34,7 @@
     <h2>Manufacturer</h2>
     <p>Browse all items made by a given manufacturer.</p>
     <label for="manufacturer-entry">Manufacturer: </label>
-    <input type="text" id='manufacturer-entry' placeholder='ex. "Sumitomo"'>
+    <input type="text" id='manufacturer-entry' placeholder='ex. "Sumitomo"' pattern="^.{4,}$">
     <button class="block-button" id='manufacturer-submit'>GO</button>
     <span class="bold-or">OR</span>
     <a href="{{ url_for('browse_by_manufacturer') }}">
@@ -45,7 +45,7 @@
     <h2>Item SKU</h2>
     <p>View an item matching a given SKU number.</p>
     <label for="sku-entry">SKU Number: </label>
-    <input type="text" id='sku-entry' placeholder='ex. "1234"'>
+    <input type="text" id='sku-entry' placeholder='ex. "1234"' pattern="^\d{4,}$">
     <button class="block-button" id='sku-submit'>GO</button>
     <span class="bold-or">OR</span>
     <a href="/browse/items?browse_type=All&filter_id=All">

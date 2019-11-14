@@ -26,6 +26,12 @@ def get_object_id(search_string, object_type):
         except:
             abort(404)
         result_id = location.id
+    elif object_type == "reason":
+        try:
+            reason = db.session.query(db.AdjustmentReason).filter(db.AdjustmentReason.name == search_string.lower()).one()
+        except:
+            abort(404)
+        result_id = reason.id
     else:
         abort(400)
     return result_id    
