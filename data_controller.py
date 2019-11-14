@@ -116,9 +116,12 @@ def count_adjustment_dates() -> int:
 
 def get_adjustment_dates(page: int = 0) -> [date]:
     dates = []
-    for row in session.query(Adjustment.date).group_by(Adjustment.date).limit(page_limit).offset(page_limit * page).all():
+    for row in session.query(Adjustment.date).\
+            group_by(Adjustment.date).\
+            limit(page_limit).\
+            offset(page_limit * page).all():
         dates.append(row[0])
-    dates.sort()
+    dates.sort(reverse=True)
     return dates
 
 # Authentication

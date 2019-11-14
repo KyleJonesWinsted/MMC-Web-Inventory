@@ -265,7 +265,6 @@ def create_new_picklist():
         abort(400)
     picklist = view_controllers.picklist.create_new_picklist(employee_id, picklist_title)
     commit_session(stop_execution = True)
-    print(picklist.id)
     session['picklist_id'] = picklist.id
     return jsonify(picklist.id), 200
 
