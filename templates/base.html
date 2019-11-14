@@ -33,7 +33,7 @@
                         </button>
                     </a>
                 </li>
-                {% if session['user'].credentials == 'admin' %}
+                {% if session['user'].credentials != 'employee' %}
                 <li>
                     <a href="{{ url_for('adjustments') }}">
                         <button class="sidebar-button">

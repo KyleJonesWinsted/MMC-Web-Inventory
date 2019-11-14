@@ -22,13 +22,12 @@ def picklist_list_view():
 
 def create_new_picklist(employee_id, picklist_title) -> int:
     picklist = db.create_new_picklist(picklist_title, employee_id)
-    return picklist.id
+    return picklist
 
 def delete_picklist(picklist_id):
     try:
         picklist = db.session.query(db.Picklist).filter(db.Picklist.id == picklist_id).one()
         picklist.status = 'deleted'
-        db.session.commit()
         return picklist.id
     except:
         db.session.rollback()
@@ -44,7 +43,6 @@ def add_item_to_picklist(picklist_id, location_item_id):
         if item.location_item_id == location_item.id:
             if item.quantity < location_item.quantity:
                 item.quantity += 1
-                db.session.commit()
                 return item.id
             else:
                 return item.id
@@ -53,7 +51,6 @@ def add_item_to_picklist(picklist_id, location_item_id):
     picklist_item.picklist = picklist
     try:
         db.session.add(picklist_item)
-        db.session.commit()
     except:
         db.session.rollback()
         abort(500)
@@ -63,7 +60,6 @@ def delete_picklist_item(picklist_item_id):
     try:
         picklist_item = db.session.query(db.PicklistItem).filter(db.PicklistItem.id == picklist_item_id).one()
         db.session.delete(picklist_item)
-        db.session.commit()
     except:
         db.session.rollback()
         abort(400)
@@ -82,7 +78,6 @@ def check_out_picklist(picklist_id):
             item = picklist_item.location_item.item
             location.quantity -= picklist_item.quantity
             item.qty_checked_out += picklist_item.quantity
-        db.session.commit()
     except:
         db.session.rollback()
         abort(500)
@@ -112,7 +107,6 @@ def check_in_picklist(picklist_id, returned_item_counts):
                     [{'location_id': picklist_item.location_item.location.id, 
                         'old_qty': old_qty,
                         'new_qty': new_qty}])
-        db.session.commit()
     except:
         db.session.rollback()
         abort(500)

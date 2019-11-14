@@ -26,8 +26,16 @@ def login():
     return render_template('login.html', first_time=True)
 
 def check_admin():
-    if session['user']['credentials'] != 'admin':
+    if session['user']['credentials'] == 'employee':
         abort(403)
+
+def commit_session(stop_execution: bool):
+    if session['user']['credentials'] == 'demo':
+        db.session.rollback()
+        if stop_execution:
+            abort(403)
+    else:
+        db.session.commit()
 
 @app.route('/logout')
 def logout():
@@ -161,6 +169,7 @@ def checkin_picklist():
     for i in range(len(picklist_item_ids)):
         returned_item_counts[int(picklist_item_ids[i])] = int(returned_qtys[i])
     view_controllers.picklist.check_in_picklist(picklist_id, returned_item_counts)
+    commit_session(stop_execution = False)
     return redirect('/picklists')
 
 #Search Inventory
@@ -194,14 +203,14 @@ def adjust_quantity():
     try:
         json = request.get_json(force=True)
         locations = json['locations']
-        employee_id = session['user'].id
+        employee_id = session['user']['id']
         item_sku = json['item_sku']
         reason_id = json['reason_id']
     except:
         abort(400)
     result = db.adjust_quantities_for_item(locations, employee_id, employee_password, reason_id, item_sku)
     if result == 'Success':
-        db.session.commit()
+        commit_session(stop_execution = True)
     return jsonify(result), 200
 
 @app.route('/api/new_location')
@@ -212,6 +221,7 @@ def add_new_location():
     except:
         abort(400)
     location = db.add_new_location(location_name.lower())
+    commit_session(stop_execution = True)
     json = {
         'location_id': location.id,
         'location_name': location.name.lower()
@@ -250,12 +260,14 @@ def get_picklist_by_id():
 def create_new_picklist():
     try:
         picklist_title = escape(request.args.get('picklist_title'))
-        employee_id = session['user'].id
+        employee_id = session['user']['id']
     except:
         abort(400)
-    picklist_id = view_controllers.picklist.create_new_picklist(employee_id, picklist_title)
-    session['picklist_id'] = picklist_id
-    return jsonify(picklist_id), 200
+    picklist = view_controllers.picklist.create_new_picklist(employee_id, picklist_title)
+    commit_session(stop_execution = True)
+    print(picklist.id)
+    session['picklist_id'] = picklist.id
+    return jsonify(picklist.id), 200
 
 @app.route('/api/delete_picklist')
 def delete_picklist():
@@ -264,7 +276,9 @@ def delete_picklist():
     except:
         abort(400)
     return_id = view_controllers.picklist.delete_picklist(picklist_id)
-    session.pop('picklist_id')
+    commit_session(stop_execution = False)
+    if 'picklist_id' in session:
+        session.pop('picklist_id')
     return jsonify(return_id), 200
 
 @app.route('/api/save_picklist')
@@ -280,6 +294,7 @@ def add_item_to_picklist():
     except:
         abort(400)
     picklist_item_id = view_controllers.picklist.add_item_to_picklist(picklist_id, location_item_id)
+    commit_session(stop_execution = False)
     return jsonify(picklist_item_id), 200
 
 @app.route('/api/delete_picklist_item')
@@ -289,6 +304,7 @@ def delete_picklist_item():
     except:
         abort(400)
     return_id = view_controllers.picklist.delete_picklist_item(picklist_item_id)
+    commit_session(stop_execution = False)
     return jsonify(return_id), 200
 
 @app.route('/api/checkout_picklist')
@@ -299,6 +315,7 @@ def checkout_picklist():
         abort(400)
     view_controllers.picklist.check_out_picklist(picklist_id)
     session.pop('picklist_id')
+    commit_session(stop_execution = False)
     return jsonify("Success"), 200
 
 @app.route('/api/get_id')

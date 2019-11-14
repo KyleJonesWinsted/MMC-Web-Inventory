@@ -169,7 +169,6 @@ def create_new_item(part_no: str, description: str, manufacturer: str, category:
     new_item = Item(part_no=part_no, description=description, manufacturer=manufacturer, category=category)
     try:
         session.add(new_item)
-        session.commit()
         return new_item
     except:
         return None
@@ -200,7 +199,6 @@ def add_new_location(location_name):
     except:
         location = Location(name = location_name.lower())
         session.add(location)
-        session.commit()
     return location
 
 def create_new_picklist(picklist_title, employee_id):
@@ -209,7 +207,6 @@ def create_new_picklist(picklist_title, employee_id):
         employee = session.query(Employee).filter(Employee.id == employee_id).one()
         picklist.employee = employee
         session.add(picklist)
-        session.commit()
     except:
         session.rollback()
         abort(500)
