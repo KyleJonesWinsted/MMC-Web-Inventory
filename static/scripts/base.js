@@ -1,3 +1,9 @@
+$(window).bind("pageshow", function(event) {
+    if (event.originalEvent.persisted) {
+        window.location.reload() 
+    }
+});
+
 // Search box functionality
 const searchBox = document.getElementById('search-box');
 const searchButton = document.getElementById('search-button');
@@ -25,7 +31,7 @@ function search() {
 //Picklist functionality
 const $picklistFrame = $('#picklist-frame');
 
-getPicklist()
+ getPicklist()
 
 function getPicklist() {
     $picklistFrame.load('/api/get_picklist');
