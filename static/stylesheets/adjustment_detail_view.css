@@ -26,6 +26,12 @@ body {
     color: #005ea1;
 }
 
+#sku {
+    font-family: 'HelveticaNeueThin', monospace;
+    margin: 0;
+    font-size: 80%;
+}
+
 #page-header {
     border-bottom: 1px solid lightgrey;
     padding: 5px;

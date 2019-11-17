@@ -23,7 +23,7 @@
     <h2>Date</h2>
     <p>View all adjustments made on a given date. Format is YYYY-MM-DD.</p>
     <label for="date-entry">Date: </label>
-    <input type="text" id='date-entry' placeholder='ex. "2019-06-14"'>
+    <input type="text" id='date-entry' placeholder='ex. "2019-06-14"' pattern="^\d{4}.\d{2}.\d{2}$">
     <button class="block-button" id='date-submit'>GO</button>
     <span class="bold-or">OR</span>
     <a href="{{ url_for('adjustments_by_date') }}">

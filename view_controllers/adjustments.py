@@ -105,7 +105,7 @@ def adjustments_view(browse_type, filter_id, page_number = 0):
             abort(400)
     except:
         db.session.rollback()
-        abort(500)
+        abort(404)
     page_count = ceil(adjustment_count / db.page_limit)
     for adjustment in adjustments:
         rows.append(BasicRow(

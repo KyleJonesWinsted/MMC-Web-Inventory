@@ -26,6 +26,22 @@ def get_object_id(search_string, object_type):
         except:
             abort(404)
         result_id = location.id
+    elif object_type == 'manufacturer':
+        item_count = db.count_items_by_manufacturer(search_string.lower())
+        if item_count == 0:
+            abort(404)
+        result_id = search_string.lower()
+    elif object_type == 'item':
+        item = db.get_item_by_sku(search_string)
+        if item == None:
+            abort(404)
+        result_id = item.sku
+    elif object_type == 'employee':
+        try:
+            employee = db.session.query(db.Employee).get(search_string)
+        except:
+            abort(404)
+        result_id = employee.id
     elif object_type == "reason":
         try:
             reason = db.session.query(db.AdjustmentReason).filter(db.AdjustmentReason.name == search_string.lower()).one()
@@ -99,30 +115,33 @@ def manufacturer_select_view():
 def items_view(browse_type, filter_id, page_number = 0):
     items = []
     rows = []
-    if browse_type == 'Category':
-        category = db.session.query(db.Category).filter(db.Category.id==filter_id).one()
-        table_header = '{}s'.format(category.name.title())
-        page_title = '{}s'.format(category.name.title())
-        item_count = db.count_items_by_category_id(filter_id)
-        items = db.get_items_by_category_id(filter_id, page_number)
-    elif browse_type == 'Location':
-        location = db.session.query(db.Location).filter(db.Location.id==filter_id).one()
-        table_header = 'Items in {}'.format(location.name.upper())
-        page_title = location.name.upper()
-        item_count = db.count_items_by_location_id(filter_id)
-        items = db.get_items_by_location_id(filter_id, page_number)
-    elif browse_type == 'Manufacturer':
-        table_header = 'Items from {}'.format(filter_id.title())
-        page_title = filter_id.title()
-        item_count = db.count_items_by_manufacturer(filter_id)
-        items = db.get_items_by_manufacturer(filter_id, page_number)
-    elif browse_type == 'All':
-        table_header = 'All Items'
-        page_title = 'All Items'
-        item_count = db.count_all_items()
-        items = db.get_all_items(page_number)
-    else:
-        abort(400)
+    try:
+        if browse_type == 'Category':
+            category = db.session.query(db.Category).filter(db.Category.id==filter_id).one()
+            table_header = '{}s'.format(category.name.title())
+            page_title = '{}s'.format(category.name.title())
+            item_count = db.count_items_by_category_id(filter_id)
+            items = db.get_items_by_category_id(filter_id, page_number)
+        elif browse_type == 'Location':
+            location = db.session.query(db.Location).filter(db.Location.id==filter_id).one()
+            table_header = 'Items in {}'.format(location.name.upper())
+            page_title = location.name.upper()
+            item_count = db.count_items_by_location_id(filter_id)
+            items = db.get_items_by_location_id(filter_id, page_number)
+        elif browse_type == 'Manufacturer':
+            table_header = 'Items from {}'.format(filter_id.title())
+            page_title = filter_id.title()
+            item_count = db.count_items_by_manufacturer(filter_id)
+            items = db.get_items_by_manufacturer(filter_id, page_number)
+        elif browse_type == 'All':
+            table_header = 'All Items'
+            page_title = 'All Items'
+            item_count = db.count_all_items()
+            items = db.get_all_items(page_number)
+        else:
+            abort(400)
+    except:
+        abort(500)
     page_count = ceil(item_count / db.page_limit)
     for item in items:
         rows.append(BasicRow(

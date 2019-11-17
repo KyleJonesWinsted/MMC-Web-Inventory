@@ -10,6 +10,7 @@
 <h1 id='page-header'>Adjustment Details</h1>
 <h4 id='reason'>{{ adjustment.reason.name.title() }}</h4>
 <h2 id='item'>{{ adjustment.item.manufacturer.title() }} - {{ adjustment.item.part_no.upper() }}</h2>
+<h6 id='sku'>Item SKU: {{adjustment.item.sku }}</h6>
 <p id='employee-datetime'>Created by {{ adjustment.employee.name.title() }} on {{ adjustment.date.strftime("%x") }} at {{ adjustment.datetime.strftime("%-I:%M %p") }}</p>
 <h2 id="changes-header">Changes</h2>
 {% for adj_location in adjustment.locations %}

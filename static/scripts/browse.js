@@ -1,9 +1,15 @@
 $(function() {
 
+    const apiURL = '/api/get_id';
+
+    function createBaseURL(browseType) {
+        return "/browse/items?browse_type=" + browseType + "&filter_id="
+    }
+
     function categorySearch() {
         var categoryString = $('#category-entry').val();
-        var baseURL = "/browse/items?browse_type=Category&filter_id="
-        request = $.get('/api/get_id', { search_string: categoryString.toLowerCase(), object_type: 'category'})
+        var baseURL = createBaseURL("Category");
+        var request = $.get(apiURL, { search_string: categoryString.toLowerCase(), object_type: 'category'})
         request.done(function(data) {
             window.location.assign(baseURL + data)
         });
@@ -14,8 +20,8 @@ $(function() {
 
     function locationSearch() {
         var locationString = $('#location-entry').val();
-        var baseURL = "/browse/items?browse_type=Location&filter_id="
-        request = $.get('/api/get_id', {search_string: locationString.toLowerCase(), object_type: 'location'})
+        var baseURL = createBaseURL("Location");
+        var request = $.get(apiURL, {search_string: locationString.toLowerCase(), object_type: 'location'})
         request.done(function(data) {
             window.location.assign(baseURL + data);
         });
@@ -26,14 +32,26 @@ $(function() {
 
     function manufacturerSearch() {
         var manufacturerString = $('#manufacturer-entry').val();
-        var baseURL = "/browse/items?browse_type=Manufacturer&filter_id="
-        window.location.assign(baseURL + encodeURI(manufacturerString.toLowerCase()));
+        var baseURL = createBaseURL("Manufacturer");
+        var request = $.get(apiURL, {search_string: manufacturerString.toLowerCase(), object_type: 'manufacturer'})
+        request.done(function(data) {
+            window.location.assign(baseURL + data);
+        });
+        request.fail(function() {
+            alert("The entered manufacturer does not exist.");
+        });
     }
 
     function itemSearch() {
         var itemSKU = $('#sku-entry').val();
         var baseURL = "/item/";
-        window.location.assign(baseURL + encodeURI(itemSKU));
+        var request = $.get(apiURL, {search_string: itemSKU, object_type: 'item'})
+        request.done(function(data) {
+            window.location.assign(baseURL + data)
+        });
+        request.fail(function() {
+            alert("The entered SKU number does not exist.")
+        });
     }
 
     $('#category-submit').click(function() {

@@ -1,27 +1,50 @@
 $(function() {
 
+    const apiURL = "/api/get_id"
+
+    function createBaseURL(browseType) {
+        return "/adjustments/adjustments?browse_type=" + browseType + "&filter_id="
+    }
+
     function employeeSearch() {
         var employeeString = $('#employee-entry').val();
-        var baseURL = "/adjustments/adjustments?browse_type=employee&filter_id=";
-        window.location.assign(baseURL + encodeURI(employeeString));
+        var baseURL = createBaseURL("employee");
+        var request = $.get(apiURL, {search_string: employeeString, object_type: 'employee'});
+        request.done(function(data) {
+            window.location.assign(baseURL + data);
+        });
+        request.fail(function() {
+            alert("The entered employee ID does not exist.");
+        });
     }
 
     function dateSearch() {
         var dateString = $('#date-entry').val();
-        var baseURL = "/adjustments/adjustments?browse_type=date&filter_id=";
-        window.location.assign(baseURL + encodeURI(dateString));
+        var baseURL = createBaseURL("date");
+        var dateTextbox = document.getElementById('date-entry');
+        if (dateTextbox.validity.patternMismatch) {
+            alert("Please enter a valid date.");
+        } else {
+            window.location.assign(baseURL + encodeURI(dateString));
+        }
     }
 
-    function itemSearch() {
+    function itemSearch() {        
         var itemString = $('#sku-entry').val();
-        var baseURL = "/adjustments/adjustments?browse_type=item&filter_id=";
-        window.location.assign(baseURL + encodeURI(itemString));
+        var baseURL = createBaseURL("item");
+        var request = $.get(apiURL, {search_string: itemString, object_type: 'item'});
+        request.done(function(data) {
+            window.location.assign(baseURL + data);
+        });
+        request.fail(function() {
+            alert('The entered SKU number does not exist.');
+        });
     }
 
     function reasonSearch() {
         var reasonString = $('#reason-entry').val();
         var baseURL = "/adjustments/adjustments?browse_type=reason&filter_id=";
-        request = $.get('/api/get_id', {search_string: reasonString.toLowerCase(), object_type: 'reason'});
+        var request = $.get('/api/get_id', {search_string: reasonString.toLowerCase(), object_type: 'reason'});
         request.done(function(data) {
             window.location.assign(baseURL + data);
         });
