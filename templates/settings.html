@@ -3,19 +3,25 @@
 {% block title %}Settings{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="../static/stylesheets/settings.css">
+<link rel="stylesheet" href="../static/stylesheets/browse.css">
 {% endblock %}
 
 {% block main %}
-<h1>This is the settings page</h1>
-<button class="block-button" id="adjust-stock-button">Adjust Stock for Item</button>
-<div id="sku-entry-frame">
-    <label for="sku-textbox">Enter SKU Number:</label>
-    <input type="text" name="sku-textbox" id="sku-textbox" pattern="^\d{4,}$">
-    <button id='sku-entry-submit'>Submit</button>
-    <p id="sku-entry-error-text">Please enter a valid sku number.</p>
+<h1>Management</h1>
+<div class="browse-row">
+    <h2>Create New Item</h2>
+    <p>Create a new item. After entering item details, you will be able to modify item quantities.</p>
+    <a href="{{ url_for('placeholder', page_name='create item') }}">
+        <button class="block-button create-item-button">Create Item</button>
+    </a>
 </div>
-<div id="background-cover"></div>
+<div class="browse-row">
+    <h2>Adjust Stock for Item</h2>
+    <p>Manually edit quantity levels in each storage location for an item.</p>
+    <label for="category-entry">Item SKU: </label>
+    <input type="text" id='adjust-entry' placeholder='ex. "1234"'>
+    <button class="block-button" id="adjust-submit">GO</button>
+</div>
 {% endblock %}
 
 {% block script %}

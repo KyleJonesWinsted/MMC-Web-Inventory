@@ -1,5 +1,6 @@
 from data_model import session, Item, Location, Adjustment, AdjustmentLocation, LocationItem, Employee, AdjustmentReason, Category, Picklist, PicklistItem
 import data_model as db
+import traceback
 from sqlalchemy import func, and_, or_
 from math import ceil
 from datetime import datetime, date
@@ -177,22 +178,17 @@ def create_new_item(part_no: str, description: str, manufacturer: str, category:
         return None
 
 def adjust_quantities_for_item(locations, employee_id: int, reason_id: int, item_sku: int) -> str:
-    # Locations argument should be a dictionary with keys 'location_id' and 'quantity'
+    # Locations argument should be a dictionary with format {'location_id': 'quantity'}
     try:
         item = get_item_by_sku(item_sku)
         reason = session.query(AdjustmentReason).filter(AdjustmentReason.id==reason_id).one()
         employee = session.query(Employee).filter(Employee.id == employee_id).one()
-        item.locations = []
-        for l in locations:
-            quantity = l['quantity']
-            if quantity > 0:
-                location = session.query(Location).filter(Location.id==int(l['location_id'])).one()
-                association = LocationItem(quantity = quantity)
-                association.item = item
-                association.location = location
-                session.add(association)
+        for location in item.locations:
+            location.quantity = locations[location.id]
+        item.qty_checked_out = locations['checked-out']
         return 'Success'
-    except:
+    except Exception as e:
+        traceback.print_exc()
         session.rollback()
         abort(500)
 
@@ -224,7 +220,6 @@ def create_new_adjustment(reason_id, item_sku, employee_id, qty_changes):
         item = session.query(Item).get(item_sku)
         reason = session.query(AdjustmentReason).get(reason_id)
     except:
-        print('unable to get employee, reason, or item')
         abort(400)
     new_adjustment = Adjustment()
     new_adjustment.employee = employee
@@ -239,7 +234,6 @@ def create_new_adjustment(reason_id, item_sku, employee_id, qty_changes):
         try:
             location = session.query(Location).get(qty_change['location_id'])
         except:
-            print('unable to get location {}'.format(qty_change['location_id']))
             abort(400)
         new_adj_location = AdjustmentLocation(new_qty = qty_change['new_qty'], old_qty = qty_change['old_qty'])
         new_adj_location.adjustment = new_adjustment
@@ -248,6 +242,5 @@ def create_new_adjustment(reason_id, item_sku, employee_id, qty_changes):
             session.add(new_adj_location)
         except:
             session.rollback()
-            print('unable to add adj_location {}'.format(new_adj_location))
             abort(500)
     return new_adjustment.id

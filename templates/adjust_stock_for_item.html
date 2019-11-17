@@ -2,36 +2,43 @@
 
 {% block title %}Adjust {{ item.part_no.upper() }} Quantity{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="../static/stylesheets/form.css">
+{% endblock %}
+
 {% block main %}
 <h1>Adjust Stock for {{ item.part_no.upper() }}</h1>
-<div id='stock-in-out-frame'>
-    <form id='stock-in-out-form'>
-        <label for="employee-id">Employee ID:</label>
-        <input type="text" name="employee-id" id="employee-id"><br>
-        <label for="employee-password">Password:</label>
-        <input type="password" name="employee-password" id="employee-password"><br>
+<div id='form-frame'>
+    <form id='stock-in-out-form' method='POST' action='/settings/adjust_stock'>
+        <input type="text" name="item-sku" class="hidden-input" value={{ item.sku }}>
         <label for="reason">Reason for Change:</label>
-        <select name="reason" id="reason">
-            <option selected value="0">-</option>
-            {% for reason in reasons %}
-                <option value={{ reason.id }}>{{ reason.name }}</option>
-            {% endfor %}
-        </select><br>
+        <div id='select-div'>
+            <select required name="reason" id="reason">
+                {% for reason in reasons %}
+                    <option value={{ reason.id }}>{{ reason.name }}</option>
+                {% endfor %}
+            </select><br>
+        </div>
         <fieldset id='locations-fieldset'>
             <legend>Locations</legend>
             {% for location in item.locations %}
-                <label class="location-label" for={{ location.location.id }}>{{ location.location.name.upper() }}</label>
-                <input type="number" name={{ location.location.id }} id={{ location.location.id }} value={{ location.quantity }}>
+                <label class="location-label" for="quantity">{{ location.location.name.upper() }}</label>
+                <input required type="number" name="quantity" value={{ location.quantity }}>
+                <input required type="text" class="hidden-input" name="location-id" value={{ location.id }}>
                 <br>
             {% endfor %}
         </fieldset>
+        <label for="checked-out">Checked Out Qty: </label>
+        <input required type="number" name="checked-out" value={{ item.qty_checked_out }}>
     </form>
-        <label for="add-location-textbox">New Location:</label>
-        <input type="text" id="add-location-textbox" pattern="^[0-9]{3}[^0-9]+[0-9]{2,}[^0-9]+$">
-        <button id='add-location-button'>Add</button>
-        <br>
-        <input type="reset" form="stock-in-out-form">
-        <button id='submit' form='stock-in-out-form'>Submit</button>
+    <!--
+    <label for="add-location-textbox">New Location:</label>
+    <input type="text" id="add-location-textbox" pattern="^[0-9]{3}[^0-9]+[0-9]{2,}[^0-9]+$">
+    <button id='add-location-button'>Add</button>
+    -->
+    <br>
+    <input type="reset" form="stock-in-out-form" class="block-button">
+    <button id='submit' form='stock-in-out-form' class="block-button">Submit</button>
 </div>
 {% endblock %}
 

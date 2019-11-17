@@ -136,14 +136,31 @@ def settings():
     check_admin()
     return render_template('settings.html')
 
-@app.route('/settings/adjust_stock')
+@app.route('/settings/adjust_stock', methods=['GET', 'POST'])
 def adjust_stock_for_item():
-    check_admin()
+    if request.method == 'GET':
+        check_admin()
+        try:
+            item_sku = request.args.get('item_sku')
+        except:
+            abort(400)
+        return view_controllers.settings.adjust_stock_for_item_view(item_sku = item_sku)
     try:
-        item_sku = request.args.get('item_sku')
+        item_sku = request.form.get("item-sku")
+        reason_id = request.form.get("reason")
+        location_ids = request.form.getlist("location-id")
+        quantities = request.form.getlist("quantity")
+        qty_checked_out = request.form.get("checked-out")
+        employee_id = session['user']['id']
     except:
         abort(400)
-    return view_controllers.settings.adjust_stock_for_item_view(item_sku = item_sku)
+    locations = {}
+    for i in range(len(location_ids)):
+        locations[int(location_ids[i])] = int(quantities[i])
+    locations['checked-out'] = int(qty_checked_out)
+    db.adjust_quantities_for_item(locations, employee_id, reason_id, item_sku)
+    commit_session(stop_execution = False)
+    return redirect(url_for('view_item_details', sku = item_sku))
 
 #Picklists
 @app.route('/picklists')

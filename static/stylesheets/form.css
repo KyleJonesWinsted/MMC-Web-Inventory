@@ -1,0 +1,66 @@
+form {
+    text-align: center;
+    font-family: 'HelveticaNeue';
+}
+
+#form-frame {
+    text-align: center;
+}
+
+fieldset {
+    border: 1px solid lightgray;
+    margin: 20px;
+}
+
+fieldset legend {
+    font-size: 120%;
+}
+
+.hidden-input {
+    display: none;
+}
+
+form label {
+    margin-right: 10px;
+}
+
+form input {
+    width: 70px;
+    text-align: center;
+    font-size: 1em;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #d2d5db;
+    box-shadow: 0 0 3px #d2d5db;
+}
+
+form select {
+    -webkit-appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    text-align: center;
+    width: 200px;
+    font-size: 1em;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #d2d5db;
+    box-shadow: 0 0 3px #d2d5db;
+}
+
+#select-div {
+    position: relative;
+    display: inline-block;
+}
+
+#select-div:after {
+    content: '▼';
+    position: absolute;
+    top: 17px;
+    padding-left: 75px;
+    pointer-events: none;
+}
+
+

@@ -1,5 +1,8 @@
 $( function() {
 
+    //Blank reason dropdown
+    $("#reason").prop("selectedIndex", -1);
+
     //Add location
     $('#add-location-button').click( function() {
         const addLocationTextbox = document.getElementById('add-location-textbox');
