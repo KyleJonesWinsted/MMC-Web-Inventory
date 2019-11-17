@@ -16,3 +16,4 @@ alembic.ini
 jsconfig.json
 
 example_adjust_quantities.json
+static/.DS_Store
