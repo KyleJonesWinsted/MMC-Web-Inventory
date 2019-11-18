@@ -7,7 +7,8 @@ $( function() {
     $('#add-location-button').click( function() {
         const addLocationTextbox = document.getElementById('add-location-textbox');
         addLocationTextbox.setCustomValidity('Enter a valid location name. (ex. "301A01A")');
-        var locationLabels = document.getElementsByClassName('location-label');        
+        var locationLabels = document.getElementsByClassName('location-label');
+        var itemSKU = document.getElementById('item-sku').value;       
         var locationNames = [];
         for (var i = 0; i < locationLabels.length; i++) {
             locationNames.push(locationLabels[i].innerHTML.toLowerCase());
@@ -19,22 +20,13 @@ $( function() {
                 addLocationTextbox.reportValidity();
                 return
             }
-            $.get('/api/new_location', {location_name: locationName}).done(function (data) {
-                const location = data;
-                const locationLabel = document.createElement('label');
-                const quantityInput = document.createElement('input');
-                locationLabel.htmlFor = location['location_id'];
-                locationLabel.className = 'location-label';
-                locationLabel.innerHTML = location['location_name'].toUpperCase();
-                quantityInput.type = "number";
-                quantityInput.defaultValue = 0;
-                const locationFieldSet = document.getElementById('locations-fieldset');
-                locationFieldSet.appendChild(locationLabel);
-                locationFieldSet.appendChild(quantityInput);
-                locationFieldSet.appendChild(document.createElement('br'));
-                addLocationTextbox.value = "";
-            })         
-            
+            var request = $.get('/api/new_location', {location_name: locationName, item_sku: itemSKU});
+            request.done(function (data) {
+                window.location.reload();
+            });
+            request.fail(function() {
+                alert("Unable to add new location. Please reload and try again.");
+            });            
         } else {
             addLocationTextbox.reportValidity();
         }

@@ -63,4 +63,11 @@ form select {
     pointer-events: none;
 }
 
+#add-location-textbox {
+    width: 125px;
+}
 
+#add-location-button {
+    padding: 10px;
+    font-size: 80%;
+}

@@ -192,13 +192,24 @@ def adjust_quantities_for_item(locations, employee_id: int, reason_id: int, item
         session.rollback()
         abort(500)
 
-def add_new_location(location_name):
+def add_new_location(location_name, item_sku):
+    try:
+        item = session.query(Item).get(item_sku)
+    except:
+        abort(400)
     try:
         location = session.query(Location).filter(Location.name == location_name.lower()).one()
     except:
         location = Location(name = location_name.lower())
         session.add(location)
-    return location
+    for location_item in item.locations:
+        if location_item.location.id == location.id:
+            return location_item.id
+    location_item = LocationItem(quantity = 0)
+    session.add(location_item)
+    location_item.location = location
+    location_item.item = item
+    return location_item.id
 
 def create_new_picklist(picklist_title, employee_id):
     picklist = Picklist(title = picklist_title, status = 'open')

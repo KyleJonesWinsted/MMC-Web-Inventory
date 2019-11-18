@@ -28,7 +28,10 @@ def create_new_picklist(employee_id, picklist_title) -> int:
 def delete_picklist(picklist_id):
     try:
         picklist = db.session.query(db.Picklist).filter(db.Picklist.id == picklist_id).one()
-        db.session.delete(picklist)
+        if picklist.status == 'open':
+            db.session.delete(picklist)
+        else:
+            abort(400)
     except Exception as e:
         traceback.print_exc()
         db.session.rollback()

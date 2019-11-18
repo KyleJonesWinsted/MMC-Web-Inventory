@@ -235,15 +235,12 @@ def add_new_location():
     check_admin()
     try:
         location_name = request.args.get('location_name')
+        item_sku = int(request.args.get('item_sku'))
     except:
         abort(400)
-    location = db.add_new_location(location_name.lower())
+    location_item_id = db.add_new_location(location_name.lower(), item_sku)
     commit_session(stop_execution = True)
-    json = {
-        'location_id': location.id,
-        'location_name': location.name.lower()
-    }
-    return jsonify(json), 200
+    return jsonify(location_item_id), 200
 
 @app.route('/api/set_picklist_id')
 def create_new_cart():
