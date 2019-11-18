@@ -1,5 +1,6 @@
 import data_controller as db
 import app
+import traceback
 from flask import render_template, abort
 
 def picklist_view(picklist_id):
@@ -27,9 +28,9 @@ def create_new_picklist(employee_id, picklist_title) -> int:
 def delete_picklist(picklist_id):
     try:
         picklist = db.session.query(db.Picklist).filter(db.Picklist.id == picklist_id).one()
-        picklist.status = 'deleted'
-        return picklist.id
-    except:
+        db.session.delete(picklist)
+    except Exception as e:
+        traceback.print_exc()
         db.session.rollback()
         abort(400)
 
@@ -93,7 +94,6 @@ def check_in_picklist(picklist_id, returned_item_counts):
     except:
         abort(400)
     try:
-        picklist.status = 'closed'
         for picklist_item in picklist.location_items:
             qty_not_returned = picklist_item.quantity - returned_item_counts[picklist_item.id]
             old_qty = picklist_item.location_item.quantity + picklist_item.quantity
@@ -107,6 +107,7 @@ def check_in_picklist(picklist_id, returned_item_counts):
                     [{'location_id': picklist_item.location_item.location.id, 
                         'old_qty': old_qty,
                         'new_qty': new_qty}])
+        db.session.delete(picklist)
     except:
         db.session.rollback()
         abort(500)

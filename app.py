@@ -291,11 +291,11 @@ def delete_picklist():
         picklist_id = request.args.get('picklist_id')
     except:
         abort(400)
-    return_id = view_controllers.picklist.delete_picklist(picklist_id)
+    view_controllers.picklist.delete_picklist(picklist_id)
     commit_session(stop_execution = False)
     if 'picklist_id' in session:
         session.pop('picklist_id')
-    return jsonify(return_id), 200
+    return jsonify("Deleted"), 200
 
 @app.route('/api/save_picklist')
 def save_picklist():

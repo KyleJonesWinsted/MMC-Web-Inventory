@@ -177,7 +177,7 @@ class Picklist(Base):
     employee_id = Column(Integer, ForeignKey('employees.id'))
     employee = relationship('Employee', back_populates='picklists')
     datetime = Column(DateTime(timezone=False), server_default=func.now())
-    location_items = relationship('PicklistItem', back_populates='picklist')
+    location_items = relationship('PicklistItem', back_populates='picklist', cascade="all, delete, delete-orphan")
 
     @hybrid_property
     def number_of_items(self):
