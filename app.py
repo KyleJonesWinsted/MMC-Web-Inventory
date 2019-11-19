@@ -6,6 +6,7 @@ import view_controllers.picklist
 import view_controllers.adjustments
 import data_controller as db
 import os
+from sqlalchemy import exc
 app = Flask(__name__)
 app.secret_key = os.urandom(64)
 
@@ -35,7 +36,11 @@ def commit_session(stop_execution: bool = True):
         if stop_execution:
             abort(403)
     else:
-        db.session.commit()
+        try:
+            db.session.commit()
+        except exc.DBAPIError as ex:
+            db.session.rollback()
+            print(ex.orig.pgcode)
 
 @app.route('/logout')
 def logout():

@@ -183,9 +183,18 @@ def adjust_quantities_for_item(locations, employee_id: int, reason_id: int, item
         item = get_item_by_sku(item_sku)
         reason = session.query(AdjustmentReason).filter(AdjustmentReason.id==reason_id).one()
         employee = session.query(Employee).filter(Employee.id == employee_id).one()
-        for location in item.locations:
-            location.quantity = locations[location.id]
+        qty_changes = []
+        for location_item in item.locations:
+            old_qty = location_item.quantity
+            new_qty = locations[location_item.id]
+            qty_changes.append({
+                'location_id': location_item.location.id,
+                'old_qty': old_qty,
+                'new_qty': new_qty
+            })
+            location_item.quantity = new_qty
         item.qty_checked_out = locations['checked-out']
+        create_new_adjustment(reason.id, item.sku, employee.id, qty_changes)
         return 'Success'
     except Exception as e:
         traceback.print_exc()
@@ -234,7 +243,7 @@ def create_new_picklist(picklist_title, employee_id):
 
 def create_new_adjustment(reason_id, item_sku, employee_id, qty_changes):
     """
-    locations should be dict list in form of {location_id: int, old_qty: int, new_qty: int}
+    qty_changes should be dict list in form of {location_id: int, old_qty: int, new_qty: int}
     """
     try:
         employee = session.query(Employee).get(employee_id)
@@ -253,7 +262,7 @@ def create_new_adjustment(reason_id, item_sku, employee_id, qty_changes):
         abort(500)
     for qty_change in qty_changes:
         try:
-            location = session.query(Location).get(qty_change['location_id'])
+            location = session.query(Location).filter(Location.id == qty_change['location_id']).one()
         except:
             abort(400)
         new_adj_location = AdjustmentLocation(new_qty = qty_change['new_qty'], old_qty = qty_change['old_qty'])
