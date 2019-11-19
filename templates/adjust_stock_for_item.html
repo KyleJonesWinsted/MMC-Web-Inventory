@@ -15,7 +15,7 @@
         <div id='select-div'>
             <select required name="reason" id="reason">
                 {% for reason in reasons %}
-                    <option value={{ reason.id }}>{{ reason.name }}</option>
+                    <option value={{ reason.id }}>{{ reason.name.title() }}</option>
                 {% endfor %}
             </select><br>
         </div>
@@ -23,10 +23,12 @@
             <legend>Locations</legend>
             <div id='locations-fieldset'>
                 {% for location in item.locations %}
-                    <label class="location-label" for="quantity">{{ location.location.name.upper() }}</label>
-                    <input required type="number" name="quantity" value={{ location.quantity }}>
-                    <input required type="text" class="hidden-input" name="location-id" value={{ location.id }}>
-                    <br>
+                    <div id={{ location.id }}>
+                        <label class="location-label" for="quantity">{{ location.location.name.upper() }}</label>
+                        <input required type="number" name="quantity" value={{ location.quantity }}>
+                        <input required type="text" class="hidden-input" name="location-id" value={{ location.id }}>
+                        <i class="fa fa-trash-o delete-location"></i>
+                    </div>
                 {% endfor %}
             </div>
             <label for="add-location-textbox" form="dummy">New Location:</label>

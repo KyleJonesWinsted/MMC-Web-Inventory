@@ -29,7 +29,7 @@ def check_admin():
     if session['user']['credentials'] == 'employee':
         abort(403)
 
-def commit_session(stop_execution: bool):
+def commit_session(stop_execution: bool = True):
     if session['user']['credentials'] == 'demo':
         db.session.rollback()
         if stop_execution:
@@ -241,6 +241,20 @@ def add_new_location():
     location_item_id = db.add_new_location(location_name.lower(), item_sku)
     commit_session(stop_execution = True)
     return jsonify(location_item_id), 200
+
+@app.route('/api/delete_location_item')
+def delete_location_item():
+    check_admin()
+    try:
+        location_item_id = request.args.get('location_item_id')
+    except:
+        abort(400)
+    result = db.delete_location_item(location_item_id)
+    if result == 409:
+        abort(409)
+    commit_session(stop_execution = False)
+    return jsonify("deleted"), 200
+    
 
 @app.route('/api/set_picklist_id')
 def create_new_cart():

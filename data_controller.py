@@ -4,7 +4,7 @@ import traceback
 from sqlalchemy import func, and_, or_
 from math import ceil
 from datetime import datetime, date
-from flask import abort
+from flask import abort, jsonify
 
 page_limit = 20
 
@@ -210,6 +210,16 @@ def add_new_location(location_name, item_sku):
     location_item.location = location
     location_item.item = item
     return location_item.id
+
+def delete_location_item(location_item_id):
+    try:
+        location_item = session.query(LocationItem).filter(LocationItem.id == location_item_id).one()
+    except:
+        abort(400)
+    if location_item.quantity != 0 or location_item.picklists != []:
+        return 409
+    session.delete(location_item)
+    return 200
 
 def create_new_picklist(picklist_title, employee_id):
     picklist = Picklist(title = picklist_title, status = 'open')

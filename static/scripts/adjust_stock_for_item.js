@@ -31,4 +31,16 @@ $( function() {
             addLocationTextbox.reportValidity();
         }
     });
+
+    //Delete location
+    $(".delete-location").click(function() {
+        var locationItemId = this.parentElement.id
+        var request = $.get('/api/delete_location_item', {location_item_id: locationItemId});
+        request.done(function() {
+            window.location.reload();
+        });
+        request.fail(function() {
+            alert("Unable to delete location. Location must be empty with no items checked out to be deleted.")
+        });
+    });
 });

@@ -50,6 +50,14 @@ form select {
     box-shadow: 0 0 3px #d2d5db;
 }
 
+form i {
+    font-size: 24px;
+}
+
+form i:hover {
+    color: red;
+}
+
 #select-div {
     position: relative;
     display: inline-block;
