@@ -169,13 +169,17 @@ def count_search_results(search_string: str) -> int:
 
 # Modify database
 
-def create_new_item(part_no: str, description: str, manufacturer: str, category: Category) -> Item:
-    new_item = Item(part_no=part_no, description=description, manufacturer=manufacturer, category=category)
+def create_new_item(part_no: str, description: str, manufacturer: str, category_id: int) -> Item:
+    try:
+        category = session.query(Category).filter(Category.id == category_id).one()
+    except:
+        abort(400)
+    new_item = Item(part_no=part_no.lower(), description=description.lower(), manufacturer=manufacturer.lower(), category_id=category_id)
     try:
         session.add(new_item)
         return new_item
     except:
-        return None
+        abort(500)
 
 def adjust_quantities_for_item(locations, employee_id: int, reason_id: int, item_sku: int) -> str:
     # Locations argument should be a dictionary with format {'location_id': 'quantity'}

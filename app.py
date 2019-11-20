@@ -141,6 +141,23 @@ def settings():
     check_admin()
     return render_template('settings.html')
 
+@app.route('/settings/create_new_item', methods = ['GET', 'POST'])
+def create_new_item():
+    check_admin()
+    if request.method == 'GET':
+        categories = db.get_all_categories()
+        return render_template('create_new_item.html', categories = categories)
+    try:
+        part_no = request.form.get("part_no").lower()
+        manufacturer = request.form.get("manufacturer").lower()
+        description = request.form.get("description").lower()
+        category_id = request.form.get("category")
+    except:
+        abort(400)
+    new_item = db.create_new_item(part_no, description, manufacturer, category_id)
+    commit_session(stop_execution=True)
+    return redirect("/settings/adjust_stock?item_sku={}".format(new_item.sku))
+
 @app.route('/settings/adjust_stock', methods=['GET', 'POST'])
 def adjust_stock_for_item():
     if request.method == 'GET':

@@ -25,13 +25,35 @@ form label {
 }
 
 form input {
-    width: 70px;
-    text-align: center;
     font-size: 1em;
     padding: 10px;
     margin: 5px;
     border: 1px solid #d2d5db;
     box-shadow: 0 0 3px #d2d5db;
+}
+
+form textarea {
+    font-size: 90%;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #d2d5db;
+    box-shadow: 0 0 3px #d2d5db;
+    width: 80%;
+}
+
+.number-input {
+    width: 75px;
+    text-align: center;
+}
+
+.text-input {
+    width: 125px;
+    text-align: left;
+}
+
+.text-input-large {
+    width: 250px;
+    text-align: left;
 }
 
 form select {
@@ -69,10 +91,6 @@ form i:hover {
     top: 17px;
     padding-left: 75px;
     pointer-events: none;
-}
-
-#add-location-textbox {
-    width: 125px;
 }
 
 #add-location-button {

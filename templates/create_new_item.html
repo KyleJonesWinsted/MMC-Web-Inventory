@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Create New Item{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="../static/stylesheets/form.css">
+{% endblock %}
+
+{% block main %}
+<h1>Create New Item</h1>
+<div id="form-frame">
+    <form id="create-new-item-form" method="POST" action="/settings/create_new_item">
+        <label for="part_no">Part Number: </label>
+        <input required type="text" class="text-input-large" name="part_no" id="part-no"><br>
+        <label for="manufacturer">Manufacturer: </label>
+        <input required type="text" class="text-input-large" name="manufacturer" id="manufacturer" style="margin-bottom: 20px;"><br>
+        <label for="description">Description: </label><br>
+        <textarea name="description" id="description" cols="30" rows="5"></textarea><br>
+        <label for="category">Category: </label>
+        <div id="select-div">
+            <select required name="category" id="category">
+                {% for category in categories %}
+                    <option value={{ category.id }}>{{ category.name.title() }}</option>
+                {% endfor %}
+            </select><br>
+        </div><br>
+        <input type="reset" id="reset" class="block-button">
+        <button class="block-button" id="submit">Submit</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+//Blank category dropdown
+$("#category").prop("selectedIndex", -1);
+
+$('#reset').click(function() {
+    setTimeout(function() {
+        $("#category").prop("selectedIndex", -1);
+    });
+});
+</script>
+{% endblock %}
