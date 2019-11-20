@@ -181,6 +181,17 @@ def create_new_item(part_no: str, description: str, manufacturer: str, category_
     except:
         abort(500)
 
+def modify_item_details(item_sku, part_no, manufacturer, description, category_id):
+    try:
+        item = session.query(Item).filter(Item.sku == item_sku).one()
+    except:
+        abort(400)
+    item.part_no = part_no
+    item.description = description
+    item.manufacturer = manufacturer
+    item.category_id = category_id
+    return item
+
 def adjust_quantities_for_item(locations, employee_id: int, reason_id: int, item_sku: int) -> str:
     # Locations argument should be a dictionary with format {'location_id': 'quantity'}
     try:

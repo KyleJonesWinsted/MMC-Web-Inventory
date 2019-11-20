@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Modify {{ item.part_no.upper() }}{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="../static/stylesheets/form.css">
+{% endblock %}
+
+{% block main %}
+<h1>Create New Item</h1>
+<div id="form-frame">
+    <form id="modify-item-form" method="POST" action="/settings/modify_item_details">
+        <input type="text" name="item_sku" class="hidden-input" value="{{ item.sku }}">
+        <label for="part_no">Part Number: </label>
+        <input required type="text" class="text-input-large" name="part_no" id="part-no" value="{{ item.part_no.upper() }}"><br>
+        <label for="manufacturer">Manufacturer: </label>
+        <input required type="text" class="text-input-large" name="manufacturer" id="manufacturer" style="margin-bottom: 20px;" value="{{ item.manufacturer.title() }}"><br>
+        <label for="description">Description: </label><br>
+        <textarea name="description" id="description" cols="30" rows="5">{{ item.description }}</textarea><br>
+        <label for="category">Category: </label>
+        <div id="select-div">
+            <select required name="category" id="category">
+                {% for category in categories %}
+                    <option value={{ category.id }}>{{ category.name.title() }}</option>
+                {% endfor %}
+            </select><br>
+        </div><br>
+        <input type="reset" id="reset" class="block-button">
+        <button class="block-button" id="submit">Submit</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+//Reset category dropdown
+$("#category").prop("selectedIndex", {{ item.category.id }});
+
+$('#reset').click(function() {
+    setTimeout(function() {
+        $("#category").prop("selectedIndex", {{ item.category.id }});
+    });
+});
+</script>
+{% endblock %}

@@ -158,6 +158,33 @@ def create_new_item():
     commit_session(stop_execution=True)
     return redirect("/settings/adjust_stock?item_sku={}".format(new_item.sku))
 
+@app.route('/settings/modify_item_details', methods=['GET', 'POST'])
+def modify_item_details():
+    check_admin()
+    if request.method == 'GET':
+        try:
+            item_sku = request.args.get('item_sku')
+            item = db.session.query(db.Item).filter(db.Item.sku == item_sku).one()
+        except:
+            abort(400)
+        categories = db.get_all_categories()
+        return render_template('modify_item_details.html', item = item, categories = categories)
+    try:
+        item_sku = request.form.get("item_sku")
+        part_no = request.form.get("part_no").lower()
+        manufacturer = request.form.get("manufacturer").lower()
+        description = request.form.get("description").lower()
+        category_id = request.form.get("category")
+    except:
+        abort(400)
+    item = db.modify_item_details(item_sku, part_no, manufacturer, description, category_id)
+    commit_session(stop_execution=False)
+    return redirect(url_for('view_item_details', sku = item_sku))
+    
+    
+
+
+
 @app.route('/settings/adjust_stock', methods=['GET', 'POST'])
 def adjust_stock_for_item():
     if request.method == 'GET':
