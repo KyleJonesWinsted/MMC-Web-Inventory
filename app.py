@@ -150,7 +150,7 @@ def create_new_item():
     try:
         part_no = request.form.get("part_no").lower()
         manufacturer = request.form.get("manufacturer").lower()
-        description = request.form.get("description").lower()
+        description = request.form.get("description")
         category_id = request.form.get("category")
     except:
         abort(400)
@@ -173,7 +173,7 @@ def modify_item_details():
         item_sku = request.form.get("item_sku")
         part_no = request.form.get("part_no").lower()
         manufacturer = request.form.get("manufacturer").lower()
-        description = request.form.get("description").lower()
+        description = request.form.get("description")
         category_id = request.form.get("category")
     except:
         abort(400)

@@ -174,7 +174,7 @@ def create_new_item(part_no: str, description: str, manufacturer: str, category_
         category = session.query(Category).filter(Category.id == category_id).one()
     except:
         abort(400)
-    new_item = Item(part_no=part_no.lower(), description=description.lower(), manufacturer=manufacturer.lower(), category_id=category_id)
+    new_item = Item(part_no=part_no.lower(), description=description, manufacturer=manufacturer.lower(), category_id=category_id)
     try:
         session.add(new_item)
         return new_item
