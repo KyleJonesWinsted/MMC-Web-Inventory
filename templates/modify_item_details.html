@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block main %}
-<h1>Create New Item</h1>
+<h1>Modify {{ item.part_no.upper() }}</h1>
 <div id="form-frame">
     <form id="modify-item-form" method="POST" action="/settings/modify_item_details">
         <input type="text" name="item_sku" class="hidden-input" value="{{ item.sku }}">
@@ -34,11 +34,11 @@
 {% block script %}
 <script>
 //Reset category dropdown
-$("#category").prop("selectedIndex", {{ item.category.id }});
+$("#category").val({{ item.category.id }});
 
 $('#reset').click(function() {
     setTimeout(function() {
-        $("#category").prop("selectedIndex", {{ item.category.id }});
+        $("#category").val({{ item.category.id }});
     });
 });
 </script>
