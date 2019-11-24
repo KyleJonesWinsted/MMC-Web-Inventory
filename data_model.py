@@ -14,7 +14,7 @@ class Item(Base):
     __tablename__ = "items"
 
     sku = Column(Integer, Sequence('item_skus'), primary_key=True)
-    part_no = Column(String(50))
+    part_no = Column(String)
     description = Column(String)
     manufacturer = Column(String(50))
     category_id = Column(Integer, ForeignKey('categories.id'))

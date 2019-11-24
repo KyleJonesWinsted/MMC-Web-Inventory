@@ -22,7 +22,7 @@ def get_object_id(search_string, object_type):
         result_id = category.id
     elif object_type == "location":
         try:
-            location = db.session.query(db.Location).filter(db.Location.name == search_string.lower()).one()
+            location = db.session.query(db.Location).filter(db.Location.name == search_string.upper()).one()
         except:
             abort(404)
         result_id = location.id
@@ -73,10 +73,11 @@ def category_select_view():
         page_title='Categories', 
         rows = rows)
 
-def location_select_view():
-    all_locations = db.get_all_locations()
+def location_select_view(page_number = 0):
+    location_count = db.count_all_locations()
+    locations = db.get_all_locations(page_number)
     rows = []
-    for location in all_locations:
+    for location in locations:
         rows.append(BasicRow(
             id = location.id,
             href = '/browse/items?browse_type=Location&filter_id={}'.format(location.id),
@@ -87,10 +88,13 @@ def location_select_view():
             )
         )
         )
+    page_count = ceil(location_count / db.page_limit)
     return render_template('basic_table_view.html', 
         table_header = 'Select Location', 
         page_title='Locations', 
-        rows = rows)
+        rows = rows,
+        current_page = page_number + 1,
+        total_pages = page_count)
 
 def manufacturer_select_view():
     all_manufacturers = db.get_all_manufacturers()

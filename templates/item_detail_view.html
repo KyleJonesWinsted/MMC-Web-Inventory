@@ -15,8 +15,8 @@
 </div>
 <h4 id='manufacturer'>{{ item.manufacturer.title() }}</h4>
 <h2 id='part-no'>{{ item.part_no.upper() }}</h2>
-<h6 id = 'sku'>SKU: {{ item.sku }}</h6>
-<p id='description'>{{ item.description.capitalize() }}</p>
+<h6 id = 'sku'>SKU: {{ item.sku }} - Category: {{ item.category.name.title() }}</h6>
+<p id='description'>{{ item.description }}</p>
 <h2 id='locations-header'>Locations:</h2>
 {% for location in item.locations %}
     <div class='location-row' id={{ location.id }}>

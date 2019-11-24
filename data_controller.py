@@ -54,9 +54,12 @@ def get_all_manufacturers() -> [str]:
 def get_all_categories() -> [Category]:
     return session.query(Category).all()
 
-def get_all_locations() -> [Location]:
-    locations = session.query(Location).all()
-    for i in range(len(locations)):
+def count_all_locations():
+    return session.query(func.count(Location.id)).scalar()
+
+def get_all_locations(page: int = 0) -> [Location]:
+    locations = session.query(Location).limit(page_limit).offset(page_limit * page).all()
+    for i in range(len(locations)-1,-1,-1):
         if locations[i].total_quantity == 0:
             locations.pop(i)
     return locations
@@ -222,9 +225,9 @@ def add_new_location(location_name, item_sku):
     except:
         abort(400)
     try:
-        location = session.query(Location).filter(Location.name == location_name.lower()).one()
+        location = session.query(Location).filter(Location.name == location_name.upper()).one()
     except:
-        location = Location(name = location_name.lower())
+        location = Location(name = location_name.upper())
         session.add(location)
     for location_item in item.locations:
         if location_item.location.id == location.id:

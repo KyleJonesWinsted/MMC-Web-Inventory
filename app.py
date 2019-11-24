@@ -287,7 +287,7 @@ def add_new_location():
         item_sku = int(request.args.get('item_sku'))
     except:
         abort(400)
-    location_item_id = db.add_new_location(location_name.lower(), item_sku)
+    location_item_id = db.add_new_location(location_name.upper(), item_sku)
     commit_session(stop_execution = True)
     return jsonify(location_item_id), 200
 

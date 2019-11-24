@@ -95,6 +95,7 @@ def check_in_picklist(picklist_id, returned_item_counts):
         if picklist.status != 'checked_out':
             abort(400)
     except:
+        traceback.print_exc()
         abort(400)
     try:
         for picklist_item in picklist.location_items:
@@ -106,11 +107,12 @@ def check_in_picklist(picklist_id, returned_item_counts):
             if qty_not_returned != 0:
                 db.create_new_adjustment(1, 
                     picklist_item.location_item.item.sku, 
-                    app.session['user'].id, 
+                    app.session['user']['id'], 
                     [{'location_id': picklist_item.location_item.location.id, 
                         'old_qty': old_qty,
                         'new_qty': new_qty}])
         db.session.delete(picklist)
     except:
+        traceback.print_exc()
         db.session.rollback()
         abort(500)
