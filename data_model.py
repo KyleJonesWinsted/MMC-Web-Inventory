@@ -4,8 +4,9 @@ from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.ext.hybrid import hybrid_property
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import date
+import os
 
-engine = create_engine('postgres://localhost/mmc_test_inventory', echo=False)
+engine = create_engine(os.environ['DATABASE_URL'], echo=False)
 Base = declarative_base()
 Session = sessionmaker(bind=engine)
 session = Session()
