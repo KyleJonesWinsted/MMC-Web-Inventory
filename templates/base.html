@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{{ BUCKET_NAME }}static/stylesheets/base.css">
+    <link rel="stylesheet" href="{{ os.environ['BUCKET_NAME'] }}static/stylesheets/base.css">
     <link rel="icon" type="image/png" href="https://www.millerberndmfg.com/wp-content/uploads/2015/04/favicon-32x32.png" sizes="32x32"> <link rel="icon" type="image/png" href="https://www.millerberndmfg.com/wp-content/uploads/2015/04/favicon.ico" sizes="16x16"> <link rel="apple-touch-icon-precomposed" sizes="152x152" href="https://www.millerberndmfg.com/wp-content/uploads/2015/04/apple-touch-icon-152x152.png">
     <link href="https://allfont.net/allfont.css?fonts=agency-fb" rel="stylesheet" type="text/css" />
     <link href="https://allfont.net/allfont.css?fonts=agency-fb-bold" rel="stylesheet" type="text/css" />
@@ -65,7 +65,7 @@
     <div id="picklist-frame"></div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="{{ BUCKET_NAME }}static/scripts/base.js"></script>
+<script src="{{ os.environ['BUCKET_NAME'] }}static/scripts/base.js"></script>
 {% block script %}{% endblock %}
 </body>
 </html>

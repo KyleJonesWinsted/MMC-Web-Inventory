@@ -3,7 +3,7 @@
 {% block title %}Create New Item{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ BUCKET_NAME }}static/stylesheets/form.css">
+<link rel="stylesheet" href="{{ os.environ['BUCKET_NAME'] }}static/stylesheets/form.css">
 {% endblock %}
 
 {% block main %}

@@ -3,7 +3,7 @@
 {% block title %}Settings{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ BUCKET_NAME }}static/stylesheets/browse.css">
+<link rel="stylesheet" href="{{ os.environ['BUCKET_NAME'] }}static/stylesheets/browse.css">
 {% endblock %}
 
 {% block main %}
@@ -32,5 +32,5 @@
 {% endblock %}
 
 {% block script %}
-<script src="{{ BUCKET_NAME }}static/scripts/settings.js"></script>
+<script src="{{ os.environ['BUCKET_NAME'] }}static/scripts/settings.js"></script>
 {% endblock %}
