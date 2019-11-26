@@ -1,21 +1,21 @@
 @font-face {
     font-family: 'HelveticaNeueThin';
-    src: url('{{ env["BUCKET_NAME"] }}static/fonts/HelveticaNeue-ThinCond.woff') format('woff');
+    src: url('../fonts/HelveticaNeue-ThinCond.woff') format('woff');
 }
 
 @font-face {
     font-family: 'HelveticaNeue';
-    src: url('{{ env["BUCKET_NAME"] }}static/fonts/HelveticaNeue-Condensed.woff') format('woff');
+    src: url('../fonts/HelveticaNeue-Condensed.woff') format('woff');
 }
 
 @font-face {
     font-family: 'HelveticaNeueLight';
-    src: url('{{ env["BUCKET_NAME"] }}static/fonts/helvetica-47-light-condensed-587ebd7b5a6f6.woff') format('woff');
+    src: url('../fonts/helvetica-47-light-condensed-587ebd7b5a6f6.woff') format('woff');
 }
 
 @font-face {
     font-family: 'Agency FB Bold';
-    src: url('{{ env["BUCKET_NAME"] }}static/fonts/AGENCYB.woff') format('woff');
+    src: url('../fonts/AGENCYB.woff') format('woff');
 }
 
 #sidebar {

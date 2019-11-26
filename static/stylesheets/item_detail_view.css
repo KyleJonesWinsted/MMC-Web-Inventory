@@ -26,7 +26,7 @@
 }
 
 #part-no {
-    font-family: 'Agency FB', monospace;
+    font-family: 'Agency FB Bold', monospace;
     color: #005ea1;
     margin: 0.5em auto;
     font-size: 200%;
@@ -40,7 +40,7 @@
 }
 
 #locations-header {
-    font-family: 'Agency FB', monospace;
+    font-family: 'Agency FB Bold', monospace;
     color: #005ea1;
     border-bottom: 1px solid #e5e7ea;
     margin-bottom: 0;
