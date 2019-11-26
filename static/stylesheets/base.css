@@ -20,7 +20,7 @@
 
 #sidebar {
     background-color: white;
-    position: absolute;
+    position: fixed;
     width: 15em;
     height: 100%;
     padding-right: 1em;
