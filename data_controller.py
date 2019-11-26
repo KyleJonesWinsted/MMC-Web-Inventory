@@ -176,12 +176,14 @@ def create_new_item(part_no: str, description: str, manufacturer: str, category_
     try:
         category = session.query(Category).filter(Category.id == category_id).one()
     except:
+        traceback.print_exc()
         abort(400)
     new_item = Item(part_no=part_no.lower(), description=description, manufacturer=manufacturer.lower(), category_id=category_id)
     try:
         session.add(new_item)
         return new_item
     except:
+        traceback.print_exc()
         abort(500)
 
 def modify_item_details(item_sku, part_no, manufacturer, description, category_id):

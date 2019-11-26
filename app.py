@@ -6,6 +6,7 @@ import view_controllers.picklist
 import view_controllers.adjustments
 import data_controller as db
 import os
+import traceback
 from sqlalchemy import exc
 
 app = Flask(__name__)
@@ -43,6 +44,7 @@ def commit_session(stop_execution: bool = True):
         try:
             db.session.commit()
         except exc.DBAPIError as ex:
+            traceback.print_exc()
             db.session.rollback()
             print(ex.orig.pgcode)
 
@@ -157,9 +159,12 @@ def create_new_item():
         description = request.form.get("description")
         category_id = request.form.get("category")
     except:
+        traceback.print_exc()
         abort(400)
     new_item = db.create_new_item(part_no, description, manufacturer, category_id)
+    print("sku before commit {}".format(new_item.sku))
     commit_session(stop_execution=True)
+    print("sku after commit {}".format(new_item.sku))
     return redirect("/settings/adjust_stock?item_sku={}".format(new_item.sku))
 
 @app.route('/settings/modify_item_details', methods=['GET', 'POST'])
@@ -184,10 +189,6 @@ def modify_item_details():
     item = db.modify_item_details(item_sku, part_no, manufacturer, description, category_id)
     commit_session(stop_execution=False)
     return redirect(url_for('view_item_details', sku = item_sku))
-    
-    
-
-
 
 @app.route('/settings/adjust_stock', methods=['GET', 'POST'])
 def adjust_stock_for_item():
