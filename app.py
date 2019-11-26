@@ -16,7 +16,7 @@ app.add_template_global(name = 'env', f=os.environ)
 
 @app.before_request
 def check_logged_in():
-    if 'user' not in session and request.endpoint != 'login':
+    if 'user' not in session and request.endpoint != 'login' and 'static' not in request.path:
         return redirect('/login')
 
 @app.route('/login', methods=['GET', 'POST'])
