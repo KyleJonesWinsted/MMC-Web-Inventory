@@ -3,7 +3,7 @@
 {% block title %}Adjust {{ item.part_no.upper() }} Quantity{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ os.environ['BUCKET_NAME'] }}static/stylesheets/form.css">
+<link rel="stylesheet" href="{{ env['BUCKET_NAME'] }}static/stylesheets/form.css">
 {% endblock %}
 
 {% block main %}
@@ -46,5 +46,5 @@
 {% endblock %}
 
 {% block script %}
-<script src="{{ os.environ['BUCKET_NAME'] }}static/scripts/adjust_stock_for_item.js"></script>
+<script src="{{ env['BUCKET_NAME'] }}static/scripts/adjust_stock_for_item.js"></script>
 {% endblock %}

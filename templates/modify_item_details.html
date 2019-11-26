@@ -3,7 +3,7 @@
 {% block title %}Modify {{ item.part_no.upper() }}{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ os.environ['BUCKET_NAME'] }}static/stylesheets/form.css">
+<link rel="stylesheet" href="{{ env['BUCKET_NAME'] }}static/stylesheets/form.css">
 {% endblock %}
 
 {% block main %}

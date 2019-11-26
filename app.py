@@ -7,14 +7,15 @@ import view_controllers.adjustments
 import data_controller as db
 import os
 from sqlalchemy import exc
+
 app = Flask(__name__)
 app.secret_key = os.urandom(64)
 
 os.environ['BUCKET_NAME'] = "https://kylejones-testing.s3.us-east-2.amazonaws.com/" if True else "../"
+app.add_template_global(name = 'env', f=os.environ)
 
 @app.before_request
 def check_logged_in():
-    print(os.environ['BUCKET_NAME'])
     if 'user' not in session and request.endpoint != 'login':
         return redirect('/login')
 
