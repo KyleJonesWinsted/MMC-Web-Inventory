@@ -9,7 +9,7 @@ import os
 from sqlalchemy import exc
 
 app = Flask(__name__)
-app.secret_key = os.urandom(64)
+app.secret_key = os.environ['SECRET_KEY']
 
 os.environ['BUCKET_NAME'] = "https://kylejones-testing.s3.us-east-2.amazonaws.com/" if True else "../"
 app.add_template_global(name = 'env', f=os.environ)
