@@ -3,7 +3,7 @@
 {% block title %}Current Picklists{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="../static/stylesheets/picklist_list.css">
+<link rel="stylesheet" href="{{ BUCKET_NAME }}static/stylesheets/picklist_list.css">
 {% endblock %}
 
 {% block main %}
@@ -40,5 +40,5 @@
 {% endblock %}
 
 {% block script %}
-<script src="../static/scripts/picklist_list.js"></script>
+<script src="{{ BUCKET_NAME }}static/scripts/picklist_list.js"></script>
 {% endblock %}

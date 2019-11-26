@@ -10,6 +10,8 @@ from sqlalchemy import exc
 app = Flask(__name__)
 app.secret_key = os.urandom(64)
 
+os.environ['BUCKET_NAME'] = "https://kylejones-testing.s3.us-east-2.amazonaws.com/" if False else "../"
+
 @app.before_request
 def check_logged_in():
     if 'user' not in session and request.endpoint != 'login':

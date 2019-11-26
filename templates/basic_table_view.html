@@ -3,7 +3,7 @@
 {% block title %}{{ page_title }}{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="../static/stylesheets/basic_table_view.css">
+<link rel="stylesheet" href="{{ BUCKET_NAME }}static/stylesheets/basic_table_view.css">
 {% if current_page %}
 <style>
     {% if current_page <= 1 %}
@@ -49,5 +49,5 @@
 {% if current_page %}
     <script>var currentPageNumber = {{ current_page - 1}}</script>
 {% endif %}
-<script src="../static/scripts/basic-table-view.js"></script>
+<script src="{{ BUCKET_NAME }}static/scripts/basic-table-view.js"></script>
 {% endblock %}
