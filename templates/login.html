@@ -52,33 +52,26 @@
         }
 
         #login-form {
-            display: grid;
-            grid-template-columns:  100px 1fr;
+            text-align: right;
         }
 
-        #labels {
-            text-align: left;
-        }
-
-        #labels h3 {
+        #login-form label {
             padding: 15px 0;
             margin: 1px;
             height: 30px;
             font-family: 'Agency FB Bold';
+            width: 100px;
+            text-align: left;
         }
 
-        #inputs {
-            text-align: right;
-        }
-
-        #inputs input {
-            width: 100%;
+        #login-form input {
             margin: 10px 0;
             font-size: 1em;
             border: 1px solid #d2d5db;
             box-shadow: 0 0 3px #d2d5db;
             padding: 10px;
             font-family: HelveticaNeue, Arial;
+            width: 225px;
         }
 
         img {
@@ -94,14 +87,10 @@
         {% endif %}
         <form method='POST'>
             <div id='login-form'>
-                <div id="labels">
-                    <h3>Employee ID:</h3>
-                    <h3>Password:</h3>
-                </div>
-                <div id='inputs'>
-                    <input type="text" name='username' id='username'>
-                    <input type="password" name="password" id="password">
-                </div>
+                <label for="username">Employee ID:</label>
+                <input type="text" name='username' id='username'>
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password">
             </div>
             <input type="submit" class='block-button' value="Login">
         </form>
