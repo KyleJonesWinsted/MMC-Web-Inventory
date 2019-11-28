@@ -1,5 +1,3 @@
-import 'core-js/features/url-search-params';
-
 $(window).bind("pageshow", function(event) {
     if (event.originalEvent.persisted) {
         this.getPicklist()
