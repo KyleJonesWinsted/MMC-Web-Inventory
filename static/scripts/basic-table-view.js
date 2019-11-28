@@ -1,3 +1,5 @@
+import 'url-search-params-polyfill';
+
 $(function() {
 
     var currentURL = new URL(window.location.href);     
