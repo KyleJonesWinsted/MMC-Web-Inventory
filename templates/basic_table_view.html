@@ -49,6 +49,5 @@
 {% if current_page %}
     <script>var currentPageNumber = {{ current_page - 1}}</script>
 {% endif %}
-<script src="{{ env['BUCKET_NAME'] }}static/scripts/index.js"></script>
 <script src="{{ env['BUCKET_NAME'] }}static/scripts/basic-table-view.js"></script>
 {% endblock %}
