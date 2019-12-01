@@ -24,6 +24,7 @@
     width: 15em;
     height: 100%;
     padding-right: 1em;
+    z-index: 2;
 }
 
 #sidebar-box {
@@ -74,6 +75,7 @@
     background-color: white;
     padding-left: 17em;
     padding-right: 300px;
+    min-width: 400px;
 }
 
 #main h1 {
@@ -147,6 +149,8 @@ a {
     width: 300px;
     box-shadow: 0 0 20px lightgray;
     padding: 10px;
+    background-color: white;
+    z-index: 2;
 }
 
 #background-cover {
@@ -183,4 +187,77 @@ a {
 
 .fa-sign-out-alt {
     color: #005ea1;
+}
+
+.mobile-show-button {
+    display: none;
+    min-width: 25px;
+    margin: 10px;
+}
+
+.mobile-show-button i {
+    font-size: 20pt;
+    padding: 5px 0;
+    color: #005ea1;
+}
+
+.mobile-hide-button {
+    display: none;
+    position: fixed;
+    bottom: 0px;
+    width: 50px;
+    height: 50px;
+    margin: 10px;
+}
+
+.mobile-hide-button i {
+    font-size: 30pt;
+    padding: 5px;
+    color: #005ea1;
+}
+
+#hide-picklist-button {
+    left: 0;
+}
+
+#hide-sidebar-button {
+    right: 0;
+}
+
+/* Hide picklist under 1000px */
+@media only screen and (max-width: 1000px) {
+    #picklist-frame {
+        display: none;
+    }
+
+    #main {
+        padding-right: 0;
+    }
+
+    #search-bar {
+        padding-right: 0;
+    }
+
+    #show-picklist-button {
+        display: inline-block;
+    }
+}
+
+/* Hide sidebar and picklist under 700px */
+@media only screen and (max-width: 700px) {
+    #sidebar {
+        display: none;
+    }
+
+    #main {
+        padding: 0;
+    }
+
+    #search-bar {
+        padding: 0;
+    }
+
+    #show-sidebar-button {
+        display: inline-block;
+    }
 }

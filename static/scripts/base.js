@@ -29,12 +29,10 @@ function search() {
 }
 
 //Picklist functionality
-const $picklistFrame = $('#picklist-frame');
-
- getPicklist()
+getPicklist()
 
 function getPicklist() {
-    $picklistFrame.load('/api/get_picklist');
+    $('#picklist-frame').load('/api/get_picklist');
 }
 
 //Logout
@@ -73,3 +71,32 @@ function idleTimer() {
         //t= setTimeout(reload, 300000);  // time is in milliseconds (1000 is 1 second)
     }
 }
+
+//Show and hide sidebar and picklist on mobile
+
+$(function() {
+
+    $('#show-sidebar-button').click(function() {
+        $('#sidebar').show()
+        $('#hide-sidebar-button').show()
+        $('#show-picklist-button').hide()
+    });
+
+    $('#show-picklist-button').click(function() {
+        $('#picklist-frame').show()
+        $('#hide-picklist-button').show()
+        $('#show-sidebar-button').hide()
+    });
+
+    $('#hide-picklist-button').click(function() {
+        $('#picklist-frame').hide()
+        $('#hide-picklist-button').hide()
+        $('#show-sidebar-button').show()
+    });
+
+    $('#hide-sidebar-button').click(function() {
+        $('#sidebar').hide()
+        $('#hide-sidebar-button').hide()
+        $('#show-picklist-button').show()
+    });
+});
