@@ -79,24 +79,24 @@ $(function() {
     $('#show-sidebar-button').click(function() {
         $('#sidebar').show()
         $('#hide-sidebar-button').show()
-        $('#show-picklist-button').hide()
+        $('#white-cover').show()
     });
 
     $('#show-picklist-button').click(function() {
         $('#picklist-frame').show()
         $('#hide-picklist-button').show()
-        $('#show-sidebar-button').hide()
+        $('#white-cover').show()
     });
 
     $('#hide-picklist-button').click(function() {
         $('#picklist-frame').hide()
         $('#hide-picklist-button').hide()
-        $('#show-sidebar-button').show()
+        $('#white-cover').hide()
     });
 
     $('#hide-sidebar-button').click(function() {
         $('#sidebar').hide()
         $('#hide-sidebar-button').hide()
-        $('#show-picklist-button').show()
+        $('#white-cover').hide()
     });
 });

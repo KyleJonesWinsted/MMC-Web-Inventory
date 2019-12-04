@@ -104,6 +104,7 @@ class Employee(Base):
     name = Column(String(50))
     password_hash = Column(String(128))
     credentials = Column(String(50))
+    # Credentials include 'admin', 'employee', and 'demo'
     adjustments = relationship('Adjustment', back_populates='employee')
     picklists = relationship('Picklist', back_populates='employee')
 

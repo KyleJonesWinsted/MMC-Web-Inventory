@@ -18,6 +18,7 @@ a:any-link {
 .basic-table-cell {
     border-bottom: 1px solid #e5e7ea;
     padding: 0 1em;
+    position: relative;
 }
 
 .basic-table-cell:hover {
@@ -30,14 +31,19 @@ a:any-link {
     color: black;
     font-size: 1em;
     display: inline-block;
+    padding-right: 80px;
 }
 
 .basic-table-cell p {
+    position: absolute;
+    right: 10px;
+    margin: 0;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
     font-family: 'HelveticaNeueLight', sans-serif;
     display: inline-block;
-    float: right;
     color: black;
-    line-height: 25px;
 }
 
 .basic-table-cell:hover h4 {
