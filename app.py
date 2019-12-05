@@ -247,7 +247,7 @@ def checkin_picklist():
 @app.route('/search')
 def search():
     try:
-        search_string = str(request.args.get('input'))
+        search_string = str(request.args.get('input')).lower()
         if search_string == None or search_string == "" or search_string == "None":
             abort(400)
     except:

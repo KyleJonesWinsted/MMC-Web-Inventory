@@ -149,7 +149,7 @@ def get_search_results(search_string: str, page: int = 0) -> [Item]:
         pass
     search = "%{}%".format(search_string)
     for row in session.query(Item).\
-            filter(or_(Item.part_no.like(search), Item.description.like(search))).\
+            filter(or_(Item.part_no.like(search), Item.description.ilike(search))).\
             limit(page_limit).\
             offset(page_limit * page).all():
         results.append(row)
@@ -166,7 +166,7 @@ def count_search_results(search_string: str) -> int:
     except:
         pass
     search = "%{}%".format(search_string)
-    for row in session.query(Item).filter(or_(Item.part_no.like(search), Item.description.like(search))).all():
+    for row in session.query(Item).filter(or_(Item.part_no.like(search), Item.description.ilike(search))).all():
         count += 1
     return count
 
