@@ -76,6 +76,16 @@ function idleTimer() {
 
 $(function() {
 
+    function checkWidth() {
+        $("#sidebar").toggle($(window).width() > 700);
+        $('#show-sidebar-button').toggle($(window).width() < 701);
+        $('#picklist-frame').toggle($(window).width() > 1000);
+        $('#show-picklist-button').toggle($(window).width() < 1001);
+    }
+    checkWidth();
+
+    $(window).resize(checkWidth);
+
     $('#show-sidebar-button').click(function() {
         $('#sidebar').show()
         $('#hide-sidebar-button').show()

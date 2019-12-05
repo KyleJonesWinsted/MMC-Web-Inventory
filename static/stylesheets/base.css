@@ -32,6 +32,7 @@
 #sidebar {
     background-color: white;
     position: fixed;
+    display: block;
     width: 270px;
     top: 0;
     bottom: 0;
@@ -240,10 +241,6 @@ a {
 
 /* Hide picklist under 1000px */
 @media only screen and (max-width: 1000px) {
-    #picklist-frame {
-        display: none;
-    }
-
     #main {
         padding-right: 0;
     }
@@ -251,16 +248,11 @@ a {
     #search-bar {
         padding-right: 0;
     }
-
-    #show-picklist-button {
-        display: inline-block;
-    }
 }
 
 /* Hide sidebar and picklist under 700px */
 @media only screen and (max-width: 700px) {
     #sidebar {
-        display: none;
         box-shadow: 0 0 10px lightgray;
     }
 
@@ -270,9 +262,5 @@ a {
 
     #search-bar {
         padding: 0;
-    }
-
-    #show-sidebar-button {
-        display: inline-block;
     }
 }
