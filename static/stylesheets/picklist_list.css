@@ -1,5 +1,6 @@
 .picklist-row {
     border-top: 1px solid lightgray;
+    position: relative;
 }
 
 #main .picklist-row h3 {
@@ -10,7 +11,7 @@
 .picklist-row p {
     display: inline-block;
     position: absolute;
-    right: 475px;
+    right: 140px;
 }
 
 .picklist-row .block-button {
