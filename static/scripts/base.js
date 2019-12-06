@@ -77,10 +77,23 @@ function idleTimer() {
 $(function() {
 
     function checkWidth() {
-        $("#sidebar").toggle($(window).width() > 700);
-        $('#show-sidebar-button').toggle($(window).width() < 701);
-        $('#picklist-frame').toggle($(window).width() > 1000);
-        $('#show-picklist-button').toggle($(window).width() < 1001);
+        var sidebarIsHidden = $(window).width() > 700;
+        var picklistFrameIsHidden = $(window).width() > 1000;
+
+        $("#sidebar").toggle(sidebarIsHidden);
+        $('#show-sidebar-button').toggle(!sidebarIsHidden);
+        $('#picklist-frame').toggle(picklistFrameIsHidden);
+        $('#show-picklist-button').toggle(!picklistFrameIsHidden);
+
+        if (!sidebarIsHidden) {
+            $('#white-cover').hide()
+            $('#hide-sidebar-button').hide()
+        }
+
+        if (!picklistFrameIsHidden) {
+            $('#white-cover').hide()
+            $('#hide-picklist-button').hide()
+        }
     }
     checkWidth();
 
