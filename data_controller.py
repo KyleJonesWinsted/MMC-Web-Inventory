@@ -294,3 +294,12 @@ def create_new_adjustment(reason_id, item_sku, employee_id, qty_changes):
             session.rollback()
             abort(500)
     return new_adjustment.id
+
+def create_new_employee(id, name, credentials, password):
+    valid_credentials = ['admin', 'employee', 'demo']
+    if credentials not in valid_credentials:
+        return "Invalid credentials entered"
+    new_employee = Employee(id = id, name = name.lower(), credentials = credentials)
+    new_employee.set_password(password)
+    session.add(new_employee)
+    return new_employee
