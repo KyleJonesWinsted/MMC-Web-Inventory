@@ -17,7 +17,7 @@ def search_results_view(search_string, page_number):
             page_title = '0 Search Results',
             rows = [])
     else:
-        page_count = ceil(db.count_search_results(search_string) / db.page_limit)
+        page_count = ceil(number_of_results / db.page_limit)
         items = db.get_search_results(search_string, page_number)
         rows = []
         for item in items:

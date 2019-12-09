@@ -140,34 +140,38 @@ def login_employee(employee_id: int, password: str) -> bool:
 
 def get_search_results(search_string: str, page: int = 0) -> [Item]:
     results = []
-    if len(search_string) < 3:
-        return None
     try:
         results.append(session.query(Item).filter(Item.sku==int(search_string)).one())
         return results
     except:
         pass
-    search = "%{}%".format(search_string)
-    for row in session.query(Item).\
-            filter(or_(Item.part_no.like(search), Item.description.ilike(search))).\
-            limit(page_limit).\
-            offset(page_limit * page).all():
-        results.append(row)
+    search_terms = search_string.split()
+    for term in search_terms:
+        if len(term) >= 3:
+            search = "%{}%".format(term)
+            for row in session.query(Item).\
+                    filter(or_(Item.part_no.like(search), Item.description.ilike(search))).\
+                    order_by(Item.sku).\
+                    limit(page_limit).\
+                    offset(page_limit * page).all():
+                if row not in results:
+                    results.append(row)
     return results
 
 
 def count_search_results(search_string: str) -> int:
     count = 0
-    if len(search_string) < 3:
-        return None
     try:
         item = session.query(Item).filter(Item.sku==int(search_string)).one()
         return 1
     except:
         pass
-    search = "%{}%".format(search_string)
-    for row in session.query(Item).filter(or_(Item.part_no.like(search), Item.description.ilike(search))).all():
-        count += 1
+    search_terms = search_string.split()
+    for term in search_terms:
+        if len(term) >= 3:
+            search = "%{}%".format(term)
+            for row in session.query(Item).filter(or_(Item.part_no.like(search), Item.description.ilike(search))).all():
+                count += 1
     return count
 
 # Modify database
