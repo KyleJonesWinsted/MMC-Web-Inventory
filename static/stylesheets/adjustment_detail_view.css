@@ -45,20 +45,15 @@ body {
 }
 
 .change-row {
-    margin: 0 10px;
+    position: relative;
+    margin-left: 10px;
+    padding-right: 190px;
     border-bottom: 1px solid #e5e7ea;
 }
 
-.change-row p{
-    display: inline-block;
-}
-
-.change-location {
-    display: inline-block;
-}
-
 .quantity-change {
-    float: right;
-    line-height: 29px;
-    padding-right: 20px;
+    margin: 0;
+    position: absolute;
+    right: 10px;
+    top: 0px;
 }
