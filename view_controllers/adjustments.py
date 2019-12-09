@@ -2,7 +2,7 @@ import data_controller as db
 from flask import render_template, abort
 from math import ceil
 from view_controllers.browse import BasicRow
-from datetime import date
+from datetime import date, timedelta
 
 def adjustments_browse_view():
     return render_template('adjustments.html')
@@ -108,10 +108,11 @@ def adjustments_view(browse_type, filter_id, page_number = 0):
         abort(404)
     page_count = ceil(adjustment_count / db.page_limit)
     for adjustment in adjustments:
+        cst_datetime = adjustment.datetime - timedelta(hours=6)
         rows.append(BasicRow(
             id = adjustment.id,
             href = '/adjustment/{}'.format(adjustment.id),
-            primary_text = "{} - {}".format(adjustment.item.part_no.upper(), adjustment.datetime.strftime("%m/%d/%y %I:%M %p")),
+            primary_text = "{} - {}".format(adjustment.item.part_no.upper(), cst_datetime.strftime("%m/%d/%y %I:%M %p")),
             secondary_text = "Qty Change: {}".format(adjustment.total_qty_change)
         ))
     return render_template('basic_table_view.html',
@@ -123,4 +124,4 @@ def adjustments_view(browse_type, filter_id, page_number = 0):
 
 def adjustment_detail_view(adjustment_id):
     adjustment = db.get_adjustment_by_id(adjustment_id)
-    return render_template('adjustment_detail_view.html', adjustment = adjustment)
+    return render_template('adjustment_detail_view.html', adjustment = adjustment, cst_datetime = adjustment.datetime - timedelta(hours=6))
