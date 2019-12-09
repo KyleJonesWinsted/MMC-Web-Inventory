@@ -122,8 +122,8 @@ def items_view(browse_type, filter_id, page_number = 0):
     try:
         if browse_type == 'Category':
             category = db.session.query(db.Category).filter(db.Category.id==filter_id).one()
-            table_header = '{}s'.format(category.name.title())
-            page_title = '{}s'.format(category.name.title())
+            table_header = '{}'.format(category.name.title())
+            page_title = '{}'.format(category.name.title())
             item_count = db.count_items_by_category_id(filter_id)
             items = db.get_items_by_category_id(filter_id, page_number)
         elif browse_type == 'Location':

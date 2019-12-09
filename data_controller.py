@@ -52,13 +52,13 @@ def get_all_manufacturers() -> [str]:
     return manufacturers
 
 def get_all_categories() -> [Category]:
-    return session.query(Category).all()
+    return session.query(Category).order_by(Category.name).all()
 
 def count_all_locations():
     return session.query(func.count(Location.id)).scalar()
 
 def get_all_locations(page: int = 0) -> [Location]:
-    locations = session.query(Location).limit(page_limit).offset(page_limit * page).all()
+    locations = session.query(Location).order_by(Location.name).limit(page_limit).offset(page_limit * page).all()
     for i in range(len(locations)-1,-1,-1):
         if locations[i].total_quantity == 0:
             locations.pop(i)
@@ -110,7 +110,7 @@ def count_adjustments_by_date(date1: date, date2: date = None) -> int:
     return session.query(func.count(Adjustment.id)).filter(and_(Adjustment.date>=date1, Adjustment.date<=date2)).scalar()
 
 def get_all_employees() -> [Employee]:
-    return session.query(Employee).all()
+    return session.query(Employee).filter(and_(Employee.id != 1234, Employee.id != 1111)).order_by(Employee.name).all()
 
 def get_all_reasons() -> [AdjustmentReason]:
     return session.query(AdjustmentReason).all()

@@ -73,7 +73,10 @@ def browse_by_category():
 
 @app.route('/browse/location')
 def browse_by_location():
-    return view_controllers.browse.location_select_view()
+    page_number = request.args.get('page')
+    if page_number == None:
+        page_number = 0
+    return view_controllers.browse.location_select_view(page_number=int(page_number))
 
 @app.route('/browse/manufacturer')
 def browse_by_manufacturer():
