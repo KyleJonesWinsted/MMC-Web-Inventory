@@ -9,8 +9,9 @@ $(function() {
         var parameters = {};
         if (splitURL.length == 2) {
             var param_strings = splitURL[1].split("&");
-            for (var param_string of param_strings); {
-                if (param_string != "") {                    
+            for (var i = 0; i < param_strings.length; i++) {
+                var param_string = param_strings[i];                               
+                if (param_string != "") {
                     const keyRegex = new RegExp('(.+)\=');
                     const valueRegex = new RegExp('\=(.+)');
                     var key = param_string.match(keyRegex)[1];
@@ -20,7 +21,7 @@ $(function() {
             }
         }
         parameters['page'] = page_number;
-        for (key in parameters); {
+        for (var key in parameters) {
             modifiedURL += key + '=' + parameters[key] + '&';
         }        
         return modifiedURL;
