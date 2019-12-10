@@ -11,7 +11,7 @@
 <h4 id='reason'>{{ adjustment.reason.name.title() }}</h4>
 <h2 id='item'>{{ adjustment.item.manufacturer.title() }} - {{ adjustment.item.part_no.upper() }}</h2>
 <h6 id='sku'>Item SKU: {{adjustment.item.sku }}</h6>
-<p id='employee-datetime'>Created by {{ adjustment.employee.name.title() }} on {{ cst_datetime.strftime("%x") }} at {{ cst_datetime.strftime("%-I:%M %p") }}</p>
+<p id='employee-datetime'>Created by {{ adjustment.employee.name.title() }} on {{ adjustment.cst_datetime.strftime("%x") }} at {{ adjustment.cst_datetime.strftime("%-I:%M %p") }}</p>
 <h2 id="changes-header">Changes</h2>
 {% for adj_location in adjustment.locations %}
 <div class="change-row">

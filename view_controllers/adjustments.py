@@ -112,7 +112,7 @@ def adjustments_view(browse_type, filter_id, page_number = 0):
         rows.append(BasicRow(
             id = adjustment.id,
             href = '/adjustment/{}'.format(adjustment.id),
-            primary_text = "{} - {}".format(adjustment.item.part_no.upper(), cst_datetime.strftime("%m/%d/%y %I:%M %p")),
+            primary_text = "{} - {}".format(adjustment.item.part_no.upper(), adjustment.cst_datetime.strftime("%m/%d/%y %I:%M %p")),
             secondary_text = "Qty Change: {}".format(adjustment.total_qty_change)
         ))
     return render_template('basic_table_view.html',
@@ -124,4 +124,4 @@ def adjustments_view(browse_type, filter_id, page_number = 0):
 
 def adjustment_detail_view(adjustment_id):
     adjustment = db.get_adjustment_by_id(adjustment_id)
-    return render_template('adjustment_detail_view.html', adjustment = adjustment, cst_datetime = adjustment.datetime - timedelta(hours=6))
+    return render_template('adjustment_detail_view.html', adjustment = adjustment)

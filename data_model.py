@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.ext.hybrid import hybrid_property
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import date
+from datetime import date, timedelta
 import os
 
 engine = create_engine(os.environ['DATABASE_URL'], echo=False)
@@ -80,6 +80,10 @@ class Adjustment(Base):
         for location in self.locations:
             quantity += location.new_qty - location.old_qty
         return quantity
+
+    @hybrid_property
+    def cst_datetime(self):
+        return self.datetime - timedelta(hours=6)
 
     def __repr__(self):
         part_no = self.item.part_no if self.item != None else 'None'
