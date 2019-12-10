@@ -9,7 +9,7 @@ $(function() {
         var parameters = {};
         if (splitURL.length == 2) {
             var param_strings = splitURL[1].split("&");
-            for (param_string of param_strings); {
+            for (var param_string of param_strings); {
                 if (param_string != "") {                    
                     const keyRegex = new RegExp('(.+)\=');
                     const valueRegex = new RegExp('\=(.+)');
