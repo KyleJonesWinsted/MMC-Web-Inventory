@@ -5,9 +5,10 @@ import app
 from .browse import BasicRow
 
 def search_results_view(search_string, page_number):
-    number_of_results = db.count_search_results(search_string)
+    matched_skus = db.count_search_results(search_string)
+    number_of_results = len(matched_skus)
     if number_of_results == 1:
-        items = db.get_search_results(search_string)
+        items = db.get_search_results(matched_skus)
         return redirect('/item/{}'.format(items[0].sku), code=302)
     elif number_of_results == None:
         abort(400)
@@ -18,7 +19,7 @@ def search_results_view(search_string, page_number):
             rows = [])
     else:
         page_count = ceil(number_of_results / db.page_limit)
-        items = db.get_search_results(search_string, page_number)
+        items = db.get_search_results(matched_skus, page_number)
         rows = []
         for item in items:
             rows.append(

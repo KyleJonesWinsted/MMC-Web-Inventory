@@ -1,7 +1,7 @@
-from data_model import session, Item, Location, Adjustment, AdjustmentLocation, LocationItem, Employee, AdjustmentReason, Category, Picklist, PicklistItem
+from data_model import engine, session, Item, Location, Adjustment, AdjustmentLocation, LocationItem, Employee, AdjustmentReason, Category, Picklist, PicklistItem
 import data_model as db
 import traceback
-from sqlalchemy import func, and_, or_
+from sqlalchemy import func, and_, or_, text
 from math import ceil
 from datetime import datetime, date
 from flask import abort, jsonify
@@ -138,24 +138,12 @@ def login_employee(employee_id: int, password: str) -> bool:
 
 # Search items by SKU, Part_no, or Description
 
-def get_search_results(search_string: str, page: int = 0) -> [Item]:
+def get_search_results(matched_skus, page: int = 0) -> [Item]:
     results = []
-    try:
-        results.append(session.query(Item).filter(Item.sku==int(search_string)).one())
-        return results
-    except:
-        pass
-    search_terms = search_string.split()
-    for term in search_terms:
-        if len(term) >= 3:
-            search = "%{}%".format(term)
-            for row in session.query(Item).\
-                    filter(or_(Item.part_no.like(search), Item.description.ilike(search))).\
-                    order_by(Item.sku).\
-                    limit(page_limit).\
-                    offset(page_limit * page).all():
-                if row not in results:
-                    results.append(row)
+    page_start = page * page_limit
+    for sku in matched_skus[page_start: page_start + page_limit]:
+        item = session.query(Item).filter(Item.sku == sku).one()
+        results.append(item)
     return results
 
 
@@ -167,12 +155,24 @@ def count_search_results(search_string: str) -> int:
     except:
         pass
     search_terms = search_string.split()
-    for term in search_terms:
-        if len(term) >= 3:
-            search = "%{}%".format(term)
-            for row in session.query(Item).filter(or_(Item.part_no.like(search), Item.description.ilike(search))).all():
-                count += 1
-    return count
+    for i in range(len(search_terms) - 1, -1, -1):
+        if len(search_terms[i]) < 3:
+            search_terms.pop(i)
+    sql = "SELECT sku FROM items WHERE "
+    for i in range(len(search_terms)):
+        term = search_terms[i]
+        search = "%{}%".format(term)
+        sql += "(part_no LIKE '{}' OR description ILIKE '{}') ".format(search, search)
+        if i < len(search_terms) - 1:
+            sql += "AND "
+    con = engine.connect()
+    rows = con.execute(text(sql))
+    fetched_results = rows.fetchall()
+    con.close()
+    matched_skus = []
+    for result in fetched_results:
+        matched_skus.append(result[0])
+    return matched_skus
 
 # Modify database
 
