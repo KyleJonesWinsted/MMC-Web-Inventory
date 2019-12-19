@@ -151,7 +151,7 @@ def count_search_results(search_string: str) -> int:
     count = 0
     try:
         item = session.query(Item).filter(Item.sku==int(search_string)).one()
-        return 1
+        return [item.sku]
     except:
         pass
     search_terms = search_string.split()
