@@ -337,9 +337,10 @@ def get_item_by_sku():
 def get_picklist_by_id():
     try:
         picklist_id = session['picklist_id']
+        is_printable = request.args.get('printable')
     except:
         return view_controllers.picklist.no_picklist_view(), 200
-    return view_controllers.picklist.picklist_view(picklist_id), 200
+    return view_controllers.picklist.picklist_view(picklist_id, is_printable), 200
 
 @app.route('/api/create_new_picklist')
 def create_new_picklist():

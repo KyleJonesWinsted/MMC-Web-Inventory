@@ -3,12 +3,12 @@ import app
 import traceback
 from flask import render_template, abort
 
-def picklist_view(picklist_id):
+def picklist_view(picklist_id, is_printable):
     try:
         picklist = db.session.query(db.Picklist).filter(db.Picklist.id==picklist_id).one()
     except:
         abort(404)
-    return render_template('picklist.html', picklist = picklist)
+    return render_template('picklist.html', picklist = picklist, is_printable = is_printable)
 
 def no_picklist_view():
     return render_template('no_picklist.html')
