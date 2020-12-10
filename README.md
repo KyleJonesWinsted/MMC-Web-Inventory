@@ -1,4 +1,4 @@
-# [MMC Web Inventory Tracker](http://www.mmcinventory.com)
+# [MMC Web Inventory Tracker](http://mmcinventory.herokuapp.com)
 
 ## A web-based inventory tracking app for the machining department at [Millerbernd Manufacturing Company](http://www.millerberndmfg.com/ring-cylinder/products/cnc-machining/).
 
